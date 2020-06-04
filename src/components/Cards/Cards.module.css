@@ -1,0 +1,35 @@
+.container {
+  margin: 50px 0;
+  margin-top: 0;
+}
+
+.card {
+  margin: 0 8px !important;
+  /* min-width: 210px; */
+}
+
+.date {
+  margin: auto 0 !important;
+}
+
+.infected {
+  border-bottom: 8px solid rgba(139, 0, 0);
+}
+
+.recovered {
+  border-bottom: 8px solid #49c0b6;
+}
+
+.deaths {
+  border-bottom: 8px solid rgba(34, 34, 34);
+}
+
+@media (max-width: 960px) {
+  .card {
+    margin: 2% 0 !important;
+  }
+
+  .date {
+    margin: auto 8px !important;
+  }
+}
