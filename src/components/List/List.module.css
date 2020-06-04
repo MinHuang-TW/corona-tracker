@@ -1,0 +1,40 @@
+li {
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.54);
+  line-height: 48px;
+}
+
+li {
+  list-style-type: none;
+  padding: 0 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+li:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.more {
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+.listBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selectText {
+  font-weight: 700;
+}
+
+.selectText,
+.listText {
+  margin-left: 16px;
+}

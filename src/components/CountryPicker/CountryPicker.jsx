@@ -1,44 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { fetchCountries } from '../../api';
-import { Grid, NativeSelect, Typography } from '@material-ui/core';
+import List from '../List/List';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import styles from './CountryPicker.module.css';
 
 const CountryPicker = ({ handleCountry }) => {
   const [countries, setCountries] = useState([]);
+  const [country, setCountry] = useState('Worldwide');
+  const [icon, setIcon] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = useCallback(() => {
+    setOpen(!open);
+  }, [open]);
+
+  const handleSelect = useCallback((country, flag) => event => {
+    handleCountry(country); 
+    setCountry(country);
+    setIcon(flag);
+  }, [handleCountry]);
 
   useEffect(() => {
     const getCountries = async () => {
       setCountries(await fetchCountries());
     };
     getCountries();
-  }, [setCountries]);
+  }, []);
 
   return (
-    <Grid  
-      container 
-      spacing={3} 
-      justify='center' 
-      alignItems='center' 
-      className={styles.container}
-    >
-      <Grid item>
-        <Typography color='textSecondary'>Location</Typography>
-      </Grid>
+    <div className={styles.container}>
+      <div className={styles.selector} onClick={handleOpen}>
+        <List country={country} icon={icon}>
+          {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        </List>
 
-      <Grid item>
-        <NativeSelect
-          defaultValue=''
-          onChange={e => handleCountry(e.target.value)}
-        >
-          <option value=''>Worldwide</option>
-          {countries.map((country, index) => (
-            <option key={index} value={country}>
-              {country}
-            </option>
-          ))}
-        </NativeSelect>
-      </Grid>
-    </Grid>
+        {open &&
+          countries
+            .filter(({ name }) => name !== country)
+            .map(({ name, flag }) => (
+              <List 
+                key={name}
+                name={name}
+                icon={flag}
+                handleClick={handleSelect(name, flag)} 
+              />
+            ))}
+      </div>
+    </div>
   );
 };
 

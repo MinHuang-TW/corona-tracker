@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { fetchDailyData } from '../../api';
+import { fetchDailyData, fetchData } from '../../api';
 import { Line, Bar } from 'react-chartjs-2';
 import moment from 'moment';
 import styles from './Chart.module.css';
 
 const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
   const [dailyData, setDailyData] = useState([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
       const data = await fetchDailyData();
+      setData(await fetchData());
       setDailyData(data);
     };
     getData();
@@ -18,10 +20,10 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
   const lineChart = dailyData.length ? (
     <Line
       data={{
-        labels: dailyData.map(({ date }) => moment(date).format('MMMM D, YYYY')),
+        labels: dailyData.map(({ date }) => moment(date)),
         datasets: [{
           data: dailyData.map(({ confirmed }) => confirmed),
-          label: 'Infected',
+          label: 'Confirmed',
           borderColor: 'rgba(139, 0, 0)',
           backgroundColor: 'rgba(139, 0, 0, 0.2)',
           fill: true,
@@ -34,9 +36,9 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
         }],
       }}
       options={{
-        legend: {
-          position: 'bottom',
-        },
+        // legend: {
+        //   position: 'bottom',
+        // },
         scales: {
           yAxes: [{
             ticks: {
@@ -67,10 +69,10 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
     />
   ) : null;
 
-  const barChart = confirmed ? (
+  const barChart = data ? (
     <Bar
       data={{
-        labels: ['Infected', 'Recovered', 'Deaths'],
+        labels: ['Confirmed', 'Recovered', 'Deaths'],
         datasets: [
           {
             label: 'Amount',
@@ -85,7 +87,7 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
               'rgba(73,192,182, 0.2)', 
               'rgba(34, 34, 34, 0.2)',
             ],
-            data: [confirmed.value, recovered.value, deaths.value],
+            data: [confirmed, recovered, deaths],
           },
         ],
       }}

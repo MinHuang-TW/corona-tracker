@@ -16,59 +16,93 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
+const CardUnit = ({
+  style,
+  styleToday,
+  title,
+  value,
+  todayValue,
+  text,
+  updated,
+}) => (
+  <Grid item component={Card} xs={12} md={3} className={cx(styles.card, style)}>
+    <CardContent>
+      <Typography color='textSecondary' gutterBottom>
+        {title}
+      </Typography>
+
+      <Typography variant='h5' gutterBottom>
+        <Countup start={0} end={value} duration={1} separator=',' />
+        <Countup 
+          className={styleToday} 
+          start={0} end={todayValue} 
+          duration={0.5} 
+          separator=',' 
+          prefix=' + ' 
+        />
+      </Typography>
+
+      <Grid container alignItems='center'>
+        <Grid item>
+          <Typography variant='body2' color='textSecondary'>
+            {text}
+          </Typography>
+        </Grid>
+
+        <Grid item className={styles.date} xs={6} md={12}>
+          <Typography variant='body2' color='textSecondary'>
+            <strong>{moment(updated).format('MMMM D, YYYY')}</strong>
+          </Typography>
+        </Grid>
+      </Grid>
+    </CardContent>
+  </Grid>
+);
+
+const Cards = ({
+  data: {
+    confirmed,
+    todayCases,
+    recovered,
+    todayRecovered,
+    deaths,
+    todayDeaths,
+    lastUpdate,
+  },
+}) => {
   const classes = useStyles();
-  
+
   if (!confirmed) {
     return (
       <div className={classes.root}>
         <CircularProgress />
       </div>
     );
-  };
+  }
 
-  const CardUnit = ({ style, title, value, text }) => (
-    <Grid item component={Card} xs={12} md={3} className={cx(styles.card, style)}>
-      <CardContent>
-        <Typography color='textSecondary' gutterBottom>
-          {title}
-        </Typography>
-        <Typography variant='h5' gutterBottom>
-          <Countup start={0} end={value} duration={1} separator=',' />
-        </Typography>
-
-        <Grid container alignItems='center'>
-          <Grid item>
-            <Typography variant='body2'>{text}</Typography>
-          </Grid>
-
-          <Grid item className={styles.date}>
-            <Typography color='textSecondary'>
-              {moment(lastUpdate).format('MMMM D, YYYY')}
-            </Typography>
-          </Grid>
-        </Grid>
-      </CardContent>
-    </Grid>
-  );
-
-  const cardLists = [
+  const contents = [
     {
-      title: 'Infected',
+      title: 'Confirmed',
       style: styles.infected,
-      value: confirmed.value,
+      styleToday: styles.infectedToday,
+      value: confirmed,
+      todayValue: todayCases,
       text: 'of active cases until',
     },
     {
       title: 'Recovered',
       style: styles.recovered,
-      value: recovered.value,
+      styleToday: styles.recoveredToday,
+      value: recovered,
+      todayValue: todayRecovered,
       text: 'of recoveries until',
     },
     {
       title: 'Deaths',
       style: styles.deaths,
-      value: deaths.value,
+      styleToday: styles.deathsToday,
+      value: deaths,
+      todayValue: todayDeaths,
       text: 'of deaths until',
     },
   ];
@@ -76,15 +110,20 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
   return (
     <div className={styles.container}>
       <Grid container spacing={3} justify='center'>
-        {cardLists.map(({ title, style, value, text }) => (
-          <CardUnit
-            key={title}
-            title={title}
-            value={value}
-            text={text}
-            style={style}
-          />
-        ))}
+        {contents.map(
+          ({ title, style, styleToday, value, todayValue, text }) => (
+            <CardUnit
+              key={title}
+              title={title}
+              value={value}
+              todayValue={todayValue}
+              text={text}
+              style={style}
+              styleToday={styleToday}
+              updated={lastUpdate}
+            />
+          )
+        )}
       </Grid>
     </div>
   );
