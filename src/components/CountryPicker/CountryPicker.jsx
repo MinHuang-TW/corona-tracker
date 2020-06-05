@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { fetchCountries } from '../../api';
 import List from '../List/List';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import styles from './CountryPicker.module.css';
 
-const CountryPicker = ({ handleCountry }) => {
-  const [countries, setCountries] = useState([]);
+const CountryPicker = ({ handleCountry, countries }) => {
   const [country, setCountry] = useState('Worldwide');
   const [icon, setIcon] = useState(null);
   const [open, setOpen] = useState(false);
@@ -21,25 +19,16 @@ const CountryPicker = ({ handleCountry }) => {
     setIcon(flag);
   }, [handleCountry]);
 
-  const handleEsc = useCallback(event => {
-    // console.log(event.key)
-    if (event.keyCode === 27) setOpen(false);
-  }, []);
-
   useEffect(() => {
-    const getCountries = async () => {
-      setCountries([
-        { name: 'Worldwide' }, 
-        ...await fetchCountries(),
-      ]);
+    const handleClose = event => {
+      if (event.key === 'Escape') setOpen(false);
     };
-    getCountries();
-    window.addEventListener('keydown', handleEsc);
-
+    window.addEventListener('keydown', handleClose);
+    
     return () => {
-      window.removeEventListener('keydown', handleEsc);
+      window.removeEventListener('keydown', handleClose);
     }
-  }, [handleEsc]);
+  }, []);
 
   return (
     <div className={styles.container}>

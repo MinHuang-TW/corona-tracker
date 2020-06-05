@@ -1,40 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
-import { Cards, Chart, CountryPicker } from './components';
-import { fetchData } from './api';
+import { Cards, Chart, CountryPicker, Map } from './components';
+import { fetchData, fetchCountries } from './api';
 import styles from './App.module.css';
 import { Typography } from '@material-ui/core';
 
 const App = () => {
   const [data, setData] = useState([]);
-  const [country, setCountry] = useState('');
+  const [countries, setCountries] = useState([]);
+  const [country, setCountry] = useState('Worldwide');
 
   useEffect(() => {
     const getData = async () => {
       setData(await fetchData());
+      setCountries(await fetchCountries());
     };
     getData();
   }, []);
 
   const handleCountry = async (country) => {
-    const getData = await fetchData(country);
+    setData(await fetchData(country));
     setCountry(country);
-    setData(getData);
   };
 
   return (
     <>
       <div className={styles.container}>
-        <header>
+        {/* <header>
           <Typography variant='h3' color='textSecondary'>
             Coronavirus Tracker
-          </Typography>
+          </Typography> */}
           {/* <span className={styles.icon} role='img' aria-label='corona icon'>
             🦠
           </span> */}
-        </header>
+        {/* </header> */}
 
-        <CountryPicker handleCountry={handleCountry} />
+        <Map 
+          selected_Country={country} 
+          handleCountry={handleCountry}
+          countries={countries} 
+          data={data} 
+        />
+
+        <CountryPicker 
+          selected_Country={country}
+          countries={[{ name: 'Worldwide' }, ...countries]}
+          handleCountry={handleCountry} 
+        />
         <Cards data={data} />
         <Chart data={data} country={country} />
       </div>
