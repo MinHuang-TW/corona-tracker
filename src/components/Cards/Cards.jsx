@@ -61,18 +61,18 @@ const CardUnit = ({
 
 const Cards = ({
   data: {
-    confirmed,
+    cases,
     todayCases,
     recovered,
     todayRecovered,
     deaths,
     todayDeaths,
-    lastUpdate,
+    updated,
   },
 }) => {
   const classes = useStyles();
 
-  if (!confirmed) {
+  if (!cases) {
     return (
       <div className={classes.root}>
         <CircularProgress />
@@ -85,7 +85,7 @@ const Cards = ({
       title: 'Confirmed',
       style: styles.infected,
       styleToday: styles.infectedToday,
-      value: confirmed,
+      value: cases,
       todayValue: todayCases,
       text: 'of active cases until',
     },
@@ -120,7 +120,7 @@ const Cards = ({
               text={text}
               style={style}
               styleToday={styleToday}
-              updated={lastUpdate}
+              updated={updated}
             />
           )
         )}

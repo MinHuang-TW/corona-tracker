@@ -38,11 +38,11 @@ const App = () => {
         <Cards data={data} />
         <Chart data={data} country={country} />
       </div>
-      
+
       <footer>
         <Typography color='textSecondary' variant='caption'>
           Updated <strong>
-          {moment(data.lastUpdate).startOf('hour').fromNow()}
+          {moment(data.updated).startOf('hour').fromNow()}
           </strong> from NOVELCovid API
         </Typography>
       </footer>

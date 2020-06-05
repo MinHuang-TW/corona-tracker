@@ -1,44 +1,67 @@
 import React, { useState, useEffect } from 'react';
-import { fetchDailyData, fetchData } from '../../api';
+import { fetchData, fetchGlobalData } from '../../api';
 import { Line, Bar } from 'react-chartjs-2';
 import moment from 'moment';
 import styles from './Chart.module.css';
 
-const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
-  const [dailyData, setDailyData] = useState([]);
+const Chart = ({ data: { cases, recovered, deaths }, country }) => {
+  const [globalData, setGlobalData] = useState([]);
   const [data, setData] = useState([]);
+
+  const color = {
+    confirmed: 'rgba(139, 0, 0)', 
+    recovered: 'rgba(73,192,182)', 
+    deaths: 'rgba(34, 34, 34)',
+  };
+
+  const bg = {
+    confirmed: 'rgba(139, 0, 0, 0.2)', 
+    recovered: 'rgba(73,192,182, 0.2)', 
+    deaths: 'rgba(34, 34, 34, 0.2)',
+  };
+
+  const tooltips_style = {
+    titleFontSize: 16,
+    titleMarginBottom: 8,
+    xPadding: 16,
+    yPadding: 16,
+  };
 
   useEffect(() => {
     const getData = async () => {
-      const data = await fetchDailyData();
+      setGlobalData(await fetchGlobalData());
       setData(await fetchData());
-      setDailyData(data);
     };
     getData();
   }, []);
 
-  const lineChart = dailyData.length ? (
+  const lineChart = globalData['cases'] ? (
     <Line
       data={{
-        labels: dailyData.map(({ date }) => moment(date)),
-        datasets: [{
-          data: dailyData.map(({ confirmed }) => confirmed),
-          label: 'Confirmed',
-          borderColor: 'rgba(139, 0, 0)',
-          backgroundColor: 'rgba(139, 0, 0, 0.2)',
+        labels: Object
+          .keys(globalData.cases)
+          .map(date => moment(new Date(date)).format('MMMM D, YYYY')),
+        datasets: [{ 
+          data: Object.values(globalData.cases),
+          label: ' Confirmed',
+          borderColor: color.confirmed,
+          backgroundColor: 'rgba(139, 0, 0, 0.1)',
           fill: true,
-        }, {
-          data: dailyData.map(({ deaths }) => deaths),
-          label: 'Deaths',
-          borderColor: 'rgba(34, 34, 34)',
-          backgroundColor: 'rgba(34, 34, 34, 0.5)',
+        }, { 
+          data: Object.values(globalData.recovered),
+          label: ' Recovered',
+          borderColor: color.recovered,
+          backgroundColor: bg.recovered,
+          fill: true,
+        }, { 
+          data: Object.values(globalData.deaths),
+          label: ' Deaths',
+          borderColor: color.deaths,
+          backgroundColor: bg.deaths,
           fill: true,
         }],
       }}
       options={{
-        // legend: {
-        //   position: 'bottom',
-        // },
         scales: {
           yAxes: [{
             ticks: {
@@ -50,20 +73,19 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
             type: 'time',
             time: {
               unit: 'month',
-              displayFormats: {
-                month: 'MMM YYYY'
-              },
+              displayFormats: { month: 'MMM YYYY' },
             }
           }]
         },
         tooltips: {
-          callbacks: {
-            label: (tooltipItem, data) => {
-              let label = data.datasets[tooltipItem.datasetIndex].label;
-              label += `: ${tooltipItem.yLabel.toLocaleString()}`;
-              return label;
-            }
-          },
+          mode: 'index',
+          ...tooltips_style,
+          bodySpacing: 8,
+          callbacks: { label: (tooltipItem, data) => {
+            let label = data.datasets[tooltipItem.datasetIndex].label;
+            label += ` : ${tooltipItem.yLabel.toLocaleString()}`;
+            return label;
+          }},
         },
       }}
     />
@@ -73,23 +95,13 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
     <Bar
       data={{
         labels: ['Confirmed', 'Recovered', 'Deaths'],
-        datasets: [
-          {
-            label: 'Amount',
-            borderWidth: 1.5,
-            borderColor: [
-              'rgba(139, 0, 0)', 
-              'rgba(73,192,182)', 
-              'rgba(34, 34, 34)',
-            ],
-            backgroundColor: [
-              'rgba(139, 0, 0, 0.2)', 
-              'rgba(73,192,182, 0.2)', 
-              'rgba(34, 34, 34, 0.2)',
-            ],
-            data: [confirmed, recovered, deaths],
-          },
-        ],
+        datasets: [{
+          label: 'Amount',
+          borderWidth: 1.5,
+          borderColor: [color.confirmed, color.recovered, color.deaths],
+          backgroundColor: [bg.confirmed, bg.recovered, bg.deaths],
+          data: [cases, recovered, deaths],
+        }],
       }}
       options={{
         legend: { display: false },
@@ -103,18 +115,19 @@ const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
           }]
         },
         tooltips: {
-          callbacks: {
-            label: (tooltipItem, data) => {
-              return ' Amount: ' + tooltipItem.yLabel.toLocaleString();
-            },
-          },
+          ...tooltips_style,
+          callbacks: { label: (tooltipItem) => (
+            ' Amount : ' + tooltipItem.yLabel.toLocaleString()
+          )},
         },
       }}
     />
   ) : null;
 
   return (
-    <div className={styles.container}>{country ? barChart : lineChart}</div>
+    <div className={styles.container}>
+      {country ? barChart : lineChart}
+    </div>
   );
 };
 
