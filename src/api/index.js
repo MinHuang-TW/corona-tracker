@@ -4,7 +4,8 @@ const url = 'https://corona.lmao.ninja/v2';
 
 export const fetchData = async (country) => {
   let changeableUrl = `${url}/all`;
-  if (country) changeableUrl = `${url}/countries/${country}`;
+  if (country && country !== 'Worldwide')
+    changeableUrl = `${url}/countries/${country}`;
 
   try {
     const {

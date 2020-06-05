@@ -15,18 +15,31 @@ const CountryPicker = ({ handleCountry }) => {
     setOpen(!open);
   }, [open]);
 
-  const handleSelect = useCallback((country, flag) => event => {
+  const handleSelect = useCallback((country, flag) => e => {
     handleCountry(country); 
     setCountry(country);
     setIcon(flag);
   }, [handleCountry]);
 
+  const handleEsc = useCallback(event => {
+    // console.log(event.key)
+    if (event.keyCode === 27) setOpen(false);
+  }, []);
+
   useEffect(() => {
     const getCountries = async () => {
-      setCountries(await fetchCountries());
+      setCountries([
+        { name: 'Worldwide' }, 
+        ...await fetchCountries(),
+      ]);
     };
     getCountries();
-  }, []);
+    window.addEventListener('keydown', handleEsc);
+
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    }
+  }, [handleEsc]);
 
   return (
     <div className={styles.container}>
@@ -35,17 +48,16 @@ const CountryPicker = ({ handleCountry }) => {
           {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </List>
 
-        {open &&
-          countries
-            .filter(({ name }) => name !== country)
-            .map(({ name, flag }) => (
-              <List 
-                key={name}
-                name={name}
-                icon={flag}
-                handleClick={handleSelect(name, flag)} 
-              />
-            ))}
+        {open && countries
+          .filter(({ name }) => name !== country)
+          .map(({ name, flag }) => (
+            <List 
+              key={name}
+              name={name}
+              icon={flag}
+              handleClick={handleSelect(name, flag)} 
+            />
+          ))}
       </div>
     </div>
   );

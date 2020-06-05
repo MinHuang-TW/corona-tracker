@@ -12,8 +12,8 @@ const List = ({
   return (
     <li onClick={handleClick}>
       <span className={styles.listBlock}>
-        {country === 'Worldwide' ? (
-          <PublicIcon />
+        {name === 'Worldwide' || country === 'Worldwide' ? (
+          <PublicIcon style={{ margin: '0 3px' }} />
         ) : (
           <img width='30px' src={icon} alt={name || country} />
         )}

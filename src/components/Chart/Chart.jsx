@@ -5,6 +5,7 @@ import moment from 'moment';
 import styles from './Chart.module.css';
 
 const Chart = ({ data: { cases, recovered, deaths }, country }) => {
+  moment.suppressDeprecationWarnings = true;
   const [globalData, setGlobalData] = useState([]);
   const [data, setData] = useState([]);
 
@@ -62,6 +63,7 @@ const Chart = ({ data: { cases, recovered, deaths }, country }) => {
         }],
       }}
       options={{
+        title: { display: true, text: 'Toggle different type of cases' },
         scales: {
           yAxes: [{
             ticks: {
@@ -126,7 +128,7 @@ const Chart = ({ data: { cases, recovered, deaths }, country }) => {
 
   return (
     <div className={styles.container}>
-      {country ? barChart : lineChart}
+      {country && country !== 'Worldwide' ? barChart : lineChart}
     </div>
   );
 };
