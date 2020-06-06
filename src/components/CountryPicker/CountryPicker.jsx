@@ -4,15 +4,31 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import styles from './CountryPicker.module.css';
 
-const CountryPicker = ({ handleCountry, countries, selected_Country, setCountry, setIcon, icon }) => {
-  const [open, setOpen] = useState(false);
+const CountryPicker = ({
+  handleCountry,
+  countries,
+  selected_Country,
+  setCountry,
+  icon,
+  setIcon,
+  open,
+  setOpen,
+}) => {
+  const [key, setKey] = useState(null);
+
+  const filterList = text => {
+    if (key) return text.startsWith(key);
+    return text !== selected_Country;
+  };
 
   const handleOpen = useCallback(() => {
     setOpen(!open);
+    setKey(null);
+    // eslint-disable-next-line
   }, [open]);
 
-  const handleSelect = useCallback((country, flag) => e => {
-    handleCountry(country); 
+  const handleSelect = useCallback((country, flag) => (event) => {
+    handleCountry(country);
     setCountry(country);
     setIcon(flag);
     setOpen(false);
@@ -20,34 +36,32 @@ const CountryPicker = ({ handleCountry, countries, selected_Country, setCountry,
   }, []);
 
   useEffect(() => {
-    const handleClose = event => {
-      if (event.key === 'Escape') setOpen(false);
+    const handleKeyDown = ({ key, keyCode }) => {
+      if (key === 'Escape') setOpen(false);
+      if (keyCode >= 65 & keyCode <= 90) setKey(key.toUpperCase());
     };
-    window.addEventListener('keydown', handleClose);
-    
-    return () => {
-      window.removeEventListener('keydown', handleClose);
-    }
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
     // eslint-disable-next-line
   }, []);
 
   return (
     <div className={styles.container}>
       <div className={styles.selector} onClick={handleOpen}>
-        <List country={selected_Country} icon={icon}>
+        <List main icon={icon} text={selected_Country}>
           {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </List>
 
         {open && countries
-          .filter(({ name }) => name !== selected_Country)
+          .filter(({ name }) => filterList(name))
           .map(({ name, flag }) => (
             <List 
-              key={name}
-              name={name}
-              icon={flag}
-              handleClick={handleSelect(name, flag)} 
+              key={name} 
+              icon={flag} 
+              text={name} 
+              onClick={handleSelect(name, flag)} 
             />
-          ))}
+        ))}
       </div>
     </div>
   );

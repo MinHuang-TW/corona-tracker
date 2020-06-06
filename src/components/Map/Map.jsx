@@ -3,19 +3,22 @@ import MapGL, { Marker, FlyToInterpolator } from 'react-map-gl';
 import styles from './Map.module.css';
 
 const Map = ({ selected_Country, setCountry, handleCountry, countries, setIcon }) => {
-  const TOKEN = process.env.REACT_APP_MAPBOX_TOKEN;
   const initial_viewport = { 
     zoom: 1.3, 
     latitude: 20,
     longitude: 15,
   };
 
+  const animation = {
+    transitionInterpolator: new FlyToInterpolator({ speed: 2 }),
+    transitionDuration: 'auto',
+  };
+
   const [viewport, setViewport] = useState({
     width: '100vw',
     height: '50vh',
-    transitionInterpolator: new FlyToInterpolator({ speed: 2 }),
-    transitionDuration: 'auto',
     ...initial_viewport,
+    ...animation,
   });
 
   useEffect(() => {
@@ -59,23 +62,18 @@ const Map = ({ selected_Country, setCountry, handleCountry, countries, setIcon }
   return (
     <MapGL
       {...viewport}
-      mapboxApiAccessToken={TOKEN}
-      mapStyle='mapbox://styles/mapbox/dark-v10'
-      // mapStyle='mapbox://styles/mapbox/light-v9'
-      maxZoom={6}
+      mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+      mapStyle='mapbox://styles/min-huang/ckb2wh38l00aw1iph6kncjlx0'
+      // maxZoom={6}
       minZoom={1}
-      onViewportChange={(viewport) => setViewport(viewport)}
+      onViewportChange={viewport => setViewport({ ...viewport, ...animation })}
     >
       {countries &&
         countries.map(({ name, lat, long, cases, flag }) => (
           <Marker key={name} latitude={lat} longitude={long}>
             <div 
               className={styles.marker}
-              style={{ 
-                width: setSize(cases), 
-                height: setSize(cases), 
-                borderRadius: setSize(cases) / 2,
-              }}
+              style={{ width: setSize(cases), height: setSize(cases) }}
               onClick={handleClick(name, flag)}
             >
               {/* <img src={flag} alt={name} width='20' /> */}

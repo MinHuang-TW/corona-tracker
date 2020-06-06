@@ -2,26 +2,20 @@ import React from 'react';
 import styles from './List.module.css';
 import PublicIcon from '@material-ui/icons/Public';
 
-const List = ({
-  country,
-  icon,
-  name,
-  handleClick = null,
-  children = null,
-}) => {
+const List = ({ text, icon = null, main = null, onClick = null, children = null }) => {
   return (
-    <li onClick={handleClick}>
+    <li onClick={onClick}>
       <span className={styles.listBlock}>
-        {name === 'Worldwide' || country === 'Worldwide' ? (
+        {icon ? (
+          <img width='30px' src={icon} alt={text} />
+          ) : (
           <PublicIcon style={{ margin: '0 3px' }} />
-        ) : (
-          <img width='30px' src={icon} alt={name || country} />
         )}
-        <span className={name ? styles.listText : styles.selectText}>
-          {name || country}
+        <span className={main ? styles.selectText : styles.listText}>
+          {text}
         </span>
       </span>
-      <span className={styles.more}>{children}</span>
+      {children && <span className={styles.more}>{children}</span>}
     </li>
   );
 };

@@ -1,20 +1,8 @@
 import React from 'react';
 import Countup from 'react-countup';
 import cx from 'classnames';
-// import moment from 'moment';
-import { CircularProgress, Card, CardContent, Typography, Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Card, CardContent, Typography, Grid } from '@material-ui/core';
 import styles from './Cards.module.css';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    margin: '100px auto',
-    '& > * + *': {
-      marginLeft: theme.spacing(2),
-    },
-  },
-}));
 
 const CardUnit = ({ style, styleToday, title, value, todayValue }) => (
   <Grid item component={Card} xs={12} md={3} className={cx(styles.card, style)}>
@@ -52,15 +40,11 @@ const Cards = ({
     updated,
   },
 }) => {
-  const classes = useStyles();
-
-  if (!cases) {
-    return (
-      <div className={classes.root}>
-        <CircularProgress />
-      </div>
-    );
-  }
+  if (!cases) return (
+    <div className={styles.lds}>
+      <div /><div /><div /><div />
+    </div>
+  );
 
   const contents = [{
     title: 'Confirmed',
@@ -88,18 +72,7 @@ const Cards = ({
   return (
     <div className={styles.container}>
       <Grid container spacing={3} justify='center'>
-        {contents.map(({ title, style, styleToday, value, todayValue, text }) => (
-          <CardUnit
-            key={title}
-            title={title}
-            value={value}
-            todayValue={todayValue}
-            text={text}
-            style={style}
-            styleToday={styleToday}
-            updated={updated}
-          />
-        ))}
+        {contents.map(content => (<CardUnit key={content.title} {...content} />))}
       </Grid>
     </div>
   );
