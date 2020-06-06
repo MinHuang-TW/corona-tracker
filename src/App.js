@@ -9,6 +9,7 @@ const App = () => {
   const [data, setData] = useState([]);
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState('Worldwide');
+  const [icon, setIcon] = useState(null);
 
   useEffect(() => {
     const getData = async () => {
@@ -20,7 +21,7 @@ const App = () => {
 
   const handleCountry = async (country) => {
     setData(await fetchData(country));
-    setCountry(country);
+    // setCountry(country);
   };
 
   return (
@@ -37,15 +38,19 @@ const App = () => {
 
         <Map 
           selected_Country={country} 
+          setCountry={setCountry}
           handleCountry={handleCountry}
           countries={countries} 
-          data={data} 
+          setIcon={setIcon}
         />
 
         <CountryPicker 
           selected_Country={country}
-          countries={[{ name: 'Worldwide' }, ...countries]}
+          setCountry={setCountry}
           handleCountry={handleCountry} 
+          countries={[{ name: 'Worldwide' }, ...countries]}
+          icon={icon}
+          setIcon={setIcon}
         />
         <Cards data={data} />
         <Chart data={data} country={country} />

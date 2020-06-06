@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import MapGL, { Marker, FlyToInterpolator } from 'react-map-gl';
 import styles from './Map.module.css';
 
-const Map = ({ selected_Country, handleCountry, countries, data }) => {
+const Map = ({ selected_Country, setCountry, handleCountry, countries, setIcon }) => {
   const TOKEN = process.env.REACT_APP_MAPBOX_TOKEN;
   const initial_viewport = { 
     zoom: 1.3, 
@@ -49,9 +49,12 @@ const Map = ({ selected_Country, handleCountry, countries, data }) => {
     if (number) return 15 + Math.ceil(Number(number) / interval);
   };
 
-  const handleClick = useCallback(name => event => {
+  const handleClick = useCallback((name, flag) => event => {
     handleCountry(name);
-  }, [handleCountry])
+    setCountry(name);
+    setIcon(flag);
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <MapGL
@@ -64,7 +67,7 @@ const Map = ({ selected_Country, handleCountry, countries, data }) => {
       onViewportChange={(viewport) => setViewport(viewport)}
     >
       {countries &&
-        countries.map(({ name, lat, long, cases }) => (
+        countries.map(({ name, lat, long, cases, flag }) => (
           <Marker key={name} latitude={lat} longitude={long}>
             <div 
               className={styles.marker}
@@ -73,7 +76,7 @@ const Map = ({ selected_Country, handleCountry, countries, data }) => {
                 height: setSize(cases), 
                 borderRadius: setSize(cases) / 2,
               }}
-              onClick={handleClick(name)}
+              onClick={handleClick(name, flag)}
             >
               {/* <img src={flag} alt={name} width='20' /> */}
             </div>

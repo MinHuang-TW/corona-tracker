@@ -4,9 +4,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import styles from './CountryPicker.module.css';
 
-const CountryPicker = ({ handleCountry, countries }) => {
-  const [country, setCountry] = useState('Worldwide');
-  const [icon, setIcon] = useState(null);
+const CountryPicker = ({ handleCountry, countries, selected_Country, setCountry, setIcon, icon }) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = useCallback(() => {
@@ -17,7 +15,9 @@ const CountryPicker = ({ handleCountry, countries }) => {
     handleCountry(country); 
     setCountry(country);
     setIcon(flag);
-  }, [handleCountry]);
+    setOpen(false);
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     const handleClose = event => {
@@ -28,17 +28,18 @@ const CountryPicker = ({ handleCountry, countries }) => {
     return () => {
       window.removeEventListener('keydown', handleClose);
     }
+    // eslint-disable-next-line
   }, []);
 
   return (
     <div className={styles.container}>
       <div className={styles.selector} onClick={handleOpen}>
-        <List country={country} icon={icon}>
+        <List country={selected_Country} icon={icon}>
           {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </List>
 
         {open && countries
-          .filter(({ name }) => name !== country)
+          .filter(({ name }) => name !== selected_Country)
           .map(({ name, flag }) => (
             <List 
               key={name}
