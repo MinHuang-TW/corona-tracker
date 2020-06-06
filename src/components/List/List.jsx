@@ -2,15 +2,11 @@ import React from 'react';
 import styles from './List.module.css';
 import PublicIcon from '@material-ui/icons/Public';
 
-const List = ({ text, icon = null, main = null, onClick = null, children = null }) => {
+const List = ({ text, icon, main, onClick, children, divider = true }) => {
   return (
-    <li onClick={onClick}>
+    <li onClick={onClick} className={divider ? styles.divider : null}>
       <span className={styles.listBlock}>
-        {icon ? (
-          <img width='30px' src={icon} alt={text} />
-          ) : (
-          <PublicIcon style={{ margin: '0 3px' }} />
-        )}
+        {icon ? (<img src={icon} alt={text} />) : (<PublicIcon />)}
         <span className={main ? styles.selectText : styles.listText}>
           {text}
         </span>

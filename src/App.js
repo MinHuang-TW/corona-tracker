@@ -11,6 +11,7 @@ const App = () => {
   const [country, setCountry] = useState('Worldwide');
   const [icon, setIcon] = useState(null);
   const [open, setOpen] = useState(false);
+  const [popupInfo, setPopupInfo] = useState(null);
 
   useEffect(() => {
     const getData = async () => {
@@ -47,6 +48,8 @@ const App = () => {
           countries={countries} 
           setIcon={setIcon}
           data={data}
+          popupInfo={popupInfo}
+          setPopupInfo={setPopupInfo}
         />
 
         <CountryPicker 
@@ -58,6 +61,7 @@ const App = () => {
           setIcon={setIcon}
           open={open}
           setOpen={setOpen}
+          setPopupInfo={setPopupInfo}
         />
         <Cards data={data} />
         <Chart data={data} country={country} />

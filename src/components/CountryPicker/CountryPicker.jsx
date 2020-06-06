@@ -5,20 +5,18 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import styles from './CountryPicker.module.css';
 
 const CountryPicker = ({
-  handleCountry,
-  countries,
-  selected_Country,
-  setCountry,
-  icon,
-  setIcon,
-  open,
-  setOpen,
+  countries, handleCountry,
+  selected_Country, setCountry,
+  icon, setIcon,
+  open, setOpen,
+  setPopupInfo,
 }) => {
   const [key, setKey] = useState(null);
 
   const filterList = text => {
+    if (text === selected_Country) return;
     if (key) return text.startsWith(key);
-    return text !== selected_Country;
+    return text;
   };
 
   const handleOpen = useCallback(() => {
@@ -32,6 +30,7 @@ const CountryPicker = ({
     setCountry(country);
     setIcon(flag);
     setOpen(false);
+    setPopupInfo(null);
     // eslint-disable-next-line
   }, []);
 
@@ -48,7 +47,7 @@ const CountryPicker = ({
   return (
     <div className={styles.container}>
       <div className={styles.selector} onClick={handleOpen}>
-        <List main icon={icon} text={selected_Country}>
+        <List main icon={icon} text={selected_Country} divider={open}>
           {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </List>
 
@@ -58,7 +57,7 @@ const CountryPicker = ({
             <List 
               key={name} 
               icon={flag} 
-              text={name} 
+              text={name}
               onClick={handleSelect(name, flag)} 
             />
         ))}

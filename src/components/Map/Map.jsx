@@ -3,23 +3,20 @@ import MapGL, { Marker, FlyToInterpolator, Popup } from 'react-map-gl';
 import CloseIcon from '@material-ui/icons/Close';
 import styles from './Map.module.css';
 
+const PopupContent = ({ type, amount }) => (
+  <div className={styles.popup_text}>
+    <p>{type}</p>
+    <strong>{amount.toLocaleString()}</strong>
+  </div>
+);
+
 const Map = ({
-  country,
-  setCountry,
-  handleCountry,
-  countries,
+  country, setCountry,
+  countries, handleCountry,
+  popupInfo, setPopupInfo,
   setIcon,
   data,
 }) => {
-  const [popupInfo, setPopupInfo] = useState(null);
-
-  const PopupContent = ({ type, amount }) => (
-    <div className={styles.popup_text}>
-      <p>{type}</p>
-      <strong>{amount.toLocaleString()}</strong>
-    </div>
-  );
-
   const popupLists = [
     { type: 'Confirmed', amount: data.cases },
     { type: 'Recovered', amount: data.recovered },
@@ -64,15 +61,16 @@ const Map = ({
     };
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
+    // eslint-disable-next-line
   }, []);
 
   const allCases = countries && countries.map((country) => country.cases);
   const max = allCases.length && Math.max(...allCases);
-  const interval = max && max / 350;
+  const interval = max && max / 200;
 
   const setSize = (number) => {
-    if (number === max) return 150;
-    if (number) return 15 + Math.ceil(Number(number) / interval);
+    if (number === max) return 100;
+    if (number) return 10 + Math.ceil(Number(number) / interval);
   };
 
   const handleClick = useCallback((country) => (event) => {
@@ -86,6 +84,7 @@ const Map = ({
 
   const handleClosePopup = useCallback(() => {
     setPopupInfo(null);
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -93,28 +92,33 @@ const Map = ({
       {...viewport}
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       mapStyle='mapbox://styles/min-huang/ckb2wh38l00aw1iph6kncjlx0'
-      // maxZoom={6}
+      maxZoom={9}
       minZoom={1}
       onViewportChange={(viewport) =>
         setViewport({ ...viewport, ...animation })
       }
     >
-      {countries && countries.map((country) => (
-        <Marker
-          key={country.name}
-          latitude={country.lat}
-          longitude={country.long}
-        >
-          <div
-            className={styles.marker}
-            style={{
-              width: setSize(country.cases),
-              height: setSize(country.cases),
-            }}
-            onClick={handleClick(country)}
-          />
-        </Marker>
-      ))}
+      {countries &&
+        countries.map((countryInfo) => (
+          <Marker 
+            key={countryInfo.name} 
+            latitude={countryInfo.lat} 
+            longitude={countryInfo.long}
+          >
+            <div
+              className={
+                (country !== 'Worldwide') & (country === countryInfo.name)
+                  ? styles.active
+                  : styles.marker
+              }
+              style={{
+                width: setSize(countryInfo.cases),
+                height: setSize(countryInfo.cases),
+              }}
+              onClick={handleClick(countryInfo)}
+            />
+          </Marker>
+        ))}
 
       {popupInfo && (
         <Popup
