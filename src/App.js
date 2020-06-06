@@ -41,11 +41,12 @@ const App = () => {
         {/* </header> */}
 
         <Map 
-          selected_Country={country} 
+          country={country} 
           setCountry={setCountry}
           handleCountry={handleCountry}
           countries={countries} 
           setIcon={setIcon}
+          data={data}
         />
 
         <CountryPicker 

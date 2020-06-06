@@ -1,10 +1,57 @@
 .marker {
-  /* width: 20px;
-  height: 20px; */
-  /* border-radius: 10px; */
-  /* border: 1.5px solid rgba(139, 0, 0, 0.8); */
   background: rgba(139, 0, 0, 0.6);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   cursor: pointer;
+}
+
+.popup {
+  color: rgba(0, 0, 0, 0.54);
+  /* transform: translate(-50%, -50%); */
+}
+
+.popup_title {
+  margin-left: 8px;
+  margin-right: 16px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+img {
+  width: 24px;
+  vertical-align: middle;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: rgba(139, 0, 0);
+}
+
+.popup_text {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.popup_text:first-of-type {
+  margin-top: 16px;
+}
+
+strong {
+  margin-left: 16px;
+  color: black;
+  font-weight: 500;
+}
+
+@media (max-width: 350px) {
+  .popup_title {
+    font-size: 14px;
+    display: inline-block;
+    max-width: 50px;
+  }
 }

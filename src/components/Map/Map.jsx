@@ -1,10 +1,33 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import MapGL, { Marker, FlyToInterpolator } from 'react-map-gl';
+import MapGL, { Marker, FlyToInterpolator, Popup } from 'react-map-gl';
+import CloseIcon from '@material-ui/icons/Close';
 import styles from './Map.module.css';
 
-const Map = ({ selected_Country, setCountry, handleCountry, countries, setIcon }) => {
-  const initial_viewport = { 
-    zoom: 1.3, 
+const Map = ({
+  country,
+  setCountry,
+  handleCountry,
+  countries,
+  setIcon,
+  data,
+}) => {
+  const [popupInfo, setPopupInfo] = useState(null);
+
+  const PopupContent = ({ type, amount }) => (
+    <div className={styles.popup_text}>
+      <p>{type}</p>
+      <strong>{amount.toLocaleString()}</strong>
+    </div>
+  );
+
+  const popupLists = [
+    { type: 'Confirmed', amount: data.cases },
+    { type: 'Recovered', amount: data.recovered },
+    { type: 'Deaths', amount: data.deaths },
+  ];
+
+  const initial_viewport = {
+    zoom: 1.3,
     latitude: 20,
     longitude: 15,
   };
@@ -22,42 +45,48 @@ const Map = ({ selected_Country, setCountry, handleCountry, countries, setIcon }
   });
 
   useEffect(() => {
-    if (selected_Country) {
-      if (selected_Country === 'Worldwide') {
-        setViewport({ 
-          ...viewport, 
-          ...initial_viewport,
-        });
-      } else {
-        const { lat, long } = countries.find(
-          (country) => country.name === selected_Country
-        );
-        setViewport({
-          ...viewport,
-          zoom: 6,
-          latitude: lat,
-          longitude: long,
-        });
-      }
-    }
+    if (!country) return;
+    if (country === 'Worldwide')
+      return setViewport({ ...viewport, ...initial_viewport });
+    const { lat, long } = countries.find((c) => c.name === country);
+    setViewport({
+      ...viewport,
+      zoom: 6,
+      latitude: lat,
+      longitude: long,
+    });
     // eslint-disable-next-line
-  }, [selected_Country]);
+  }, [country]);
 
-  const allCases = countries && countries.map(country => country.cases);
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === 'Escape') setPopupInfo(null);
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
+
+  const allCases = countries && countries.map((country) => country.cases);
   const max = allCases.length && Math.max(...allCases);
   const interval = max && max / 350;
 
-  const setSize = (number) => { 
+  const setSize = (number) => {
     if (number === max) return 150;
     if (number) return 15 + Math.ceil(Number(number) / interval);
   };
 
-  const handleClick = useCallback((name, flag) => event => {
+  const handleClick = useCallback((country) => (event) => {
+    const { name, flag } = country;
     handleCountry(name);
     setCountry(name);
     setIcon(flag);
+    setPopupInfo(country);
     // eslint-disable-next-line
-  }, [])
+  }, [country]);
+
+  const handleClosePopup = useCallback(() => {
+    setPopupInfo(null);
+  }, []);
 
   return (
     <MapGL
@@ -66,20 +95,48 @@ const Map = ({ selected_Country, setCountry, handleCountry, countries, setIcon }
       mapStyle='mapbox://styles/min-huang/ckb2wh38l00aw1iph6kncjlx0'
       // maxZoom={6}
       minZoom={1}
-      onViewportChange={viewport => setViewport({ ...viewport, ...animation })}
+      onViewportChange={(viewport) =>
+        setViewport({ ...viewport, ...animation })
+      }
     >
-      {countries &&
-        countries.map(({ name, lat, long, cases, flag }) => (
-          <Marker key={name} latitude={lat} longitude={long}>
-            <div 
-              className={styles.marker}
-              style={{ width: setSize(cases), height: setSize(cases) }}
-              onClick={handleClick(name, flag)}
-            >
-              {/* <img src={flag} alt={name} width='20' /> */}
-            </div>
-          </Marker>
-        ))}
+      {countries && countries.map((country) => (
+        <Marker
+          key={country.name}
+          latitude={country.lat}
+          longitude={country.long}
+        >
+          <div
+            className={styles.marker}
+            style={{
+              width: setSize(country.cases),
+              height: setSize(country.cases),
+            }}
+            onClick={handleClick(country)}
+          />
+        </Marker>
+      ))}
+
+      {popupInfo && (
+        <Popup
+          className={styles.popup}
+          latitude={popupInfo.lat}
+          longitude={popupInfo.long}
+          closeButton={false}
+        >
+          <img src={popupInfo.flag} alt={popupInfo.name} />
+          <span className={styles.popup_title}>{popupInfo.name}</span>
+
+          <CloseIcon
+            className={styles.close}
+            fontSize='small'
+            onClick={handleClosePopup}
+          />
+
+          {popupLists.map((list) => (
+            <PopupContent key={popupInfo.name + list.type} {...list} />
+          ))}
+        </Popup>
+      )}
     </MapGL>
   );
 };
