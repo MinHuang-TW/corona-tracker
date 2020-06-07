@@ -1,43 +1,42 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import List from '../List/List';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import styles from './CountryPicker.module.css';
 
 const CountryPicker = ({
-  countries, handleCountry,
-  country, setCountry,
-  icon, setIcon,
-  open, setOpen,
-  setPopupInfo,
+  countries,
+  handleCountry,
+  country,
+  setCountry,
+  pickerOpen,
+  setPickerOpen,
+  setPopupOpen,
 }) => {
   const [key, setKey] = useState(null);
 
-  const filterList = text => {
-    if (text === country) return;
+  const filterList = (text) => {
+    if (country && text === country.name) return;
     if (key) return text.startsWith(key);
     return text;
   };
 
   const handleOpen = useCallback(() => {
-    setOpen(!open);
+    setPickerOpen(!pickerOpen);
     setKey(null);
     // eslint-disable-next-line
-  }, [open]);
+  }, [pickerOpen]);
 
-  const handleSelect = useCallback((name, flag) => (event) => {
-    handleCountry(name);
-    setCountry(name);
-    setIcon(flag);
-    setOpen(false);
-    setPopupInfo(null);
+  const handleSelect = useCallback((country) => (event) => {
+    handleCountry(country && country.name);
+    setCountry(country);
+    setPickerOpen(false);
+    setPopupOpen(true);
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     const handleKeyDown = ({ key, keyCode }) => {
-      if (key === 'Escape') setOpen(false);
-      if (keyCode >= 65 & keyCode <= 90) setKey(key.toUpperCase());
+      if (key === 'Escape') setPickerOpen(false);
+      if ((keyCode >= 65) & (keyCode <= 90)) setKey(key.toUpperCase());
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
@@ -47,20 +46,26 @@ const CountryPicker = ({
   return (
     <div className={styles.container}>
       <div className={styles.selector} onClick={handleOpen}>
-        <List main icon={icon} text={country} divider={open}>
-          {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-        </List>
+        <List main 
+          icon={country && country.flag} 
+          text={country && country.name} 
+          isOpen={pickerOpen}
+        />
 
-        {open && countries
+        {pickerOpen && country && (
+          <List text='Worldwide' onClick={handleSelect()} />
+        )}
+
+        {pickerOpen && countries
           .filter(({ name }) => filterList(name))
-          .map(({ name, flag }) => (
-            <List 
-              key={name} 
-              icon={flag} 
-              text={name}
-              onClick={handleSelect(name, flag)} 
+          .map((country) => (
+            <List
+              key={country.name}
+              icon={country.flag}
+              text={country.name}
+              onClick={handleSelect(country)}
             />
-        ))}
+          ))}
       </div>
     </div>
   );

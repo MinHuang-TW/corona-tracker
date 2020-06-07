@@ -11,18 +11,14 @@ const PopupContent = ({ type, amount }) => (
 );
 
 const Map = ({
-  country, setCountry,
-  countries, handleCountry,
-  popupInfo, setPopupInfo,
-  setIcon,
+  country,
+  setCountry,
+  countries,
+  handleCountry,
+  popupOpen,
+  setPopupOpen,
   data,
 }) => {
-  const popupLists = [
-    { type: 'Confirmed', amount: data.cases },
-    { type: 'Recovered', amount: data.recovered },
-    { type: 'Deaths', amount: data.deaths },
-  ];
-
   const initial_viewport = {
     zoom: 1.3,
     latitude: 20,
@@ -41,28 +37,34 @@ const Map = ({
     ...animation,
   });
 
+  const handleViewportChange = (updatedViewport) =>
+    setViewport({ ...updatedViewport, ...animation });
+
   useEffect(() => {
-    if (!country) return;
-    if (country === 'Worldwide')
-      return setViewport({ ...viewport, ...initial_viewport });
-    const { lat, long } = countries.find((c) => c.name === country);
+    if (!country) return setViewport({ ...viewport, ...initial_viewport });
     setViewport({
       ...viewport,
       zoom: 6,
-      latitude: lat,
-      longitude: long,
+      latitude: country.lat,
+      longitude: country.long,
     });
     // eslint-disable-next-line
   }, [country]);
 
   useEffect(() => {
     const handleEsc = (event) => {
-      if (event.key === 'Escape') setPopupInfo(null);
+      if (event.key === 'Escape') setPopupOpen(null);
     };
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
     // eslint-disable-next-line
   }, []);
+
+  const popupLists = [
+    { type: 'Confirmed', amount: data.cases },
+    { type: 'Recovered', amount: data.recovered },
+    { type: 'Deaths', amount: data.deaths },
+  ];
 
   const allCases = countries && countries.map((country) => country.cases);
   const max = allCases.length && Math.max(...allCases);
@@ -73,17 +75,19 @@ const Map = ({
     if (number) return 10 + Math.ceil(Number(number) / interval);
   };
 
-  const handleClick = useCallback((country) => (event) => {
-    const { name, flag } = country;
-    handleCountry(name);
-    setCountry(name);
-    setIcon(flag);
-    setPopupInfo(country);
-    // eslint-disable-next-line
-  }, [country]);
+  const setActiveStyle = (markerName) => (
+    country && country.name === markerName ? styles.active : styles.marker
+  );
+
+  const handleClick = useCallback((countryInfo) => (event) => {
+      handleCountry(countryInfo.name);
+      setCountry(countryInfo);
+      setPopupOpen(true);
+      // eslint-disable-next-line
+    }, [country]);
 
   const handleClosePopup = useCallback(() => {
-    setPopupInfo(null);
+    setPopupOpen(false);
     // eslint-disable-next-line
   }, []);
 
@@ -94,41 +98,29 @@ const Map = ({
       mapStyle='mapbox://styles/min-huang/ckb2wh38l00aw1iph6kncjlx0'
       maxZoom={9}
       minZoom={1}
-      onViewportChange={(viewport) =>
-        setViewport({ ...viewport, ...animation })
-      }
+      onViewportChange={handleViewportChange}
     >
-      {countries &&
-        countries.map((countryInfo) => (
-          <Marker 
-            key={countryInfo.name} 
-            latitude={countryInfo.lat} 
-            longitude={countryInfo.long}
-          >
-            <div
-              className={
-                (country !== 'Worldwide') & (country === countryInfo.name)
-                  ? styles.active
-                  : styles.marker
-              }
-              style={{
-                width: setSize(countryInfo.cases),
-                height: setSize(countryInfo.cases),
-              }}
-              onClick={handleClick(countryInfo)}
-            />
-          </Marker>
-        ))}
+      {countries && countries.map((countryInfo) => {
+        const { name, lat, long, cases } = countryInfo;
+        return (
+        <Marker key={name} latitude={lat} longitude={long}>
+          <div
+            className={setActiveStyle(name)}
+            style={{ width: setSize(cases), height: setSize(cases) }}
+            onClick={handleClick(countryInfo)}
+          />
+        </Marker>
+      )})}
 
-      {popupInfo && (
+      {popupOpen && country && (
         <Popup
           className={styles.popup}
-          latitude={popupInfo.lat}
-          longitude={popupInfo.long}
+          latitude={country.lat}
+          longitude={country.long}
           closeButton={false}
         >
-          <img src={popupInfo.flag} alt={popupInfo.name} />
-          <span className={styles.popup_title}>{popupInfo.name}</span>
+          <img src={country.flag} alt={country.name} />
+          <span className={styles.popup_title}>{country.name}</span>
 
           <CloseIcon
             className={styles.close}
@@ -137,7 +129,7 @@ const Map = ({
           />
 
           {popupLists.map((list) => (
-            <PopupContent key={popupInfo.name + list.type} {...list} />
+            <PopupContent key={country.name + list.type} {...list} />
           ))}
         </Popup>
       )}

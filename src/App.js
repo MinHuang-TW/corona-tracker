@@ -8,10 +8,9 @@ import moment from 'moment';
 const App = () => {
   const [data, setData] = useState([]);
   const [countries, setCountries] = useState([]);
-  const [country, setCountry] = useState('Worldwide');
-  const [icon, setIcon] = useState(null);
-  const [open, setOpen] = useState(false);
-  const [popupInfo, setPopupInfo] = useState(null);
+  const [country, setCountry] = useState(null);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -26,8 +25,8 @@ const App = () => {
   };
 
   const handleClose = useCallback(() => {
-    if (open) setOpen(false);
-  }, [open])
+    if (pickerOpen) setPickerOpen(false);
+  }, [pickerOpen])
 
   return (
     <>
@@ -40,28 +39,23 @@ const App = () => {
             🦠
           </span> */}
         {/* </header> */}
-
         <Map 
           country={country} 
           setCountry={setCountry}
-          handleCountry={handleCountry}
           countries={countries} 
-          setIcon={setIcon}
+          handleCountry={handleCountry}
           data={data}
-          popupInfo={popupInfo}
-          setPopupInfo={setPopupInfo}
+          popupOpen={popupOpen}
+          setPopupOpen={setPopupOpen}
         />
-
         <CountryPicker 
           country={country}
           setCountry={setCountry}
+          countries={countries}
           handleCountry={handleCountry} 
-          countries={[{ name: 'Worldwide' }, ...countries]}
-          icon={icon}
-          setIcon={setIcon}
-          open={open}
-          setOpen={setOpen}
-          setPopupInfo={setPopupInfo}
+          pickerOpen={pickerOpen}
+          setPickerOpen={setPickerOpen}
+          setPopupOpen={setPopupOpen}
         />
         <Cards data={data} />
         <Chart data={data} country={country} />

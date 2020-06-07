@@ -4,8 +4,7 @@ const url = 'https://corona.lmao.ninja/v2';
 
 export const fetchData = async (country) => {
   let changeableUrl = `${url}/all`;
-  if (country && country !== 'Worldwide')
-    changeableUrl = `${url}/countries/${country}`;
+  if (country) changeableUrl = `${url}/countries/${country}`;
 
   try {
     const {
@@ -45,11 +44,15 @@ export const fetchGlobalData = async () => {
 export const fetchCountries = async () => {
   try {
     const { data } = await axios.get(`${url}/countries`);
-    return data.map(({ country, countryInfo, cases }) => ({
-      name: country,
-      ...countryInfo,
-      cases,
-    }));
+    return data.map(
+      ({ country: name, cases, countryInfo: { lat, long, flag } }) => ({
+        name,
+        lat,
+        long,
+        flag,
+        cases,
+      })
+    );
   } catch (error) {
     console.log(error);
   }
