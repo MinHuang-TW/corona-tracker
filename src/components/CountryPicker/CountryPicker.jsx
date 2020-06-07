@@ -6,7 +6,7 @@ import styles from './CountryPicker.module.css';
 
 const CountryPicker = ({
   countries, handleCountry,
-  selected_Country, setCountry,
+  country, setCountry,
   icon, setIcon,
   open, setOpen,
   setPopupInfo,
@@ -14,7 +14,7 @@ const CountryPicker = ({
   const [key, setKey] = useState(null);
 
   const filterList = text => {
-    if (text === selected_Country) return;
+    if (text === country) return;
     if (key) return text.startsWith(key);
     return text;
   };
@@ -25,9 +25,9 @@ const CountryPicker = ({
     // eslint-disable-next-line
   }, [open]);
 
-  const handleSelect = useCallback((country, flag) => (event) => {
-    handleCountry(country);
-    setCountry(country);
+  const handleSelect = useCallback((name, flag) => (event) => {
+    handleCountry(name);
+    setCountry(name);
     setIcon(flag);
     setOpen(false);
     setPopupInfo(null);
@@ -47,7 +47,7 @@ const CountryPicker = ({
   return (
     <div className={styles.container}>
       <div className={styles.selector} onClick={handleOpen}>
-        <List main icon={icon} text={selected_Country} divider={open}>
+        <List main icon={icon} text={country} divider={open}>
           {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </List>
 

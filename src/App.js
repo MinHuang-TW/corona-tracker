@@ -53,7 +53,7 @@ const App = () => {
         />
 
         <CountryPicker 
-          selected_Country={country}
+          country={country}
           setCountry={setCountry}
           handleCountry={handleCountry} 
           countries={[{ name: 'Worldwide' }, ...countries]}
