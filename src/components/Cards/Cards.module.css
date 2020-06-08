@@ -22,20 +22,32 @@
 .infectedToday,
 .recoveredToday,
 .deathsToday {
-  font-size: 16px;
-  margin-right: 8px;
+  /* font-size: 16px;
+  margin-right: 8px; */
+
+  display: inline-block;
+  margin-left: 8px;
+  padding-left: 8px; 
+  padding-right: 10px; 
+  font-size: 12px;
+  border-radius: 12px;
+  height: 24px;
+  line-height: 24px;
+  color: white;
+  vertical-align: middle;
+  font-weight: 700;
 }
 
 .infectedToday {
-  color: rgba(139, 0, 0);
+  background: rgba(139, 0, 0);
 }
 
 .recoveredToday {
-  color: rgba(73,192,182);
+  background: rgba(73,192,182);
 }
 
 .deathsToday {
-  color: rgba(34, 34, 34);
+  background: rgba(34, 34, 34);
 }
 
 @media (max-width: 960px) {

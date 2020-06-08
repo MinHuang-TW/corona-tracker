@@ -25,7 +25,9 @@ const App = () => {
   };
 
   const handleClose = useCallback(() => {
-    if (pickerOpen) setPickerOpen(false);
+    if (pickerOpen) {
+      setPickerOpen(false);
+    }
   }, [pickerOpen])
 
   return (
@@ -56,6 +58,11 @@ const App = () => {
           pickerOpen={pickerOpen}
           setPickerOpen={setPickerOpen}
           setPopupOpen={setPopupOpen}
+        />
+        <div 
+          id='blur_filter'
+          className={pickerOpen ? styles.blur_filter : null}
+          style={{ zIndex: pickerOpen ? 1 : -1 }} 
         />
         <Cards data={data} />
         <Chart data={data} country={country} />

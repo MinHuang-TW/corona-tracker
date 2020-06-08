@@ -11,19 +11,12 @@ const CardUnit = ({ style, styleToday, title, value, todayValue }) => (
         {title}
       </Typography>
 
-      <Typography variant='h5' gutterBottom>
+      <Typography variant='h5'>
         <Countup start={0} end={value} duration={1} separator=',' />
-      </Typography>
 
-      <Countup 
-        className={styleToday} 
-        start={0} end={todayValue} 
-        duration={0.5} 
-        separator=',' 
-        prefix=' + ' 
-      />
-      <Typography variant='body2' color='textSecondary' display='inline'>
-        than Yesterday
+        {todayValue !== 0 && (
+          <span className={styleToday}>+ {todayValue.toLocaleString()}</span>
+        )}
       </Typography>
     </CardContent>
   </Grid>
@@ -37,42 +30,50 @@ const Cards = ({
     todayRecovered,
     deaths,
     todayDeaths,
-    updated,
   },
 }) => {
-  if (!cases) return (
-    <div className={styles.lds}>
-      <div /><div /><div /><div />
-    </div>
-  );
+  if (!cases)
+    return (
+      <div className={styles.lds}>
+        <div />
+        <div />
+        <div />
+        <div />
+      </div>
+    );
 
-  const contents = [{
-    title: 'Confirmed',
-    style: styles.infected,
-    styleToday: styles.infectedToday,
-    value: cases,
-    todayValue: todayCases,
-    text: 'of active cases until',
-  }, {
-    title: 'Recovered',
-    style: styles.recovered,
-    styleToday: styles.recoveredToday,
-    value: recovered,
-    todayValue: todayRecovered,
-    text: 'of recoveries until',
-  }, {
-    title: 'Deaths',
-    style: styles.deaths,
-    styleToday: styles.deathsToday,
-    value: deaths,
-    todayValue: todayDeaths,
-    text: 'of deaths until',
-  }];
-
+  const contents = [
+    {
+      title: 'Confirmed',
+      style: styles.infected,
+      styleToday: styles.infectedToday,
+      value: cases,
+      todayValue: todayCases,
+      text: 'of active cases until',
+    },
+    {
+      title: 'Recovered',
+      style: styles.recovered,
+      styleToday: styles.recoveredToday,
+      value: recovered,
+      todayValue: todayRecovered,
+      text: 'of recoveries until',
+    },
+    {
+      title: 'Deaths',
+      style: styles.deaths,
+      styleToday: styles.deathsToday,
+      value: deaths,
+      todayValue: todayDeaths,
+      text: 'of deaths until',
+    },
+  ];
   return (
     <div className={styles.container}>
       <Grid container spacing={3} justify='center'>
-        {contents.map(content => (<CardUnit key={content.title} {...content} />))}
+        {contents.map((content) => (
+          <CardUnit key={content.title} {...content} />
+        ))}
       </Grid>
     </div>
   );

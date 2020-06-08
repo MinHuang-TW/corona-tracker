@@ -32,6 +32,21 @@ header {
   flex-direction: column;
 }
 
+.blur_filter {
+  width: 100vw;
+  height: 100vh;
+  top: 50vh;
+  position: absolute;
+  background: rgba(255, 255, 255, 0);
+  transition: backdropFilter 1.5s ease-out;
+  -webkit-backdrop-filter: blur(4px) saturate(20%);
+  backdrop-filter: blur(4px) saturate(20%);
+}
+
+.active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 footer {
   background: #EEE; 
   width: 100%;

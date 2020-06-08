@@ -1,31 +1,6 @@
-.marker,
-.active {
-  background: rgba(139, 0, 0, 0.6);
-  border-radius: 50%;
-  cursor: pointer;
-  position: relative;
-}
-
-.active {
-  animation: glow 1s infinite alternate;
-  animation-delay: 1s;
-}
-
-@keyframes glow {
-  from {
-    box-shadow: 0 0 10px -10px rgba(157, 0, 0, 0.8);
-  }
-  to {
-    box-shadow: 0 0 10px 10px rgba(157, 0, 0, 0.8);
-  }
-}
-
 .popup {
   color: rgba(0, 0, 0, 0.54);
-}
-
-.popup_content {
-  padding: 6px 6px 1px;
+  padding: 16px;
 }
 
 .popup_title {
