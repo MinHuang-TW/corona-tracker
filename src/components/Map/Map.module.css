@@ -4,7 +4,6 @@
   border-radius: 50%;
   cursor: pointer;
   position: relative;
-  transform: translate(-50%, -50%);
 }
 
 .active {
@@ -25,11 +24,17 @@
   color: rgba(0, 0, 0, 0.54);
 }
 
+.popup_content {
+  padding: 6px 6px 1px;
+}
+
 .popup_title {
   margin-left: 8px;
   margin-right: 16px;
   font-weight: 700;
   vertical-align: middle;
+  max-width: 88px;
+  display: inline-block;
 }
 
 img {
@@ -40,6 +45,8 @@ img {
 .close {
   float: right;
   cursor: pointer;
+  margin-top: -8px;
+  margin-right: -8px;
 }
 
 .close:hover {

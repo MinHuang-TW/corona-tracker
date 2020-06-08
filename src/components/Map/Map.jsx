@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import MapGL, { Marker, FlyToInterpolator, Popup } from 'react-map-gl';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import MapGL, { FlyToInterpolator, Popup, Source, Layer } from 'react-map-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import CloseIcon from '@material-ui/icons/Close';
 import styles from './Map.module.css';
 
@@ -19,10 +20,15 @@ const Map = ({
   setPopupOpen,
   data,
 }) => {
+  const [clusterData, setClusterData] = useState(null);
+  const sourceRef = useRef();
+
   const initial_viewport = {
     zoom: 1.3,
     latitude: 20,
     longitude: 15,
+    bearing: 0,
+    pitch: 0,
   };
 
   const animation = {
@@ -41,16 +47,30 @@ const Map = ({
     setViewport({ ...updatedViewport, ...animation });
 
   useEffect(() => {
-    if (!country) return setViewport({ ...viewport, ...initial_viewport });
-    setViewport({
+    if (!country) setViewport({ ...viewport, ...initial_viewport });
+    else setViewport({
       ...viewport,
-      zoom: 6,
+      zoom: 5,
       latitude: country.lat,
       longitude: country.long,
     });
-    // eslint-disable-next-line
-  }, [country]);
+  }, [country]); // eslint-disable-line
 
+  useEffect(() => {
+    const features = countries && countries.map((country) => ({
+      geometry: {
+        coordinates: [country.long, country.lat],
+        type: 'Point',
+      },
+      properties: country,
+      type: 'Feature',
+    }));
+    setClusterData({
+      features,
+      type: 'FeatureCollection',
+    });
+  }, [countries])
+  
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === 'Escape') setPopupOpen(null);
@@ -66,71 +86,123 @@ const Map = ({
     { type: 'Deaths', amount: data.deaths },
   ];
 
-  const allCases = countries && countries.map((country) => country.cases);
-  const max = allCases.length && Math.max(...allCases);
-  const interval = max && max / 200;
+  let clusterOpacity = 0,
+      clusterStrokeOpacity = 0;
+  const { zoom } = viewport;
+  if (zoom <= 1) clusterOpacity = 0.175;
+  else if (zoom > 1 && zoom <= 2) {
+    clusterOpacity = 0.3;
+    clusterStrokeOpacity = 0.5;
+  } else {
+    clusterOpacity = 0.6;
+    clusterStrokeOpacity = 1;
+  }
 
-  const setSize = (number) => {
-    if (number === max) return 100;
-    if (number) return 10 + Math.ceil(Number(number) / interval);
+  const clusterLayer = {
+    id: 'cluster-circle',
+    paint: {
+      'circle-color': 'rgb(139, 0, 0)',
+      'circle-opacity': clusterOpacity,
+      'circle-radius': [
+        'step',
+        ['get', 'cases'],
+        2.5,
+        50,
+        5,
+        100,
+        7.5,
+        500,
+        10,
+        1000,
+        12.5,
+        2500,
+        15,
+        5000,
+        16,
+        10000,
+        18,
+        25000,
+        20,
+        50000,
+        22,
+        75000,
+        24,
+        100000,
+        26,
+        150000,
+        28,
+        200000,
+        30,
+        250000,
+        32,
+        300000,
+        34,
+        350000,
+        36,
+      ],
+      'circle-stroke-color': 'rgb(139, 0, 0)',
+      'circle-stroke-opacity': clusterStrokeOpacity,
+      'circle-stroke-width': 1,
+    },
+    source: 'cluster-circle',
+    type: 'circle',
   };
 
-  const setActiveStyle = (markerName) => (
-    country && country.name === markerName ? styles.active : styles.marker
-  );
+  // const setActiveStyle = (markerName) => (
+  //   country && country.name === markerName ? styles.active : styles.marker
+  // );
 
-  const handleClick = useCallback((countryInfo) => (event) => {
-      handleCountry(countryInfo.name);
-      setCountry(countryInfo);
-      setPopupOpen(true);
-      // eslint-disable-next-line
-    }, [country]);
+  const handleClick = useCallback((event) => {
+    const unMarkedArea = !(event.hasOwnProperty('features') && event.features[0]);
+    if (unMarkedArea) return;
+    const { properties } = event.features[0];
+    handleCountry(properties.name);
+    setCountry(properties);
+    setPopupOpen(true);
+  }, []); // eslint-disable-line
 
   const handleClosePopup = useCallback(() => {
     setPopupOpen(false);
-    // eslint-disable-next-line
-  }, []);
+  }, []); // eslint-disable-line
 
   return (
     <MapGL
       {...viewport}
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       mapStyle='mapbox://styles/min-huang/ckb2wh38l00aw1iph6kncjlx0'
-      maxZoom={9}
+      interactiveLayerIds={[clusterLayer.id]}
+      maxZoom={8}
       minZoom={1}
+      onClick={handleClick}
       onViewportChange={handleViewportChange}
     >
-      {countries && countries.map((countryInfo) => {
-        const { name, lat, long, cases } = countryInfo;
-        return (
-        <Marker key={name} latitude={lat} longitude={long}>
-          <div
-            className={setActiveStyle(name)}
-            style={{ width: setSize(cases), height: setSize(cases) }}
-            onClick={handleClick(countryInfo)}
-          />
-        </Marker>
-      )})}
+      <Source data={clusterData} ref={sourceRef} type='geojson'>
+        <Layer {...clusterLayer} />
+      </Source>
 
-      {popupOpen && country && (
+      {popupOpen && country && viewport.zoom > 4.5 && (
         <Popup
           className={styles.popup}
           latitude={country.lat}
           longitude={country.long}
           closeButton={false}
+          onClick={handleClick}
+          tipSize={6}
         >
-          <img src={country.flag} alt={country.name} />
-          <span className={styles.popup_title}>{country.name}</span>
+          <div className={styles.popup_content}>            
+            <img src={country.flag} alt={country.name} />
+            <span className={styles.popup_title}>{country.name}</span>
 
-          <CloseIcon
-            className={styles.close}
-            fontSize='small'
-            onClick={handleClosePopup}
-          />
+            <CloseIcon
+              className={styles.close}
+              fontSize='small'
+              onClick={handleClosePopup}
+            />
 
-          {popupLists.map((list) => (
-            <PopupContent key={country.name + list.type} {...list} />
-          ))}
+            {popupLists.map((list) => (
+              <PopupContent key={country.name + list.type} {...list} />
+            ))}
+          </div>
         </Popup>
       )}
     </MapGL>
