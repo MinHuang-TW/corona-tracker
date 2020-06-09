@@ -6,7 +6,6 @@ import styles from './PopupContent.module.css';
 const PopupContent = ({
   country,
   onClick,
-  popupOpen,
   setPopupOpen,
   data: { cases, recovered, deaths },
 }) => {

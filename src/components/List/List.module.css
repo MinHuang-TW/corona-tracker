@@ -18,10 +18,20 @@ li:hover {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.more {
+.more,
+.less {
   height: 48px;
   display: flex;
   align-items: center;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+}
+
+.more {
+  transform: rotate(0deg);
+}
+
+.less {
+  transform: rotate(180deg);
 }
 
 .listBlock {

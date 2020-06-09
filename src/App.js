@@ -61,6 +61,13 @@ const App = () => {
           className={styles.blur}
           style={{ zIndex: pickerOpen ? 1 : -1 }} 
         /> */}
+        {/* <Typography variant='h5' color='textSecondary' gutterBottom>
+          Cases until {moment(data.updated).format('MMMM D, YYYY')}
+        </Typography>
+        <Typography variant='body1' color='textSecondary'>
+          {country ? ` ${country.name} ` : ' Worldwide '}
+        </Typography> */}
+        
         <Cards data={data} />
         <Chart data={data} country={country} />
       </div>

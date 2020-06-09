@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import MapGL, { FlyToInterpolator, Source, Layer } from 'react-map-gl';
 import PopupContent from '../PopupContent/PopupContent';
-import { radiusCluster } from './radiusCluster';
+import { clusterRadius, setOpacity } from './clusterStyle';
 
 const Map = ({
   country,
@@ -13,6 +13,10 @@ const Map = ({
   data,
 }) => {
   const [clusterData, setClusterData] = useState(null);
+  const [cluster, setCluster] = useState({
+    opacity: 0,
+    strokeOpacity: 0,
+  });
   const sourceRef = useRef();
 
   const initial_viewport = {
@@ -33,35 +37,19 @@ const Map = ({
     ...animation,
   });
 
-  const { zoom } = viewport;
-  let clusterOpacity = 0,
-      clusterStrokeOpacity = 0;
-
-  if (zoom <= 1) clusterOpacity = 0.175;
-  else if (zoom > 1 && zoom <= 2) {
-    clusterOpacity = 0.3;
-    clusterStrokeOpacity = 0.5;
-  } else {
-    clusterOpacity = 0.6;
-    clusterStrokeOpacity = 1;
-  }
-
   const clusterLayer = {
     id: 'cluster-circle',
     paint: {
       'circle-color': 'rgb(139, 0, 0)',
-      'circle-opacity': clusterOpacity,
-      'circle-radius': radiusCluster,
+      'circle-opacity': cluster.opacity,
+      'circle-radius': clusterRadius,
       'circle-stroke-color': 'rgb(139, 0, 0)',
-      'circle-stroke-opacity': clusterStrokeOpacity,
+      'circle-stroke-opacity': cluster.strokeOpacity,
       'circle-stroke-width': 1,
     },
     source: 'cluster-circle',
     type: 'circle',
   };
-
-  const handleViewportChange = (updatedViewport) =>
-    setViewport({ ...updatedViewport, ...animation });
 
   const handleClick = useCallback((event) => {
     const unMarkedArea = !(
@@ -76,19 +64,21 @@ const Map = ({
   }, []); // eslint-disable-line
 
   useEffect(() => {
+    setCluster(setOpacity(viewport.zoom));
+  }, [viewport.zoom]);
+
+  useEffect(() => {
     if (!country) setViewport({ ...viewport, ...initial_viewport });
-    else
-      setViewport({
-        ...viewport,
-        zoom: 5,
-        latitude: country.lat,
-        longitude: country.long,
-      });
+    else setViewport({
+      ...viewport,
+      zoom: 5,
+      latitude: country.lat,
+      longitude: country.long,
+    });
   }, [country]); // eslint-disable-line
 
   useEffect(() => {
-    const features =
-      countries &&
+    const features = countries &&
       countries.map((country) => ({
         geometry: {
           coordinates: [country.long, country.lat],
@@ -120,9 +110,12 @@ const Map = ({
       maxZoom={8}
       minZoom={1}
       onClick={handleClick}
-      onViewportChange={handleViewportChange}
+      onViewportChange={(newViewport) => setViewport({ 
+        ...newViewport, 
+        ...animation, 
+      })}
     >
-      <Source data={clusterData} ref={sourceRef} type='geojson'>
+      <Source ref={sourceRef} data={clusterData} type='geojson'>
         <Layer {...clusterLayer} />
       </Source>
 
@@ -131,7 +124,6 @@ const Map = ({
           country={country} 
           data={data} 
           onClick={handleClick}
-          popupOpen={popupOpen}
           setPopupOpen={setPopupOpen} 
         />
       )}

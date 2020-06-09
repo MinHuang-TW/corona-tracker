@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './List.module.css';
 import PublicIcon from '@material-ui/icons/Public';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
 const List = ({ text, icon, main, onClick, isOpen = true }) => (
   <li onClick={onClick} className={isOpen ? styles.divider : null}>
@@ -12,9 +11,11 @@ const List = ({ text, icon, main, onClick, isOpen = true }) => (
         {text ? text : 'Worldwide'}
       </span>
     </span>
-    {main && <span className={styles.more}>
-      {isOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-    </span>}
+    {main && (
+      <span className={isOpen ? styles.less : styles.more}>
+        <ExpandMoreIcon />
+      </span>
+    )}
   </li>
 );
 

@@ -1,8 +1,9 @@
 .container {
-  height: 48px;
+  height: 50px;
   width: 600px;
-  margin: -24px auto 24px;
   z-index: 5;
+  position: relative;
+  top: -25px;
 }
 
 .selector {
@@ -23,11 +24,9 @@
 @media (max-width: 768px) {
   .container {
     width: 100%;
-    margin: -24px auto 8px;
   }
 
   .selector {
-    /* width: 85vw; */
     max-height: calc(48px * 8 - 14px);
   }
 }
