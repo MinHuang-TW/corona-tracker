@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Cards, Chart, CountryPicker, Map } from './components';
+import { Cards, CountryPicker, Map, History } from './components';
 import { fetchData, fetchCountries } from './api';
 import styles from './App.module.css';
-import { Typography } from '@material-ui/core';
 import moment from 'moment';
 
 const App = () => {
@@ -11,6 +10,7 @@ const App = () => {
   const [country, setCountry] = useState(null);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
+  const lastUpdated = moment(data.updated).startOf('hour').fromNow();
 
   useEffect(() => {
     const getData = async () => {
@@ -57,27 +57,23 @@ const App = () => {
           setPickerOpen={setPickerOpen}
           setPopupOpen={setPopupOpen}
         />
-        {/* <div 
-          className={styles.blur}
-          style={{ zIndex: pickerOpen ? 1 : -1 }} 
-        /> */}
-        {/* <Typography variant='h5' color='textSecondary' gutterBottom>
-          Cases until {moment(data.updated).format('MMMM D, YYYY')}
-        </Typography>
-        <Typography variant='body1' color='textSecondary'>
-          {country ? ` ${country.name} ` : ' Worldwide '}
-        </Typography> */}
         
         <Cards data={data} />
-        <Chart data={data} country={country} />
+        <History countries={countries} />
+        {/* <Chart data={data} country={country} /> */}
       </div>
 
       <footer>
-        <Typography color='textSecondary' variant='caption'>
-          Updated <strong>
-          {moment(data.updated).startOf('hour').fromNow()}
-          </strong> from NOVELCovid API
-        </Typography>
+        <p>{`Updated ${lastUpdated}, `}</p>
+        <p>{`Source: `} 
+          <a 
+            href='https://github.com/NovelCovid/API' 
+            target='_blank' 
+            rel='noopener noreferrer'
+          >
+            NOVELCovid API
+          </a>
+        </p>
       </footer>
     </>
   );

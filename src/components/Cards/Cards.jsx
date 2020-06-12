@@ -1,20 +1,14 @@
 import React from 'react';
-import Countup from 'react-countup';
+import { Progress } from '../common';
 import { Card, CardContent } from '@material-ui/core';
+import Countup from 'react-countup';
 import cx from 'classnames';
 import styles from './Cards.module.css';
 
 const Cards = ({
   data: { cases, todayCases, recovered, todayRecovered, deaths, todayDeaths },
 }) => {
-  if (!cases) return (
-    <div className={styles.lds}>
-      <div />
-      <div />
-      <div />
-      <div />
-    </div>
-  );
+  if (!cases) return Progress;
 
   const contents = [{
     title: 'Confirmed',

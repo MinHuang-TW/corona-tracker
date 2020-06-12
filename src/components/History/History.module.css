@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+}
+
+.selector_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  border: 1px solid rgba(158, 158, 158, 0.3);
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.12);
+  background: white;
+  min-height: 50px;
+  border-radius: 6px;
+}
+
+.selector_text {
+  opacity: 0.5;
+  margin-left: 8px;
+}
+
+.selector_addButton {
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+@media (max-width: 960px) {
+  .container {
+    width: 100%;
+  }
+}

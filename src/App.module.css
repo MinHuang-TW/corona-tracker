@@ -11,6 +11,7 @@
 
 body {
   background: rgb(250, 250, 250);
+  color: rgba(0, 0, 0, 0.54);
   /* background: #e3e6ec; */
   /* background: rgba(8, 18, 23, 0.5); */
   /* overflow: scroll; */
@@ -32,31 +33,32 @@ header {
   flex-direction: column;
 }
 
-.blur {
-  width: 100vw;
-  height: 100vh;
-  top: 50vh;
-  position: absolute;
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(0px) saturate(0%);
-  -webkit-backdrop-filter: blur(0px) saturate(0%);
-  transition: backdropFilter 1.5s ease-out;
-}
-
-.blur_active {
-  -webkit-backdrop-filter: blur(4px) saturate(20%);
-  backdrop-filter: blur(4px) saturate(20%);
-}
-
 footer {
   background: #EEE; 
   width: 100%;
-  padding: 30px 10%;
-  text-align: center;
+  padding: 32px 0px;
+  display: flex;
+  justify-content: center;
+}
+
+footer p {
+  font-size: 12px;
+  margin: 4px 2px;
+}
+
+footer a {
+  color: rgba(0, 0, 0, 1);
 }
 
 @media (max-width: 960px) {
   .container {
     margin: 0 10%;
+  }
+}
+
+@media (max-width: 320px) {
+  footer {
+    flex-direction: column;
+    align-items: center;
   }
 }

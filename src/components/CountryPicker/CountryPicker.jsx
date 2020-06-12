@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import List from '../List/List';
+import { List } from '../common';
 import styles from './CountryPicker.module.css';
 
 const CountryPicker = ({
