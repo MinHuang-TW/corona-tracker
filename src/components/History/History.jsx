@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { fetchHistoryData, fetchHistoryOverall } from '../../api';
-import CountrySelector from '../CountryPicker/CountrySelector';
+import CountryPicker from '../CountryPicker/CountryPicker';
 import { Progress } from '../common';
 import LineChart from '../Chart/LineChart';
+import Backdrop from '@material-ui/core/Backdrop';
 import styles from './History.module.css';
 
 const History = ({ countries }) => {
@@ -21,25 +22,30 @@ const History = ({ countries }) => {
   }, [countries]);
 
   return (
-    <div className={styles.container} style={{ height: '100vh', width: '85%' }}>
-      <h1 style={{ margin: '32px auto' }}>Cases over time</h1>
+    <section className={styles.container}>
+      {pickerOpen ? <Backdrop open={pickerOpen} /> : null}
+      <h1 className={styles.title}>
+        Cases over time
+      </h1>
       {countriesData.length ? (
         <>
-          <CountrySelector
-            countriesData={countriesData}
-            selectedCountries={selectedCountries}
-            setSelectedCountries={setSelectedCountries}
+          <CountryPicker
+            countries={countriesData}
+            country={selectedCountries}
+            setCountry={setSelectedCountries}
             pickerOpen={pickerOpen}
             setPickerOpen={setPickerOpen}
+            radius={6}
+            selector
           />
-          <div style={{ margin: '40px auto', width: '100%' }}>
+          <div className={styles.chart}>
             <LineChart selectedCountries={selectedCountries} />
           </div>
         </>
       ) : (
-        Progress
+        <Progress />
       )}
-    </div>
+    </section>
   );
 };
 

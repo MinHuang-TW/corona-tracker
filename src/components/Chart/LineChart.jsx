@@ -15,14 +15,15 @@ const LineChart = ({ selectedCountries }) => {
   const timeline = hasHistoryData && selectedCountries[0].timeline.cases;
 
   const colorPalette = [
-    '#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850',
+    'rgba(139, 0, 0)', '#8e5ea2', '#3e95cd', '#3cba9f','#e8c3b9','#c45850',
+    // '#982428', '#c1241c', '#bdbcc0', '#6f4f4d', '#391b1c',
   ];
 
   const datasets = hasHistoryData ? selectedCountries
     .map(({ name, timeline }, index) => ({
       label: ` ${name}`,
       data: timeline.cases,
-      color: name === 'Worldwide' ? 'rgba(139, 0, 0)' : colorPalette[index],
+      color: name === 'Worldwide' ? colorPalette[0]  : colorPalette[index],
     })
   ) : [];
 

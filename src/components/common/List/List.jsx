@@ -3,16 +3,16 @@ import styles from './List.module.css';
 import PublicIcon from '@material-ui/icons/Public';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-const List = ({ text, icon, main, onClick, isOpen = true }) => (
-  <li onClick={onClick} className={isOpen ? styles.divider : null}>
+const List = ({ text, icon, main, onClick, open = true }) => (
+  <li onClick={onClick} className={open ? styles.divider : null}>
     <span className={styles.listBlock}>
       {icon ? <img src={icon} alt={text} /> : <PublicIcon />}
       <span className={main ? styles.selectText : styles.listText}>
-        {text ? text : 'Worldwide'}
+        {text}
       </span>
     </span>
     {main && (
-      <span className={isOpen ? styles.less : styles.more}>
+      <span className={open ? styles.less : styles.more}>
         <ExpandMoreIcon />
       </span>
     )}

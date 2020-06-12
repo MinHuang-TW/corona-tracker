@@ -3,9 +3,44 @@ import axios from 'axios';
 const url = 'https://corona.lmao.ninja/v2';
 const url_JHU = 'https://disease.sh/v2/historical';
 
+const initial = {
+  name: 'Worldwide',
+  flag: null,
+  lat: 20,
+  long: 15,
+};
+
+const handleError = (error) => {
+  if (axios.isCancel(error)) console.log('api cancel');
+  else throw error;
+};
+
+export const fetchCountries = async () => {
+  let source = axios.CancelToken.source();
+  try {
+    const { data } = await axios.get(`${url}/countries`, {
+      cancelToken: source.token,
+    });
+    const countries = data.map(
+      ({ country: name, cases, countryInfo: { lat, long, flag } }) => ({
+        name,
+        lat,
+        long,
+        flag,
+        cases,
+      })
+    );
+    return [initial, ...countries];
+  } catch (error) {
+    handleError(error);
+  }
+};
+
 export const fetchData = async (country) => {
+  let source = axios.CancelToken.source();
   let changeableUrl = `${url}/all`;
-  if (country) changeableUrl = `${url}/countries/${country}`;
+  if (country && country !== 'Worldwide') 
+    changeableUrl = `${url}/countries/${country}`;
 
   try {
     const {
@@ -18,7 +53,7 @@ export const fetchData = async (country) => {
         todayDeaths,
         updated,
       },
-    } = await axios.get(changeableUrl);
+    } = await axios.get(changeableUrl, { cancelToken: source.token });
     return {
       cases,
       todayCases,
@@ -29,7 +64,7 @@ export const fetchData = async (country) => {
       updated,
     };
   } catch (error) {
-    throw error;
+    handleError(error);
   }
 };
 
@@ -41,16 +76,9 @@ export const fetchHistoryOverall = async (days) => {
     const { data } = await axios.get(`${url_JHU}/all?lastdays=${day}`, {
       cancelToken: source.token,
     });
-    return {
-      name: 'Worldwide',
-      flag: null,
-      lat: 20,
-      long: 15,
-      timeline: data,
-    };
+    return { ...initial, timeline: data };
   } catch (error) {
-    if (axios.isCancel(error)) console.log('api cancel');
-    else throw error;
+    handleError(error);
   }
 };
 
@@ -82,24 +110,6 @@ export const fetchHistoryData = async (countries, days) => {
         timeline,
       }));
   } catch (error) {
-    if (axios.isCancel(error)) console.log('AxiosCancel cancel');
-    else throw error;
-  }
-};
-
-export const fetchCountries = async () => {
-  try {
-    const { data } = await axios.get(`${url}/countries`);
-    return data.map(
-      ({ country: name, cases, countryInfo: { lat, long, flag } }) => ({
-        name,
-        lat,
-        long,
-        flag,
-        cases,
-      })
-    );
-  } catch (error) {
-    throw error;
+    handleError(error);
   }
 };

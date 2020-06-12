@@ -1,6 +1,50 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { List } from '../common';
+import { Chip, Avatar } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import PublicIcon from '@material-ui/icons/Public';
+import cx from 'classnames';
 import styles from './CountryPicker.module.css';
+
+const Picker = ({ open, country }) => (
+  <List main 
+    icon={country && country.flag} 
+    text={country ? country.name : 'Loading...'} 
+    open={open}
+  />
+);
+
+const Selector = ({ country, setCountry }) => {
+  const handleDelete = useCallback((countryName) => (event) => {
+    setCountry(country.filter(({ name }) => name !== countryName));
+  }, [country]); // eslint-disable-line
+
+  return (
+    <>
+      <div>
+        {country.length ? (country.map(({ name, flag }) => (
+          <Chip
+            key={name}
+            label={name}
+            className={styles.selector_chip}
+            onDelete={handleDelete(name)}
+            avatar={name === 'Worldwide' 
+              ? (<PublicIcon />) 
+              : (<Avatar src={flag} alt={name} />)
+            }
+          />))
+        ) : (
+          <div className={styles.selector_text}>
+            Select countries to compare
+          </div>
+        )}
+      </div>
+      {country.length <= 7
+        ? <AddIcon className={styles.selector_addButton} />
+        : null }
+    </>
+  )
+};
 
 const CountryPicker = ({
   countries,
@@ -10,28 +54,47 @@ const CountryPicker = ({
   pickerOpen,
   setPickerOpen,
   setPopupOpen,
+  selector,
+  radius,
 }) => {
   const [key, setKey] = useState(null);
 
   const filterList = (text) => {
-    if (country && text === country.name) return;
+    const condition = selector 
+      ? country.find(({ name }) => text === name)
+      : country && text === country.name;
+    if (condition) return;
     if (key) return text.startsWith(key);
     return text;
   };
+
+  const handleSelect = useCallback((countryInfo) => (event) => {
+    if (selector) {
+      setCountry([...country, countryInfo]);
+    } else {
+      if (countryInfo.name === 'Worldwide') {
+        handleCountry();
+        setCountry({
+          name: 'Worldwide',
+          flag: null,
+          lat: 20,
+          long: 15,
+        });
+      } else {
+        handleCountry(countryInfo.name);
+        setCountry(countryInfo);
+      }
+      setPopupOpen(true);
+    }
+    setPickerOpen(false);
+    // eslint-disable-next-line
+  }, [country]);
 
   const handleOpen = useCallback(() => {
     setPickerOpen(!pickerOpen);
     setKey(null);
     // eslint-disable-next-line
   }, [pickerOpen]);
-
-  const handleSelect = useCallback((country) => (event) => {
-    handleCountry(country && country.name);
-    setCountry(country);
-    setPickerOpen(false);
-    setPopupOpen(true);
-    // eslint-disable-next-line
-  }, []);
 
   useEffect(() => {
     const handleKeyDown = ({ key, keyCode }) => {
@@ -45,18 +108,29 @@ const CountryPicker = ({
 
   return (
     <div className={styles.container}>
-      <div className={styles.selector} onClick={handleOpen}>
-        <List main 
-          icon={country && country.flag} 
-          text={country && country.name} 
-          isOpen={pickerOpen}
-        />
+      <div 
+        className={selector ? styles.selector : styles.picker} 
+        style={{ borderRadius: pickerOpen 
+          ? `${radius}px ${radius}px 0 0` 
+          : `${radius}px`,
+        }}
+        onClick={handleOpen}
+        // onBlur={handleOpen}
+        // tabIndex={0}
+      >
+        {selector 
+          ? (<Selector country={country} setCountry={setCountry} />) 
+          : (<Picker open={pickerOpen} country={country} />)}
+      </div>
 
-        {pickerOpen && country && (
-          <List text='Worldwide' onClick={handleSelect()} />
-        )}
-
-        {pickerOpen && countries
+      {pickerOpen && (<div       
+        className={pickerOpen 
+          ? cx(styles.picker_menu, styles.picker_menu_active) 
+          : styles.picker_menu
+        }
+        style={{ borderRadius: `0 0 ${radius}px ${radius}px` }}
+      >
+        {countries
           .filter(({ name }) => filterList(name))
           .map((country) => (
             <List
@@ -66,7 +140,7 @@ const CountryPicker = ({
               onClick={handleSelect(country)}
             />
           ))}
-      </div>
+      </div>)}
     </div>
   );
 };

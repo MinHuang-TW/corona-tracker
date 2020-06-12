@@ -68,7 +68,8 @@ const Map = ({
   }, [viewport.zoom]);
 
   useEffect(() => {
-    if (!country) setViewport({ ...viewport, ...initial_viewport });
+    if (!country || country.name === 'Worldwide') 
+      setViewport({ ...viewport, ...initial_viewport });
     else setViewport({
       ...viewport,
       zoom: 5,
@@ -78,8 +79,9 @@ const Map = ({
   }, [country]); // eslint-disable-line
 
   useEffect(() => {
-    const features = countries &&
-      countries.map((country) => ({
+    const features = countries && countries
+      .filter(({ name }) => name !== 'Worldwide')
+      .map((country) => ({
         geometry: {
           coordinates: [country.long, country.lat],
           type: 'Point',
@@ -119,7 +121,7 @@ const Map = ({
         <Layer {...clusterLayer} />
       </Source>
 
-      {popupOpen && (
+      {popupOpen && country.name !== 'Worldwide' && (
         <PopupContent 
           country={country} 
           data={data} 

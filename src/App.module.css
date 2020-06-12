@@ -39,6 +39,8 @@ footer {
   padding: 32px 0px;
   display: flex;
   justify-content: center;
+  position: relative;
+  z-index: -9999;
 }
 
 footer p {
