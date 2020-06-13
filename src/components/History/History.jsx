@@ -3,13 +3,11 @@ import { fetchHistoryData, fetchHistoryOverall } from '../../api';
 import CountryPicker from '../CountryPicker/CountryPicker';
 import { Progress } from '../common';
 import LineChart from '../Chart/LineChart';
-import Backdrop from '@material-ui/core/Backdrop';
 import styles from './History.module.css';
 
 const History = ({ countries }) => {
   const [countriesData, setCountriesData] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState([]);
-  const [pickerOpen, setPickerOpen] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -23,18 +21,15 @@ const History = ({ countries }) => {
 
   return (
     <section className={styles.container}>
-      {pickerOpen ? <Backdrop open={pickerOpen} /> : null}
       <h1 className={styles.title}>
         Cases over time
       </h1>
-      {countries.length > 1 ? (
+      {countriesData.length > 1 ? (
         <>
           <CountryPicker
             countries={countriesData}
             country={selectedCountries}
             setCountry={setSelectedCountries}
-            pickerOpen={pickerOpen}
-            setPickerOpen={setPickerOpen}
             radius={6}
             selector
           />

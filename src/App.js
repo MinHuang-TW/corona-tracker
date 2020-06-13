@@ -3,7 +3,6 @@ import { fetchData, fetchCountries } from './api';
 import { Cards, CountryPicker, Map, History } from './components';
 import { Progress } from './components/common';
 import BarChart from './components/Chart/BarChart';
-import Backdrop from '@material-ui/core/Backdrop';
 import styles from './App.module.css';
 import moment from 'moment';
 
@@ -11,7 +10,6 @@ const App = () => {
   const [data, setData] = useState([]);
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState(null);
-  const [pickerOpen, setPickerOpen] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const lastUpdated = moment(data.updated).startOf('hour').fromNow();
 
@@ -34,7 +32,7 @@ const App = () => {
   return (
     <>
       <div className={styles.container}>
-        <section style={{ height: '100vh' }}>
+        <section>
           <Map
             country={country}
             setCountry={setCountry}
@@ -44,7 +42,6 @@ const App = () => {
             popupOpen={popupOpen}
             setPopupOpen={setPopupOpen}
           />
-          {pickerOpen ? <Backdrop open={pickerOpen} /> : null}
           {countries.length ? (
             <div
               style={{
@@ -52,12 +49,11 @@ const App = () => {
                 flexDirection: 'column',
                 alignItems: 'center',
                 position: 'relative',
-                top: 'calc(-25px - 88px)',
+                top: -80,
                 width: '100%',
-                height: 'calc(50vh + 88px)',
               }}
             >
-              <h1 style={{ color: 'white', lineHeight: '88px' }}>
+              <h1 style={{ color: 'white', marginBottom: 25 }}>
                 Coronavirus Total Cases
               </h1>
               <CountryPicker
@@ -65,13 +61,11 @@ const App = () => {
                 setCountry={setCountry}
                 countries={countries}
                 handleCountry={handleCountry}
-                pickerOpen={pickerOpen}
-                setPickerOpen={setPickerOpen}
                 setPopupOpen={setPopupOpen}
                 radius={24}
               />
               <Cards data={data} />
-              <div style={{ margin: '40px auto', width: '95%' }}>
+              <div style={{ margin: 'auto', width: '80%', marginTop: 40 }}>
                 <BarChart country={country} data={data} />
               </div>
             </div>

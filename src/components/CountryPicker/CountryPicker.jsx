@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { List } from '../common';
-import { Chip, Avatar } from '@material-ui/core';
+import { Chip, Avatar, Backdrop } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import PublicIcon from '@material-ui/icons/Public';
 import cx from 'classnames';
 import styles from './CountryPicker.module.css';
 
-const Picker = ({ open, country }) => (
-  <List main 
-    icon={country && country.flag} 
-    text={country ? country.name : 'Loading...'} 
-    open={open}
-  />
-);
+const Picker = ({ open, country }) => {
+  return (
+    <List main 
+      icon={country && country.flag} 
+      text={country ? country.name : 'Loading...'} 
+      open={open}
+    />
+  )
+};
 
 const Selector = ({ country, setCountry }) => {
   const handleDelete = useCallback((countryName) => (event) => {
@@ -51,13 +53,12 @@ const CountryPicker = ({
   handleCountry,
   country,
   setCountry,
-  pickerOpen,
-  setPickerOpen,
   setPopupOpen,
   selector,
   radius,
 }) => {
   const [key, setKey] = useState(null);
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   const filterList = (text) => {
     const condition = selector 
@@ -90,6 +91,10 @@ const CountryPicker = ({
     // eslint-disable-next-line
   }, [country]);
 
+  const handleClose = useCallback(() => {
+    setPickerOpen(false);
+  }, []); // eslint-disable-line
+
   const handleOpen = useCallback(() => {
     setPickerOpen(!pickerOpen);
     setKey(null);
@@ -102,12 +107,15 @@ const CountryPicker = ({
       if ((keyCode >= 65) & (keyCode <= 90)) setKey(key.toUpperCase());
     };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    }
     // eslint-disable-next-line
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onBlur={handleClose} tabIndex={0}>
+      {pickerOpen ? <Backdrop open={pickerOpen} /> : null}
       <div 
         className={selector ? styles.selector : styles.picker} 
         style={{ borderRadius: pickerOpen 
@@ -115,8 +123,6 @@ const CountryPicker = ({
           : `${radius}px`,
         }}
         onClick={handleOpen}
-        // onBlur={handleOpen}
-        // tabIndex={0}
       >
         {selector 
           ? (<Selector country={country} setCountry={setCountry} />) 
