@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchHistoryData, fetchHistoryOverall } from '../../api';
-import CountryPicker from '../CountryPicker/CountryPicker';
-import { Progress } from '../common';
-import LineChart from '../Chart/LineChart';
+import { CountryPicker, Progress, LineChart } from '../common';
 import styles from './History.module.css';
 
 const History = ({ countries }) => {
@@ -21,10 +19,8 @@ const History = ({ countries }) => {
 
   return (
     <section className={styles.container}>
-      <h1 className={styles.title}>
-        Cases over time
-      </h1>
-      {countriesData.length > 1 ? (
+      <h1 className={styles.title}>Cases over time</h1>
+      {countriesData.length ? (
         <>
           <CountryPicker
             countries={countriesData}

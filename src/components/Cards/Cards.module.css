@@ -2,7 +2,7 @@
   margin: 1% 0 2%;
   display: flex;
   justify-content: center;
-  flex-basis: 0;
+  /* flex-basis: 0; */
   width: 70%;
 }
 
@@ -114,7 +114,7 @@
     margin-left: 0;
   }
 
-  .date {
+  /* .date {
     margin-left: 8px !important;
-  }
+  } */
 }

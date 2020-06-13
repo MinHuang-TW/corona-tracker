@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
   width: 70%;
 }
 
@@ -24,5 +25,11 @@
 @media (max-width: 960px) {
   .container {
     width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: 95vw;
   }
 }

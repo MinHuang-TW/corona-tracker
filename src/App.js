@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchData, fetchCountries } from './api';
-import { Cards, CountryPicker, Map, History } from './components';
-import { Progress } from './components/common';
-import BarChart from './components/Chart/BarChart';
+import { Cards, Map, History } from './components';
+import { CountryPicker, BarChart, Progress } from './components/common';
 import styles from './App.module.css';
 import moment from 'moment';
 
@@ -32,7 +31,7 @@ const App = () => {
   return (
     <>
       <div className={styles.container}>
-        <section>
+        <section style={{ minHeight: '100vh' }}>
           <Map
             country={country}
             setCountry={setCountry}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { List } from '../common';
+import List from '../List/List';
 import { Chip, Avatar, Backdrop } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import PublicIcon from '@material-ui/icons/Public';
@@ -17,9 +17,15 @@ const Picker = ({ open, country }) => {
 };
 
 const Selector = ({ country, setCountry }) => {
+  const setButton = country.length < 7 ? styles.selector_add : styles.selector_remove;
+  
   const handleDelete = useCallback((countryName) => (event) => {
     setCountry(country.filter(({ name }) => name !== countryName));
-  }, [country]); // eslint-disable-line
+  }, [country, setCountry]);
+
+  const handleClear = useCallback(() => {
+    if (country.length === 7) setCountry([]);
+  }, [country, setCountry]);
 
   return (
     <>
@@ -30,10 +36,7 @@ const Selector = ({ country, setCountry }) => {
             label={name}
             className={styles.selector_chip}
             onDelete={handleDelete(name)}
-            avatar={name === 'Worldwide' 
-              ? (<PublicIcon />) 
-              : (<Avatar src={flag} alt={name} />)
-            }
+            avatar={name === 'Worldwide' ? <PublicIcon /> : <Avatar src={flag} alt={name} />}
           />))
         ) : (
           <div className={styles.selector_text}>
@@ -41,9 +44,9 @@ const Selector = ({ country, setCountry }) => {
           </div>
         )}
       </div>
-      {country.length <= 7
-        ? <AddIcon className={styles.selector_addButton} />
-        : null }
+      <span className={setButton} onClick={handleClear}>
+        <AddIcon />
+      </span>
     </>
   )
 };
@@ -93,13 +96,13 @@ const CountryPicker = ({
 
   const handleClose = useCallback(() => {
     setPickerOpen(false);
-  }, []); // eslint-disable-line
+  }, []);
 
   const handleOpen = useCallback(() => {
+    if (country.length >= 7) return;
     setPickerOpen(!pickerOpen);
     setKey(null);
-    // eslint-disable-next-line
-  }, [pickerOpen]);
+  }, [pickerOpen, country]);
 
   useEffect(() => {
     const handleKeyDown = ({ key, keyCode }) => {
@@ -118,10 +121,7 @@ const CountryPicker = ({
       {pickerOpen ? <Backdrop open={pickerOpen} /> : null}
       <div 
         className={selector ? styles.selector : styles.picker} 
-        style={{ borderRadius: pickerOpen 
-          ? `${radius}px ${radius}px 0 0` 
-          : `${radius}px`,
-        }}
+        style={{ borderRadius: pickerOpen ? `${radius}px ${radius}px 0 0` : `${radius}px` }}
         onClick={handleOpen}
       >
         {selector 
@@ -129,7 +129,7 @@ const CountryPicker = ({
           : (<Picker open={pickerOpen} country={country} />)}
       </div>
 
-      {pickerOpen && countries.length > 1 && (
+      {pickerOpen && (
         <div   
           className={pickerOpen 
             ? cx(styles.picker_menu, styles.picker_menu_active) 
