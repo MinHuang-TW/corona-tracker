@@ -2,12 +2,17 @@
   outline: none;
 }
 
-.container,
+.container {
+  position: relative;
+  width: 50%;
+  max-width: 600px;
+}
+
+.picker,
 .picker_menu,
 .selector,
 .selector_menu {
-  width: 60%;
-  min-width: 600px;
+  width: 100%;
 }
 
 .picker,
@@ -64,18 +69,21 @@
   transform: translateY(-1px);
 }
 
-@media (max-width: 960px) {
-  .container,
-  .picker_menu,
-  .selector,
-  .selector_menu {
-    width: 80%;
+@media (max-width: 1280px) {
+  .container {
+    width: 60%;
   }
+}
 
-  .container,
-  .picker_menu,
-  .selector_menu {
-    min-width: auto;
+@media (max-width: 960px) {
+  .container {
+    width: 70%;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: 80%;
   }
 
   .picker_menu_active {

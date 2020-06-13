@@ -27,7 +27,7 @@ const History = ({ countries }) => {
       <h1 className={styles.title}>
         Cases over time
       </h1>
-      {countriesData.length ? (
+      {countries.length > 1 ? (
         <>
           <CountryPicker
             countries={countriesData}

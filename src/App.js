@@ -71,7 +71,7 @@ const App = () => {
                 radius={24}
               />
               <Cards data={data} />
-              <div style={{ margin: '40px auto', width: '70%' }}>
+              <div style={{ margin: '40px auto', width: '95%' }}>
                 <BarChart country={country} data={data} />
               </div>
             </div>

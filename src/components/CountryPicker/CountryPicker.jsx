@@ -123,24 +123,26 @@ const CountryPicker = ({
           : (<Picker open={pickerOpen} country={country} />)}
       </div>
 
-      {pickerOpen && (<div       
-        className={pickerOpen 
-          ? cx(styles.picker_menu, styles.picker_menu_active) 
-          : styles.picker_menu
-        }
-        style={{ borderRadius: `0 0 ${radius}px ${radius}px` }}
-      >
-        {countries
-          .filter(({ name }) => filterList(name))
-          .map((country) => (
-            <List
-              key={country.name}
-              icon={country.flag}
-              text={country.name}
-              onClick={handleSelect(country)}
-            />
-          ))}
-      </div>)}
+      {pickerOpen && countries.length > 1 && (
+        <div   
+          className={pickerOpen 
+            ? cx(styles.picker_menu, styles.picker_menu_active) 
+            : styles.picker_menu
+          }
+          style={{ borderRadius: `0 0 ${radius}px ${radius}px` }}
+        >
+          {countries
+            .filter(({ name }) => filterList(name))
+            .map((country) => (
+              <List
+                key={country.name}
+                icon={country.flag}
+                text={country.name}
+                onClick={handleSelect(country)}
+              />
+            ))}
+        </div>
+      )}
     </div>
   );
 };
