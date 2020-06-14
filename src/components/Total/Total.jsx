@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchData } from '../../api';
 import { Map } from '../../components';
-import { CountryPicker, Cards, BarChart, Progress } from '../common';
+import { CountryPicker, Cards, BarChart, Anchor, Progress } from '../common';
 import styles from './Total.module.css';
 
 const Total = ({ countries, data, setData }) => {
@@ -17,7 +17,7 @@ const Total = ({ countries, data, setData }) => {
   };
 
   return (
-    <section className={styles.container}>
+    <section id='total' className={styles.container}>
       <Map
         country={country}
         setCountry={setCountry}
@@ -29,7 +29,10 @@ const Total = ({ countries, data, setData }) => {
       />
       {countries.length ? (
         <div className={styles.body}>
-          <h1 className={styles.title}>Coronavirus Total Cases</h1>
+          <a href='#total' className={styles.title}>
+            <Anchor color='#fff' />
+            <h1>Coronavirus Total Cases</h1>
+          </a>
           <div className={styles.picker}>
             <CountryPicker
               country={country}

@@ -29,8 +29,8 @@ const BarChart = ({ country, data: { cases, recovered, deaths } }) => {
         scaleLabel: {
           display: true,
           fontStyle: 'bold',
-          labelString: `Cases ${
-            country ? 'in ' + country.name : 'Worldwide'
+          labelString: `${country && country.name !== 'Worldwide' 
+            ? 'Cases in ' + country.name : 'Global Cases'
           }`,
         },
       }],

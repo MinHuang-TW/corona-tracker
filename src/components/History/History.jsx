@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchHistoryData, fetchHistoryOverall } from '../../api';
-import { CountryPicker, Progress, LineChart } from '../common';
+import { CountryPicker, Progress, LineChart, Anchor } from '../common';
 import styles from './History.module.css';
 
 const History = ({ countries }) => {
@@ -18,8 +18,11 @@ const History = ({ countries }) => {
   }, [countries]);
 
   return (
-    <section className={styles.container}>
-      <h1 className={styles.title}>Cases over time</h1>
+    <section id='history' className={styles.container}>
+      <a href='#history' className={styles.title}>
+        <Anchor />
+        <h1>Cases over time</h1>
+      </a>
       {countriesData.length ? (
         <>
           <div className={styles.selector}>

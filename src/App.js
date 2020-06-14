@@ -7,7 +7,9 @@ import moment from 'moment';
 const App = () => {
   const [data, setData] = useState([]);
   const [countries, setCountries] = useState([]);
+
   const lastUpdated = moment(data.updated).startOf('hour').fromNow();
+  const link = 'https://github.com/NovelCovid/API';
 
   useEffect(() => {
     const getData = async () => {
@@ -28,11 +30,7 @@ const App = () => {
         <p>{`Updated ${lastUpdated}, `}</p>
         <p>
           {`Source: `}
-          <a
-            href='https://github.com/NovelCovid/API'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
+          <a href={link} target='_blank' rel='noopener noreferrer'>
             NOVELCovid API
           </a>
         </p>

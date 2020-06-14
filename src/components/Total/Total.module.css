@@ -1,6 +1,5 @@
 .container {
   min-height: 100vh;
-  border-bottom: 1px solid lightgray;
 }
 
 .body {
@@ -14,11 +13,28 @@
 
 .title {
   color: white;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
   margin-bottom: 25px;
+  cursor: pointer;
+}
+
+svg {
+  display: none;
+}
+
+.title:hover {
+  text-decoration: underline;
+}
+
+.title:hover svg {
+  fill: white;
+  display: initial;
 }
 
 .picker {
-  width: 80%;
+  width: 50%;
   margin-bottom: 24px;
 }
 
@@ -38,10 +54,18 @@
   .chart {
     width: 70%;
   }
+
+  .picker {
+    width: 70%;
+  }
 }
 
 @media (max-width: 600px) {
   .chart {
     width: 80%;
+  }
+
+  .picker {
+    width: 90%;
   }
 }
