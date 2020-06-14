@@ -3,9 +3,10 @@
 }
 
 .container {
-  position: relative;
-  width: 50%;
+  width: 100%;
   max-width: 600px;
+  position: relative;
+  margin: auto;
 }
 
 .picker {
@@ -51,8 +52,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 4px 8px;
-  min-height: 50px;
+  padding: 8px;
   cursor: pointer;
 }
 
@@ -66,36 +66,30 @@
 }
 
 .selector_add {
-  transform: rotate(0deg);
+  transform: rotate(0deg) scale(1);
 }
 
 .selector_remove {
-  transform: rotate(45deg);
+  transform: rotate(135deg) scale(1.2);
+}
+
+.selector_remove svg {
+  fill: rgba(139, 0, 0);
+}
+
+svg {
+  fill: rgba(0, 0, 0, 0.54);
 }
 
 .selector_add,
 .selector_remove {
   cursor: pointer;
   margin-right: 8px;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
-}
-
-@media (max-width: 1280px) {
-  .container {
-    width: 60%;
-  }
-}
-
-@media (max-width: 960px) {
-  .container {
-    width: 80%;
-  }
+  transform-origin: center;
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1) 0s;
 }
 
 @media (max-width: 600px) {
-  .container {
-    width: 90%;
-  }
   .picker_menu_active {
     max-height: calc(48px * 5 - 14px);
   }

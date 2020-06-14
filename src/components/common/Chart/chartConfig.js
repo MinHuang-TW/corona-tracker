@@ -55,7 +55,7 @@ export const drawHoverLine = (chart) => {
     ctx.beginPath();
     ctx.moveTo(x, topY);
     ctx.lineTo(x, bottomY);
-    ctx.lineWidth = 0.2;
+    ctx.lineWidth = 0.1;
     ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
     ctx.setLineDash([3, 3]);
     ctx.stroke();

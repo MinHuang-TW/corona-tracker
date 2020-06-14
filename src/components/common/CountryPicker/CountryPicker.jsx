@@ -1,30 +1,23 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import List from '../List/List';
+import { List } from '../../common';
 import { Chip, Avatar, Backdrop } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import PublicIcon from '@material-ui/icons/Public';
 import cx from 'classnames';
 import styles from './CountryPicker.module.css';
 
-const Picker = ({ open, country }) => {
-  return (
-    <List main 
-      icon={country && country.flag} 
-      text={country ? country.name : 'Loading...'} 
-      open={open}
-    />
-  )
-};
+const MAX_ITEM = 6;
 
 const Selector = ({ country, setCountry }) => {
-  const setButton = country.length < 7 ? styles.selector_add : styles.selector_remove;
-  
+  const setButton = country.length < MAX_ITEM 
+    ? styles.selector_add : styles.selector_remove;
+
   const handleDelete = useCallback((countryName) => (event) => {
     setCountry(country.filter(({ name }) => name !== countryName));
   }, [country, setCountry]);
 
   const handleClear = useCallback(() => {
-    if (country.length === 7) setCountry([]);
+    if (country.length === MAX_ITEM) setCountry([]);
   }, [country, setCountry]);
 
   return (
@@ -36,7 +29,10 @@ const Selector = ({ country, setCountry }) => {
             label={name}
             className={styles.selector_chip}
             onDelete={handleDelete(name)}
-            avatar={name === 'Worldwide' ? <PublicIcon /> : <Avatar src={flag} alt={name} />}
+            avatar={name === 'Worldwide' 
+              ? <PublicIcon /> 
+              : <Avatar src={flag} alt={name} />
+            }
           />))
         ) : (
           <div className={styles.selector_text}>
@@ -50,6 +46,14 @@ const Selector = ({ country, setCountry }) => {
     </>
   )
 };
+
+const Picker = ({ open, country }) => (
+  <List main 
+    icon={country && country.flag} 
+    text={country ? country.name : 'Loading...'} 
+    open={open}
+  />
+);
 
 const CountryPicker = ({
   countries,
@@ -99,7 +103,7 @@ const CountryPicker = ({
   }, []);
 
   const handleOpen = useCallback(() => {
-    if (country.length >= 7) return;
+    if (country.length >= MAX_ITEM) return;
     setPickerOpen(!pickerOpen);
     setKey(null);
   }, [pickerOpen, country]);

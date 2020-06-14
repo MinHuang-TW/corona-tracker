@@ -1,3 +1,3 @@
-export { default as Map } from './Map/Map';
-export { default as Cards } from './Cards/Cards';
 export { default as History } from './History/History';
+export { default as Total } from './Total/Total';
+export { default as Map } from './Map/Map';

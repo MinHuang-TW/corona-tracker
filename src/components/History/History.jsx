@@ -22,13 +22,15 @@ const History = ({ countries }) => {
       <h1 className={styles.title}>Cases over time</h1>
       {countriesData.length ? (
         <>
-          <CountryPicker
-            countries={countriesData}
-            country={selectedCountries}
-            setCountry={setSelectedCountries}
-            radius={6}
-            selector
-          />
+          <div className={styles.selector}>
+            <CountryPicker
+              countries={countriesData}
+              country={selectedCountries}
+              setCountry={setSelectedCountries}
+              radius={6}
+              selector
+            />
+          </div>
           <div className={styles.chart}>
             <LineChart selectedCountries={selectedCountries} />
           </div>
