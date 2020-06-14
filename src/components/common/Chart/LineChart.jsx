@@ -1,24 +1,14 @@
-import React, { useEffect } from 'react';
-import { 
-  gridLines, 
-  tooltips, 
-  ticks, ticks_amount, 
-  line_datasets, 
-  drawHoverLine 
-} from './chartConfig';
+import React, { useState, useEffect, useCallback } from 'react';
+import { gridLines, tooltips, ticks, ticks_amount, line_datasets, drawHoverLine } from './chartConfig';
 import { Chart, Line } from 'react-chartjs-2';
 import moment from 'moment';
 
 const LineChart = ({ selectedCountries }) => {
-  moment.suppressDeprecationWarnings = true;
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const hasHistoryData = selectedCountries.length;
   const timeline = hasHistoryData && selectedCountries[0].timeline.cases;
-
-  const colorPalette = [
-    'rgba(139, 0, 0)', '#c45850', '#e8c3b9', 
-    '#3cba9f', '#3e95cd', '#003f5c', '#8e5ea2',
-    // '#982428', '#c1241c', '#bdbcc0', '#6f4f4d', '#391b1c',
-  ];
+  const colorPalette = ['#c45850', '#e8c3b9', '#3cba9f', '#3e95cd', '#8e5ea2'];
+  moment.suppressDeprecationWarnings = true;
 
   const datasets = hasHistoryData ? selectedCountries
     .map(({ name, timeline }, index) => ({
@@ -42,12 +32,10 @@ const LineChart = ({ selectedCountries }) => {
   };
 
   const options = {
-    // responsive: false,
-    // maintainAspectRatio: false,
-    // aspectRatio: 1,
     layout: {
       padding: {
-        bottom: 40,
+        bottom: windowWidth < 450 ? 48 : 16,
+        top: 8,
         right: 8,
       }
     },
@@ -55,16 +43,12 @@ const LineChart = ({ selectedCountries }) => {
       display: true,
       text: 'Toggle different countries',
       position: 'bottom',
+      fontStyle: 'normal',
     },
     scales: {
       yAxes: [{
         gridLines,
         ticks: ticks_amount,
-        scaleLabel: {
-          display: true,
-          fontStyle: 'bold',
-          labelString: 'Confirmed Cases',
-        },
       }],
       xAxes: [{
         gridLines,
@@ -79,6 +63,7 @@ const LineChart = ({ selectedCountries }) => {
     tooltips: {
       mode: 'index',
       bodySpacing: 8,
+      yAlign: windowWidth < 400 && 'top',
       callbacks: {
         label: (tooltipItem, data) => {
           let label = data.datasets[tooltipItem.datasetIndex].label;
@@ -104,6 +89,10 @@ const LineChart = ({ selectedCountries }) => {
     },
   };
 
+  const handleResize = useCallback(() => {
+    setWindowWidth(window.innerWidth);
+  }, []);
+
   useEffect(() => {
     Chart.pluginService.register({
       afterDraw: (chart) => {
@@ -113,10 +102,21 @@ const LineChart = ({ selectedCountries }) => {
     });
   }, []);
 
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    }
+  }, [handleResize]);
+
   return (
     <>
       {hasHistoryData 
-        ? (<Line height={300} data={data} options={options} />)
+        ? (<Line 
+            height={windowWidth < 450 ? 300 : 180} 
+            data={data} 
+            options={options} 
+          />)
         : null}
     </>
   );

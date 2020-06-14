@@ -13,6 +13,7 @@ const BarChart = ({ country, data: { cases, recovered, deaths } }) => {
     datasets: [{
       label: 'Amount',
       borderWidth: 1.5,
+      // barThickness: 40,
       borderColor: [color.confirmed, color.recovered, color.deaths],
       backgroundColor: [bg.confirmed, bg.recovered, bg.deaths],
       data: [cases, recovered, deaths],
@@ -21,18 +22,19 @@ const BarChart = ({ country, data: { cases, recovered, deaths } }) => {
 
   const options = {
     legend: { display: false },
+    title: {
+      display: true,
+      position: 'bottom',
+      padding: 24,
+      text: `${country && country.name !== 'Worldwide' 
+        ? 'Cases in ' + country.name : 'Global Cases'
+      }`
+    },
     scales: {
       xAxes: [{ gridLines, ticks }],
       yAxes: [{
         gridLines,
         ticks: ticks_amount,
-        scaleLabel: {
-          display: true,
-          fontStyle: 'bold',
-          labelString: `${country && country.name !== 'Worldwide' 
-            ? 'Cases in ' + country.name : 'Global Cases'
-          }`,
-        },
       }],
     },
     tooltips: {

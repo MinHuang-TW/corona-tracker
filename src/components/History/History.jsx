@@ -21,7 +21,7 @@ const History = ({ countries }) => {
     <section id='history' className={styles.container}>
       <a href='#history' className={styles.title}>
         <Anchor />
-        <h1>Cases over time</h1>
+        <h1>Confirmed cases over time</h1>
       </a>
       {countriesData.length ? (
         <>

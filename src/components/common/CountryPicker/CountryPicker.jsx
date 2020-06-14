@@ -6,7 +6,7 @@ import PublicIcon from '@material-ui/icons/Public';
 import cx from 'classnames';
 import styles from './CountryPicker.module.css';
 
-const MAX_ITEM = 6;
+const MAX_ITEM = 5;
 
 const Selector = ({ country, setCountry }) => {
   const setButton = country.length < MAX_ITEM 

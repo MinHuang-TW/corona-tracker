@@ -86,7 +86,7 @@ svg {
   cursor: pointer;
   margin-right: 8px;
   transform-origin: center;
-  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
 }
 
 @media (max-width: 600px) {

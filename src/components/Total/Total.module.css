@@ -1,5 +1,6 @@
 .container {
   min-height: 100vh;
+  border-bottom: 8px solid #e8eaed;
 }
 
 .body {
