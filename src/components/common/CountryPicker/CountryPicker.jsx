@@ -123,9 +123,9 @@ const CountryPicker = ({
           : (<Picker open={pickerOpen} country={country} />)}
       </div>
 
-      {pickerOpen && (
+      {pickerOpen ? (
         <div   
-          className={pickerOpen ? styles.menu_active : styles.menu}
+          className={styles.menu_active}
           style={{ borderRadius: `0 0 ${radius}px ${radius}px` }}
         >
           {countries
@@ -139,6 +139,8 @@ const CountryPicker = ({
               />
             ))}
         </div>
+      ) : (
+        <div className={styles.menu} />
       )}
     </div>
   );
