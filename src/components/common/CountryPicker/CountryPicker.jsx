@@ -1,10 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { List } from '../../common';
 import { useKey } from '../../Hook';
-import { Chip, Avatar, Backdrop } from '@material-ui/core';
+import { Chip, Avatar } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import PublicIcon from '@material-ui/icons/Public';
-import cx from 'classnames';
 import styles from './CountryPicker.module.css';
 
 const MAX_ITEM = 5;
@@ -99,9 +98,7 @@ const CountryPicker = ({
     // eslint-disable-next-line
   }, [country]);
 
-  const handleClose = useCallback(() => {
-    setPickerOpen(false);
-  }, []);
+  const handleClose = useCallback(() => setPickerOpen(false), []);
 
   const handleOpen = useCallback(() => {
     if (country.length >= MAX_ITEM) return;
@@ -111,10 +108,14 @@ const CountryPicker = ({
 
   return (
     <div className={styles.container} onBlur={handleClose} tabIndex={0}>
-      {pickerOpen ? <Backdrop open={pickerOpen} /> : null}
+      {pickerOpen 
+        ? <div className={styles.backdrop_active} onClick={handleClose} /> 
+        : <div className={styles.backdrop} />}
       <div 
         className={selector ? styles.selector : styles.picker} 
-        style={{ borderRadius: pickerOpen ? `${radius}px ${radius}px 0 0` : `${radius}px` }}
+        style={{ borderRadius: pickerOpen 
+          ? `${radius}px ${radius}px 0 0` : `${radius}px` 
+        }}
         onClick={handleOpen}
       >
         {selector 
@@ -124,10 +125,7 @@ const CountryPicker = ({
 
       {pickerOpen && (
         <div   
-          className={pickerOpen 
-            ? cx(styles.picker_menu, styles.picker_menu_active) 
-            : styles.picker_menu
-          }
+          className={pickerOpen ? styles.menu_active : styles.menu}
           style={{ borderRadius: `0 0 ${radius}px ${radius}px` }}
         >
           {countries

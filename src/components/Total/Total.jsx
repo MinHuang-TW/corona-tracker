@@ -18,15 +18,17 @@ const Total = ({ countries, data, setData }) => {
 
   return (
     <section id='total' className={styles.container}>
-      <Map
-        country={country}
-        setCountry={setCountry}
-        countries={countries}
-        handleCountry={handleCountry}
-        data={data}
-        popupOpen={popupOpen}
-        setPopupOpen={setPopupOpen}
-      />
+      <div style={{ zIndex: 1, position: 'relative' }}>
+        <Map
+          country={country}
+          setCountry={setCountry}
+          countries={countries}
+          handleCountry={handleCountry}
+          data={data}
+          popupOpen={popupOpen}
+          setPopupOpen={setPopupOpen}
+        />
+      </div>
       {countries.length ? (
         <div className={styles.body}>
           <a href='#total' className={styles.title}>

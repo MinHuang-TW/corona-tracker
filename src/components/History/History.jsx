@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { fetchHistoryData, fetchHistoryOverall } from '../../api';
 import { CountryPicker, Progress, LineChart, Anchor } from '../common';
+import { color } from '../common/Chart/chartConfig';
 import styles from './History.module.css';
 
 const History = ({ countries }) => {
@@ -8,35 +9,31 @@ const History = ({ countries }) => {
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [activeType, setActiveType] = useState('cases');
   const types = [
-    { type: 'cases', color: 'darkred' }, 
-    { type: 'recovered', color: 'green' }, 
-    { type: 'deaths', color: 'darkgray' }, 
+    { type: 'cases', color: color.confirmed }, 
+    { type: 'recovered', color: color.recovered }, 
+    { type: 'deaths', color: color.deaths }, 
   ];
 
   const capitalize = (str, lower = false) => 
     (lower ? str.toLowerCase() : str)
       .replace(/(?:^|\s|["'([{])+\S/g, match => match.toUpperCase());
 
-  const getTypeText = (type) => (
-    type === 'cases' ? 'Confirmed' : capitalize(type)
-  );
+  const getTypeText = (type) => (type === 'cases' ? 'Confirmed' : type);
 
   const TypeButton = ({ type, color }) => {
+    const selected = activeType === type;
     const handleSetType = useCallback(() => setActiveType(type), [type]);
     return (
       <div 
-        style={{
-          margin: '32px 4px',
-          padding: '8px 16px',
-          background: activeType === type && `${color}`,
-          border: `1px solid ${color}`,
-          color: activeType === type ? 'white' : `${color}`,
-          borderRadius: 6,
-          cursor: 'pointer',
-        }}
         onClick={handleSetType}
+        className={styles.type_button}
+        style={{
+          background: selected && `${color}`,
+          border: `1px solid ${color}`,
+          color: selected ? 'white' : `${color}`,
+        }}
       >
-        {getTypeText(type)}
+        {getTypeText(type).toUpperCase()}
       </div>
     )
   };
@@ -55,7 +52,7 @@ const History = ({ countries }) => {
     <section id='history' className={styles.container}>
       <a href='#history' className={styles.title}>
         <Anchor />
-        <h1>{getTypeText(activeType)} cases over time</h1>
+        <h1>{capitalize(getTypeText(activeType))} cases over time</h1>
       </a>
 
       <div style={{ display: 'flex', justifyContent: 'center' }}>

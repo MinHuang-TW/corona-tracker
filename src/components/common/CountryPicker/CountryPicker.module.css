@@ -14,34 +14,31 @@
   overflow: scroll;
 }
 
+.menu,
 .picker,
-.picker_menu,
-.selector,
-.selector_menu {
+.selector {
   width: 100%;
-  z-index: 1;
 }
 
+.menu_active,
 .picker,
-.picker_menu_active,
 .selector {
   background: white;
   border: 1px solid rgba(0, 0, 0, 0.15);
   box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.12);
+  position: relative;
+  z-index: 100;
 }
 
-.picker_menu,
-.selector_menu {
-  position: absolute;
-  transform: translateY(-1px);
-}
-
-.picker_menu_active {
+.menu_active {
   max-height: calc(48px * 10 - 10px);
   overflow: scroll;
+  position: absolute;
+  transform: translateY(-1px);
+  width: 100%;
 }
 
-.picker_menu_active::-webkit-scrollbar,
+.menu_active::-webkit-scrollbar,
 .picker::-webkit-scrollbar {
   width: 0;
   height: 0;
@@ -89,8 +86,28 @@ svg {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
 }
 
+.backdrop {
+  z-index: -1;
+  backdrop-filter: blur(0px) saturate(100%);
+}
+
+.backdrop_active {
+  z-index: 0;
+  backdrop-filter: blur(4px) saturate(20%);
+}
+
+.backdrop,
+.backdrop_active {
+  width: 100vw; 
+  height: 100vh;
+  position: fixed; 
+  left: 0; 
+  top: 0;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+}
+
 @media (max-width: 600px) {
-  .picker_menu_active {
+  .menu_active {
     max-height: calc(48px * 5 - 14px);
   }
 }
