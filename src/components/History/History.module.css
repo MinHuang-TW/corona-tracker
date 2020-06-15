@@ -15,35 +15,16 @@
   width: 90%;
 }
 
-.title {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: rgba(0, 0, 0, 0.54);
-  cursor: pointer;
-}
-
-svg {
-  display: none;
-}
-
-.title:hover {
-  text-decoration: underline;
-}
-
-.title:hover svg {
-  /* fill: rgba(139, 0, 0); */
-  display: initial;
-}
-
 .type_button {
   margin: 32px 4px;
   padding: 8px 24px;
   font-size: 12px;
-  letter-spacing: 1;
+  letter-spacing: 1px;
   font-weight: 500;
   border-radius: 4px;
   cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.54);
+  color: rgba(0, 0, 0, 0.54);
 }
 
 .chart {

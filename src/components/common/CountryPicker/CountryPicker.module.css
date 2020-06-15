@@ -44,7 +44,7 @@
   overflow: scroll;
   position: absolute;
   transform: translateY(-1px);
-  transition: max-height 0.15s cubic-bezier(0.05, 0.2, 0.2, 1) 0s;
+  transition: max-height 0.15s ease-out;
 }
 
 .menu_active::-webkit-scrollbar,

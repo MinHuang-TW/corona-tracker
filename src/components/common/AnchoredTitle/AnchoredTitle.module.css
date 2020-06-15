@@ -1,0 +1,33 @@
+.title,
+.title_dark {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin-bottom: 25px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.title svg,
+.title_dark svg {
+  display: none;
+}
+
+.title:hover,
+.title_dark:hover {
+  text-decoration: underline;
+}
+
+.title:hover svg,
+.title_dark:hover svg {
+  display: initial;
+}
+
+.title_dark:hover svg {
+  fill: white;
+}
+
+.title:hover svg {
+  fill: rgba(0, 0, 0, 0.54);
+}
+

@@ -12,29 +12,6 @@
   width: 100%;
 }
 
-.title {
-  color: white;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  margin-bottom: 25px;
-  cursor: pointer;
-  z-index: 1;
-}
-
-svg {
-  display: none;
-}
-
-.title:hover {
-  text-decoration: underline;
-}
-
-.title:hover svg {
-  fill: white;
-  display: initial;
-}
-
 .picker {
   width: 50%;
   margin-bottom: 24px;
@@ -44,6 +21,57 @@ svg {
   margin: auto;
   width: 50%;
   margin-top: 40px;
+}
+
+.box {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+
+.box_chart {
+  width: 40%;
+  margin: 10% auto;
+}
+
+.box_text {
+  text-align: right;
+  margin-right: 8%;
+}
+
+.box_text_title {
+  font-size: 21px;
+  margin-bottom: 24px;
+}
+
+.box_text_list {
+  margin: 16px auto;
+}
+
+.box_text_list:last-child {
+  margin-bottom: 0px;
+}
+
+.box_text_list span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.box_text_list p {
+  font-size: 12px;
+  display: inline-block;
+}
+
+.box_text_list h2 {
+  margin-top: 4px;
+  font-weight: 500;
+  font-size: 24px;
 }
 
 @media (max-width: 1280px) {
@@ -69,5 +97,39 @@ svg {
 
   .picker {
     width: 90%;
+  }
+
+  .box {
+    flex-direction: column;
+  }
+
+  .box_chart {
+    width: 50%;
+  }
+
+  .box_text {
+    margin-right: 0;
+    width: 80%;
+  }
+
+  .box_text_title {
+    /* margin: auto; */
+    text-align: left;
+    margin-bottom: 8px;
+  }
+
+  .box_text_list {
+    margin: 8px 0px;
+  }
+
+  .box_text_data {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .box_text_list h2 {
+    font-size: 21px;
+    margin-bottom: 24px;
   }
 }

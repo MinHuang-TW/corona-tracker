@@ -1,18 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { fetchHistoryData, fetchHistoryOverall } from '../../api';
-import { CountryPicker, Progress, LineChart, Anchor } from '../common';
-import { color } from '../common/Chart/chartConfig';
+import { AnchoredTitle, CountryPicker, Progress, LineChart } from '../common';
 import styles from './History.module.css';
 
 const History = ({ countries }) => {
   const [countriesData, setCountriesData] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [activeType, setActiveType] = useState('cases');
-  const types = [
-    { type: 'cases', color: color.confirmed }, 
-    { type: 'recovered', color: color.recovered }, 
-    { type: 'deaths', color: color.deaths }, 
-  ];
+  const types = ['cases', 'recovered', 'deaths'];
 
   const capitalize = (str, lower = false) => 
     (lower ? str.toLowerCase() : str)
@@ -20,7 +15,7 @@ const History = ({ countries }) => {
 
   const getTypeText = (type) => (type === 'cases' ? 'Confirmed' : type);
 
-  const TypeButton = ({ type, color }) => {
+  const TypeButton = ({ type }) => {
     const selected = activeType === type;
     const handleSetType = useCallback(() => setActiveType(type), [type]);
     return (
@@ -28,9 +23,8 @@ const History = ({ countries }) => {
         onClick={handleSetType}
         className={styles.type_button}
         style={{
-          background: selected && `${color}`,
-          border: `1px solid ${color}`,
-          color: selected ? 'white' : `${color}`,
+          background: selected && 'rgba(0, 0, 0, 0.54)',
+          color: selected && 'white',
         }}
       >
         {getTypeText(type).toUpperCase()}
@@ -50,13 +44,16 @@ const History = ({ countries }) => {
 
   return (
     <section id='history' className={styles.container}>
-      <a href='#history' className={styles.title}>
+      <AnchoredTitle hrefId='history' color='rgba(0, 0, 0, 0.54)'>
+        {capitalize(getTypeText(activeType))} cases over time
+      </AnchoredTitle>
+      {/* <a href='#history' className={styles.title}>
         <Anchor />
         <h1>{capitalize(getTypeText(activeType))} cases over time</h1>
-      </a>
+      </a> */}
 
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        {types.map((type, index) => (<TypeButton key={index} {...type} />))}
+        {types.map((type, index) => (<TypeButton key={index} type={type} />))}
       </div>
 
       {countriesData.length ? (
