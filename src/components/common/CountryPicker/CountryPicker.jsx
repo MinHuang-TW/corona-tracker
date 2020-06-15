@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { List } from '../../common';
+import { useKey } from '../../Hook';
 import { Chip, Avatar, Backdrop } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import PublicIcon from '@material-ui/icons/Public';
@@ -64,8 +65,8 @@ const CountryPicker = ({
   selector,
   radius,
 }) => {
-  const [key, setKey] = useState(null);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [key, setKey] = useKey(setPickerOpen);
 
   const filterList = (text) => {
     const condition = selector 
@@ -106,19 +107,7 @@ const CountryPicker = ({
     if (country.length >= MAX_ITEM) return;
     setPickerOpen(!pickerOpen);
     setKey(null);
-  }, [pickerOpen, country]);
-
-  useEffect(() => {
-    const handleKeyDown = ({ key, keyCode }) => {
-      if (key === 'Escape') setPickerOpen(false);
-      if ((keyCode >= 65) & (keyCode <= 90)) setKey(key.toUpperCase());
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    }
-    // eslint-disable-next-line
-  }, []);
+  }, [pickerOpen, country]); // eslint-disable-line
 
   return (
     <div className={styles.container} onBlur={handleClose} tabIndex={0}>

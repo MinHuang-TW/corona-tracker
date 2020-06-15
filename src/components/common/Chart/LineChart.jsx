@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
+import { useWindowWidth } from '../../Hook';
 import { gridLines, tooltips, ticks, ticks_amount, line_datasets, drawHoverLine } from './chartConfig';
 import { Chart, Line } from 'react-chartjs-2';
 import moment from 'moment';
 
-const LineChart = ({ selectedCountries }) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+const LineChart = ({ selectedCountries, type }) => {
+  const windowWidth = useWindowWidth();
   const hasHistoryData = selectedCountries.length;
-  const timeline = hasHistoryData && selectedCountries[0].timeline.cases;
+  const timeline = hasHistoryData && selectedCountries[0].timeline[type];
   const colorPalette = ['#c45850', '#e8c3b9', '#3cba9f', '#3e95cd', '#8e5ea2'];
   moment.suppressDeprecationWarnings = true;
 
   const datasets = hasHistoryData ? selectedCountries
     .map(({ name, timeline }, index) => ({
       label: ` ${name}`,
-      data: timeline.cases,
+      data: timeline[type],
       color: colorPalette[index],
     })
   ) : [];
@@ -89,10 +90,6 @@ const LineChart = ({ selectedCountries }) => {
     },
   };
 
-  const handleResize = useCallback(() => {
-    setWindowWidth(window.innerWidth);
-  }, []);
-
   useEffect(() => {
     Chart.pluginService.register({
       afterDraw: (chart) => {
@@ -101,13 +98,6 @@ const LineChart = ({ selectedCountries }) => {
       },
     });
   }, []);
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    }
-  }, [handleResize]);
 
   return (
     <>
