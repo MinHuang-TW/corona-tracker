@@ -1,22 +1,25 @@
 export const color = {
-  confirmed: 'rgba(139, 0, 0)',
-  recovered: 'rgba(73,192,182)',
-  deaths: 'rgba(34, 34, 34)',
+  confirmed: '#CF6679',
+  recovered: '#03DAC5',
+  deaths: '#BB86FC',
 };
 
 export const background = {
-  confirmed: 'rgba(139, 0, 0, 0.2)',
-  recovered: 'rgba(73,192,182, 0.2)',
-  deaths: 'rgba(34, 34, 34, 0.2)',
+  confirmed: '#CF6679',
+  recovered: '#03DAC5',
+  deaths: '#BB86FC',
 };
 
 export const gridLines = {
   drawOnChartArea: false,
-  color: 'rgb(158, 158, 158)',
+  color: 'rgba(255, 255, 255, 0.6)',
   tickMarkLength: 5,
 };
 
-export const ticks = { padding: 8 };
+export const ticks = { 
+  padding: 8, 
+  fontColor: 'rgba(255, 255, 255, 0.6)',
+};
 
 export const ticks_amount = {
   ...ticks,
@@ -56,7 +59,7 @@ export const drawHoverLine = (chart) => {
     ctx.moveTo(x, topY);
     ctx.lineTo(x, bottomY);
     ctx.lineWidth = 0.1;
-    ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
     ctx.setLineDash([3, 3]);
     ctx.stroke();
     ctx.restore();

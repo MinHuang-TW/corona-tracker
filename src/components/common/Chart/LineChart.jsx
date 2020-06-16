@@ -18,7 +18,7 @@ const LineChart = ({ selectedCountries, type }) => {
       color: colorPalette[index],
     })
   ) : [];
-
+console.log(windowWidth)
   const data = {
     labels: Object.keys(timeline).map((date) =>
       moment(new Date(date)).format('MMMM D, YYYY')
@@ -45,6 +45,7 @@ const LineChart = ({ selectedCountries, type }) => {
       text: 'Toggle different countries',
       position: 'bottom',
       fontStyle: 'normal',
+      fontColor: 'rgba(255, 255, 255, 0.6)',
     },
     scales: {
       yAxes: [{
@@ -78,6 +79,7 @@ const LineChart = ({ selectedCountries, type }) => {
       labels: { 
         boxWidth: 12,
         fontStyle: 'bold', 
+        fontColor: 'rgba(255, 255, 255, 0.87)',
       },
       onHover: (e) => (e.target.style.cursor = 'pointer'),
     },

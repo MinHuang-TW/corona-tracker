@@ -1,61 +1,57 @@
-.container {
+/* .container {
   min-height: 100vh;
-  border-bottom: 8px solid #e8eaed;
-}
+} */
 
 .body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-  top: -80px;
-  width: 100%;
+  /* position: relative; */
+  /* top: -80px; */
+  width: 80%;
+  margin: auto;
+  margin-top: 24px;
 }
 
 .picker {
-  width: 50%;
-  margin-bottom: 24px;
+  width: 100%;
 }
 
-.chart {
-  margin: auto;
-  width: 50%;
-  margin-top: 40px;
-}
-
+.block,
 .box {
-  width: 90%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.box_chart {
-  width: 40%;
-  margin: 10% auto;
-}
-
-.box_text {
-  text-align: right;
-  margin-right: 8%;
-}
-
-.box_text_title {
-  font-size: 21px;
-  margin-bottom: 24px;
-}
-
-.box_text_list {
+.block {
   margin: 16px auto;
 }
 
-.box_text_list:last-child {
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.chart {
+  width: 30%;
+  margin: auto;
+}
+
+.content {
+  width: 30%;
+}
+
+.list {
+  margin: 16px auto;
+}
+
+.list:last-child {
   margin-bottom: 0px;
 }
 
-.box_text_list span {
+.list span {
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -63,73 +59,68 @@
   margin-right: 8px;
 }
 
-.box_text_list p {
+.list p {
   font-size: 12px;
   display: inline-block;
+  color: rgba(255, 255, 255, 0.6);
 }
 
-.box_text_list h2 {
+.list h2 {
   margin-top: 4px;
   font-weight: 500;
   font-size: 24px;
 }
 
 @media (max-width: 1280px) {
-  .chart {
+  /* .chart {
     width: 60%;
-  }
+  } */
 }
 
 @media (max-width: 960px) {
+  .body {
+    width: 90%;
+  }
+
   .chart {
-    width: 70%;
+    width: 40%;
   }
 
   .picker {
-    width: 70%;
+    width: 100%;
   }
 }
 
 @media (max-width: 600px) {
-  .chart {
-    width: 80%;
+  .body {
+    width: 95%;
   }
 
-  .picker {
-    width: 90%;
+  .chart {
+    width: 70%;
   }
+
+  /* .picker {
+    width: 90%;
+  } */
 
   .box {
     flex-direction: column;
   }
 
-  .box_chart {
-    width: 50%;
+  .content {
+    width: 100%;
+    margin-top: 24px;
   }
 
-  .box_text {
-    margin-right: 0;
-    width: 80%;
-  }
-
-  .box_text_title {
-    /* margin: auto; */
-    text-align: left;
-    margin-bottom: 8px;
-  }
-
-  .box_text_list {
-    margin: 8px 0px;
-  }
-
-  .box_text_data {
+  .lists {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
 
-  .box_text_list h2 {
-    font-size: 21px;
-    margin-bottom: 24px;
+  .list {
+    margin: 0px;
+    text-align: center;
   }
 }

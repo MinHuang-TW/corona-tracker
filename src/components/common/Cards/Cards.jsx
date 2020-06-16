@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card, CardContent } from '@material-ui/core';
 import Countup from 'react-countup';
 import cx from 'classnames';
 import styles from './Cards.module.css';
@@ -11,49 +10,40 @@ const Cards = ({
 
   const contents = [{
     title: 'Confirmed',
-    style: styles.infected,
-    styleToday: styles.infectedToday,
+    style: styles.confirmed,
     value: cases,
     todayValue: todayCases,
-    text: 'of active cases until',
   }, {
     title: 'Recovered',
     style: styles.recovered,
-    styleToday: styles.recoveredToday,
     value: recovered,
     todayValue: todayRecovered,
-    text: 'of recoveries until',
   }, {
     title: 'Deaths',
     style: styles.deaths,
-    styleToday: styles.deathsToday,
     value: deaths,
     todayValue: todayDeaths,
-    text: 'of deaths until',
   }];
-
+  
   return (
     <div className={styles.container}>
-      {contents.map(({ style, styleToday, title, value, todayValue }) => (
-        <Card key={title} className={cx(styles.card, style)}>
-          <CardContent>
-            <p className={styles.card_title}>{title}</p>
+      {contents.map(({ style, title, value, todayValue }) => (
+        <div key={title} className={styles.card}>
+          <div className={cx(styles.indicator, style)} />
+          <p className={styles.title}>{title}</p>
 
-            <div className={styles.card_text}>
-              <p className={styles.card_value}>
-                <Countup start={0} end={value} duration={1} separator=',' />
-              </p>
+          <div className={styles.text}>
+            <p className={styles.value}>
+              <Countup start={0} end={value} duration={1} separator=',' />
+            </p>
 
-              {todayValue !== 0 && (
-                <div>
-                  <span className={styleToday}>
-                    + {todayValue.toLocaleString()}
-                  </span>
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+            {todayValue !== 0 && (
+              <span className={cx(style, styles.badge)}>
+                + {todayValue.toLocaleString()}
+              </span>
+            )}
+          </div>
+        </div>
       ))}
     </div>
   );

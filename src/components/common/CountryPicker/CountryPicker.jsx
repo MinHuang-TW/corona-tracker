@@ -108,9 +108,7 @@ const CountryPicker = ({
 
   return (
     <div className={styles.container} onBlur={handleClose} tabIndex={0}>
-      {pickerOpen 
-        ? <div className={styles.backdrop_active} onClick={handleClose} /> 
-        : <div className={styles.backdrop} />}
+      {pickerOpen &&  (<div className={styles.backdrop} onClick={handleClose} />)}
       <div 
         className={selector ? styles.selector : styles.picker} 
         style={{ borderRadius: pickerOpen 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { fetchHistoryData, fetchHistoryOverall } from '../../api';
-import { AnchoredTitle, CountryPicker, Progress, LineChart } from '../common';
+import { color } from '../common/Chart/chartConfig';
+import { AnchoredTitle, AnchoredSubTitle, CountryPicker, Progress, LineChart } from '../common';
 import styles from './History.module.css';
 
 const History = ({ countries }) => {
@@ -16,15 +17,18 @@ const History = ({ countries }) => {
   const getTypeText = (type) => (type === 'cases' ? 'Confirmed' : type);
 
   const TypeButton = ({ type }) => {
+    const color_pallete = color[type === 'cases' ? 'confirmed' : type];
     const selected = activeType === type;
     const handleSetType = useCallback(() => setActiveType(type), [type]);
     return (
       <div 
         onClick={handleSetType}
-        className={styles.type_button}
+        className={styles.button}
         style={{
-          background: selected && 'rgba(0, 0, 0, 0.54)',
-          color: selected && 'white',
+          background: selected && color_pallete,
+          color: selected && 'black',
+          borderColor: selected && color_pallete,
+          fontWeight: selected && 600,
         }}
       >
         {getTypeText(type).toUpperCase()}
@@ -44,15 +48,11 @@ const History = ({ countries }) => {
 
   return (
     <section id='history' className={styles.container}>
-      <AnchoredTitle hrefId='history' color='rgba(0, 0, 0, 0.54)'>
-        {capitalize(getTypeText(activeType))} cases over time
+      <AnchoredTitle hrefId='history'>
+        Cases comparison
       </AnchoredTitle>
-      {/* <a href='#history' className={styles.title}>
-        <Anchor />
-        <h1>{capitalize(getTypeText(activeType))} cases over time</h1>
-      </a> */}
 
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div className={styles.buttons}>
         {types.map((type, index) => (<TypeButton key={index} type={type} />))}
       </div>
 
@@ -67,8 +67,18 @@ const History = ({ countries }) => {
               selector
             />
           </div>
-          <div className={styles.chart}>
-            <LineChart selectedCountries={selectedCountries} type={activeType} />
+          <div id='overTime' className={styles.chart}>
+            <div style={{ marginLeft: 16, marginBottom: 16 }}>
+              <AnchoredSubTitle 
+                hrefId='overTime'
+                title='Cases over time'
+                subTitle={`${capitalize(getTypeText(activeType))} cases`}
+              />
+            </div>
+            <LineChart 
+              selectedCountries={selectedCountries} 
+              type={activeType} 
+            />
           </div>
         </>
       ) : (

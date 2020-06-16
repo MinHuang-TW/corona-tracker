@@ -107,7 +107,8 @@ const Map = ({
     <MapGL
       {...viewport}
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-      mapStyle='mapbox://styles/min-huang/ckb2wh38l00aw1iph6kncjlx0'
+      mapStyle='mapbox://styles/mapbox/dark-v10'
+      // mapStyle='mapbox://styles/min-huang/ckb2wh38l00aw1iph6kncjlx0'
       interactiveLayerIds={[clusterLayer.id]}
       maxZoom={8}
       minZoom={1}

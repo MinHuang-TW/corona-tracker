@@ -1,43 +1,58 @@
 .container {
-  margin: 1% 0 2%;
   display: flex;
   justify-content: center;
-  /* flex-basis: 0; */
-  width: 70%;
+  position: relative;
+  width: 100%;
 }
 
 .card {
-  margin: 8px !important;
+  margin: 4px;
+  margin-bottom: 8px;
   width: 33.3%;
-  padding: 8px;
-  padding-bottom: 0px;
-  z-index: -9999 !important;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.07);
 }
 
-.card_title {
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.54);
+.card:first-child {
+  margin-left: 0px;
 }
 
-.card_text {
+.card:last-child {
+  margin-right: 0px;
+}
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+.title {
+  display: inline-block;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.text {
   display: flex;
   justify-content: center;
   margin-top: 8px;
 }
 
-.card_value {
+.value {
   font-size: 24px;
   font-weight: 500;
   margin: 8px;
+  color: rgba(255, 255, 255, 0.87);
 }
 
-.infectedToday,
-.recoveredToday,
-.deathsToday {
+.badge {
   display: inline-block;
   font-size: 12px;
   font-weight: 700;
-  color: white;
+  color: black;
   margin-top: -8px;
   padding-left: 8px; 
   padding-right: 10px; 
@@ -47,74 +62,63 @@
   line-height: 24px;
 }
 
-.infected {
-  border-bottom: 8px solid rgba(139, 0, 0);
+.confirmed {
+  background: #CF6679;
 }
 
 .recovered {
-  border-bottom: 8px solid rgba(73,192,182);
+  background: #03DAC5;
 }
 
 .deaths {
-  border-bottom: 8px solid rgba(34, 34, 34);
+  background: #BB86FC;
 }
 
-.infectedToday {
-  background: rgba(139, 0, 0);
-}
-
-.recoveredToday {
-  background: rgba(73,192,182);
-}
-
-.deathsToday {
-  background: rgba(34, 34, 34);
-}
-
-@media (max-width: 1280px) {
+/* @media (max-width: 1280px) {
   .container {
     width: 85%;
   }
-}
+} */
 
-@media (max-width: 960px) {
-  .container {
+/* @media (max-width: 960px) { */
+  /* .container {
     width: 100vw;
   }
 
   .card {
     width: 90%;
-  }
+  } */
 
-  .card_title {
+  /* .title {
     font-size: 12px;
   }
 
-  .card_value {
+  .value {
     font-size: 18px;
-  }
-}
+  } */
+/* } */
 
-@media (max-width: 720px) {
+@media (max-width: 800px) {
   .container {
     width: 100%;
     flex-direction: column;
   }
 
   .card {
-    margin: 8px auto !important;
+    margin: 4px auto;
+    width: 100%;
   }
 
-  .card_text {
+  .card:last-child {
+    margin-bottom: 8px;
+  }
+
+  .text {
     flex-direction: row;
     align-items: unset;
   }
 
-  .card_value {
+  .value {
     margin-left: 0;
   }
-
-  /* .date {
-    margin-left: 8px !important;
-  } */
 }

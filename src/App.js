@@ -26,7 +26,7 @@ const App = () => {
         <History countries={countries} />
       </div>
 
-      <footer style={{ zIndex: -1 }}>
+      <footer>
         <p>{`Updated ${lastUpdated}, `}</p>
         <p>
           {`Source: `}

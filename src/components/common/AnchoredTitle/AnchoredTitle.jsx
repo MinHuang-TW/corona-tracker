@@ -2,15 +2,19 @@ import React from 'react';
 import Anchor from './Anchor';
 import styles from './AnchoredTitle.module.css';
 
-const AnchoredTitle = ({ hrefId, color, children, dark }) => (
-  <a
-    href={`#${hrefId}`}
-    className={dark ? styles.title_dark : styles.title}
-    style={{ color }}
-  >
+export const AnchoredTitle = ({ hrefId, color = 'rgba(255, 255, 255, 0.87)', children }) => (
+  <a href={`#${hrefId}`} className={styles.title} style={{ color, marginBottom: 24 }}>
     <Anchor color={color} />
     <h1>{children}</h1>
   </a>
 );
 
-export default AnchoredTitle;
+export const AnchoredSubTitle = ({ hrefId, color = 'rgba(255, 255, 255, 0.87)', title, subTitle }) => (
+  <>
+    <a href={`#${hrefId}`} className={styles.title} style={{ color }}>
+      <Anchor color={color} size={12} />
+      <h1 className={styles.sub_title}>{title}</h1>
+    </a>
+    <p className={styles.text}>{subTitle}</p>
+  </>
+);

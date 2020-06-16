@@ -22,11 +22,18 @@
 }
 
 .menu_active,
-.picker,
+.picker {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid #121212;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0);
+  position: relative;
+  z-index: 100;
+}
+
 .selector {
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.12);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid #121212;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0);
   position: relative;
   z-index: 100;
 }
@@ -96,23 +103,16 @@ svg {
 }
 
 .backdrop {
-  z-index: -1;
-  backdrop-filter: blur(0px) saturate(100%);
-}
-
-.backdrop_active {
-  z-index: 0;
-  backdrop-filter: blur(4px) saturate(20%);
-}
-
-.backdrop,
-.backdrop_active {
-  width: 100vw; 
-  height: 100vh;
+  width: 100%; 
+  height: 100%;
   position: fixed; 
   left: 0; 
   top: 0;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  backdrop-filter: blur(4px) saturate(20%);
+  /* transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s; */
 }
 
 @media (max-width: 600px) {
