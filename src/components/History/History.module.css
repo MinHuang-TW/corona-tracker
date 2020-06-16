@@ -5,7 +5,7 @@
   align-items: center;
   position: relative;
   width: 100%;
-  padding: 24px 0px;
+  padding: 32px 0px;
 }
 
 .selector {
@@ -24,9 +24,9 @@
   width: 100%;
   margin: auto;
   margin-right: 8px;
-  padding: 8px 16px;
+  padding: 16px;
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 1px;
   font-weight: 500;
   cursor: pointer;
@@ -42,26 +42,50 @@
   background: rgba(255, 255, 255, 0.12);
 }
 
-.chart {
+.block {
   width: 100%;
   background: rgba(255, 255, 255, 0.05);
-  padding: 24px 8px 0px;
+  padding: 32px 0px;
 }
 
 .title {
-  font-size: 21px;
+  margin: 0px 0px 32px 32px;
 }
 
-.sub_title {
-  font-size: 14px;
-  margin-top: 8px;
-  margin-bottom: 8%;
-  color: rgba(255, 255, 255, 0.6);
+.chart {
+  width: 70%;
+  margin: auto;
 }
 
-.title,
-.sub_title {
-  margin-left: 4%;
+@media (max-width: 960px) {
+  .chart {
+    width: 85%;
+  }
+}
+
+@media (max-width: 600px) {
+  /* .button {
+    margin: 0px auto 8px;
+    padding: 12px;
+    font-size: 12px;
+  } */
+
+  .block {
+    padding: 16px 0px;
+  }
+
+  .title {
+    margin: 0px 0px 32px 24px;
+  }
+
+  .chart {
+    width: 95%;
+  }
+
+  .button {
+    font-size: 12px;
+    padding: 10px;
+  }
 }
 
 @media (max-width: 355px) {
@@ -72,6 +96,7 @@
   .button {
     margin: 0px auto 8px;
     padding: 12px;
+    font-size: 12px;
   }
 
   .button:last-child {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import MapGL, { FlyToInterpolator, Source, Layer } from 'react-map-gl';
+import { color } from '../common/Chart/chartConfig';
 import PopupContent from '../PopupContent/PopupContent';
 import { clusterRadius, setOpacity } from './clusterStyle';
 
@@ -40,10 +41,10 @@ const Map = ({
   const clusterLayer = {
     id: 'cluster-circle',
     paint: {
-      'circle-color': 'rgb(139, 0, 0)',
+      'circle-color': color.confirmed,
       'circle-opacity': cluster.opacity,
       'circle-radius': clusterRadius,
-      'circle-stroke-color': 'rgb(139, 0, 0)',
+      'circle-stroke-color': color.confirmed,
       'circle-stroke-opacity': cluster.strokeOpacity,
       'circle-stroke-width': 1,
     },

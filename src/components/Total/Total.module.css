@@ -6,11 +6,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* position: relative; */
-  /* top: -80px; */
   width: 80%;
   margin: auto;
-  margin-top: 24px;
+  top: -80px;
+  position: relative;
+  /* margin-top: 24px; */
 }
 
 .picker {
@@ -20,10 +20,10 @@
 .block,
 .box {
   width: 100%;
-  background: rgba(255, 255, 255, 0.05);
 }
 
 .block {
+  background: rgba(255, 255, 255, 0.05);
   margin: 16px auto;
 }
 
@@ -31,7 +31,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24px;
+  padding: 16px 24px 24px;
 }
 
 .chart {
@@ -109,7 +109,7 @@
   }
 
   .content {
-    width: 100%;
+    width: 80%;
     margin-top: 24px;
   }
 
@@ -122,5 +122,11 @@
   .list {
     margin: 0px;
     text-align: center;
+  }
+}
+
+@media (max-width: 450px) {
+  .content {
+    width: 100%;
   }
 }

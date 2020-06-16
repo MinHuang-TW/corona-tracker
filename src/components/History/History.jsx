@@ -48,9 +48,7 @@ const History = ({ countries }) => {
 
   return (
     <section id='history' className={styles.container}>
-      <AnchoredTitle hrefId='history'>
-        Cases comparison
-      </AnchoredTitle>
+      <AnchoredTitle hrefId='history'>Cases comparison</AnchoredTitle>
 
       <div className={styles.buttons}>
         {types.map((type, index) => (<TypeButton key={index} type={type} />))}
@@ -63,23 +61,27 @@ const History = ({ countries }) => {
               countries={countriesData}
               country={selectedCountries}
               setCountry={setSelectedCountries}
-              radius={6}
+              radius={0}
               selector
             />
           </div>
-          <div id='overTime' className={styles.chart}>
-            <div style={{ marginLeft: 16, marginBottom: 16 }}>
-              <AnchoredSubTitle 
-                hrefId='overTime'
-                title='Cases over time'
-                subTitle={`${capitalize(getTypeText(activeType))} cases`}
-              />
-            </div>
-            <LineChart 
-              selectedCountries={selectedCountries} 
-              type={activeType} 
-            />
-          </div>
+
+          {selectedCountries && selectedCountries.length > 0 && (
+            <div id='overTime' className={styles.block}>
+              <div className={styles.title}>
+                <AnchoredSubTitle 
+                  hrefId='overTime'
+                  title='Cases over time'
+                  subTitle={`${capitalize(getTypeText(activeType))} cases`}
+                />
+              </div>
+              <div className={styles.chart}>
+                <LineChart 
+                  selectedCountries={selectedCountries} 
+                  type={activeType} 
+                />
+              </div>
+            </div>)}
         </>
       ) : (
         <Progress />

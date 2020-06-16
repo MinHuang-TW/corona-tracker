@@ -1,5 +1,5 @@
 .popup {
-  color: rgba(0, 0, 0, 0.54);
+  color: rgba(255, 255, 255, 0.6);
   padding: 16px;
 }
 
@@ -10,6 +10,7 @@
   vertical-align: middle;
   max-width: 88px;
   display: inline-block;
+  color: rgba(255, 255, 255, 0.87);
 }
 
 img {
@@ -25,7 +26,7 @@ img {
 }
 
 .close:hover {
-  color: rgba(139, 0, 0);
+  color: #CF6679;
 }
 
 .popup_text {
@@ -41,7 +42,7 @@ img {
 
 .popup_text strong {
   margin-left: 16px;
-  color: black;
+  color: rgba(255, 255, 255, 0.87);
   font-weight: 500;
 }
 

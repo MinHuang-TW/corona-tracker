@@ -124,7 +124,10 @@ const CountryPicker = ({
       {pickerOpen ? (
         <div   
           className={styles.menu_active}
-          style={{ borderRadius: `0 0 ${radius}px ${radius}px` }}
+          style={{ 
+            borderRadius: `0 0 ${radius}px ${radius}px`,
+            borderColor: selector && 'rgba(255, 255, 255, 0.6)',
+          }}
         >
           {countries
             .filter(({ name }) => filterList(name))
