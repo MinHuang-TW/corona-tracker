@@ -80,11 +80,26 @@ const History = ({ countries, updated }) => {
 
           <Block
             id='countriesTotal'
-            title='New cases' 
+            title='Total cases' 
             subtitle={`${capitalize(getTypeText(activeType))} cases`}
             source={selected && `Updated ${updated}`}
           >
-
+            <table style={{ width: '90%', textAlign: 'right' }}>
+              <thead>
+                <tr>
+                  <th>Country</th>
+                  <th>Cases</th>
+                  <th>Cases/ 1M</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>USA</td>
+                  <td>556</td>
+                  <td>87</td>
+                </tr>
+              </tbody>
+            </table>
           </Block>
         </>
       ) : (

@@ -16,7 +16,7 @@ const Total = ({ countries, data, setData, updated }) => {
     const total = (data.cases + data.recovered + data.deaths);
     return parseFloat(amount / total * 100);
   };
-
+  
   const dataLists = [
     { text: 'Confirmed', data: data.cases },
     { text: 'Recovered', data: data.recovered },
