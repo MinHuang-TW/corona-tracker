@@ -51,12 +51,12 @@ const History = ({ countries, updated }) => {
     <section id='history' className={styles.container}>
       <AnchoredTitle hrefId='history'>Cases comparison</AnchoredTitle>
 
-      <div className={styles.buttons}>
-        {types.map((type, index) => (<TypeButton key={index} type={type} />))}
-      </div>
-
       {countriesData.length ? (
         <>
+          <div className={styles.buttons}>
+            {types.map((type, index) => (<TypeButton key={index} type={type} />))}
+          </div>
+
           <div className={styles.selector}>
             <CountryPicker
               countries={countriesData}
@@ -77,6 +77,15 @@ const History = ({ countries, updated }) => {
               <div className={styles.chart}>
                 <LineChart selectedCountries={selectedCountries} type={activeType} />
               </div>)}
+          </Block>
+
+          <Block
+            id='countriesTotal'
+            title='New cases' 
+            subtitle={`${capitalize(getTypeText(activeType))} cases`}
+            source={selected && `Updated ${updated}`}
+          >
+
           </Block>
         </>
       ) : (

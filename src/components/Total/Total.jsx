@@ -12,9 +12,9 @@ const Total = ({ countries, data, setData, updated }) => {
   const countryName = country && country.name;
 
   const getRatio = (amount) => {
-    if (amount === 0) return '-';
+    if (amount === 0) return 0;
     const total = (data.cases + data.recovered + data.deaths);
-    return (amount / total * 100);
+    return parseFloat(amount / total * 100);
   };
 
   const dataLists = [

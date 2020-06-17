@@ -1,7 +1,7 @@
 .block {
   width: 100%;
   background: rgba(255, 255, 255, 0.05);
-  padding: 32px 0px 16px;
+  padding: 16px 0px;
   margin-top: 16px;
 }
 
@@ -10,7 +10,10 @@
 }
 
 .title {
-  margin: 0px 0px 32px 32px;
+  margin: 0px 0px 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .source {
@@ -21,12 +24,30 @@
   margin-top: 16px;
 }
 
+.more,
+.less {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+.more {
+  transform: rotate(0deg);
+}
+
+.less {
+  transform: rotate(180deg);
+}
+
 @media (max-width: 600px) {
   .block {
     padding: 16px 0px;
   }
   
   .title {
-    margin: 0px 0px 16px 24px;
+    margin-left: 24px;
   }
 }
