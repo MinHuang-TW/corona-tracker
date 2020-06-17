@@ -105,12 +105,13 @@
   }
 
   .card {
-    margin: 4px auto;
+    margin: 0;
+    margin-bottom: 8px;
     width: 100%;
   }
 
   .card:last-child {
-    margin-bottom: 8px;
+    margin-bottom: 0;
   }
 
   .text {

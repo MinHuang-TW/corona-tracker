@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { fetchData } from '../../api';
 import { Map } from '../../components';
 import { color } from '../common/Chart/chartConfig';
-import { AnchoredTitle, AnchoredSubTitle, CountryPicker, Cards, PieChart, Progress } from '../common';
+import { AnchoredTitle, Block, CountryPicker, Cards, PieChart, Progress } from '../common';
 import styles from './Total.module.css';
 
-const Total = ({ countries, data, setData }) => {
+const Total = ({ countries, data, setData, updated }) => {
   const [country, setCountry] = useState(null);
   const [popupOpen, setPopupOpen] = useState(false);
+  const countryName = country && country.name;
 
   const getRatio = (amount) => {
     if (amount === 0) return '-';
@@ -30,13 +31,13 @@ const Total = ({ countries, data, setData }) => {
   };
 
   return (
-    <section id='map' className={styles.container}>
+    <section id='map'>
       <div style={{
         position: 'absolute',
         top: '40vh',
         width: '100vw', height: '10vh',
         zIndex: 2,
-        background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(18, 18, 18, 1))',
+        background: 'linear-gradient(to bottom, rgba(18, 18, 18, 0), rgba(18, 18, 18, 1))',
       }} />
       <Map
         country={country}
@@ -48,40 +49,33 @@ const Total = ({ countries, data, setData }) => {
         setPopupOpen={setPopupOpen}
       />
       {countries.length ? (
-        <div className={styles.body} style={{ zIndex: 5 }}>
-          <AnchoredTitle hrefId='map'>
-            Coronavirus Cases
-          </AnchoredTitle>
+        <div className={styles.body}>
+          <AnchoredTitle hrefId='map'>Coronavirus Cases</AnchoredTitle>
           
-          <div className={styles.picker}>
-            <CountryPicker
-              country={country}
-              setCountry={setCountry}
-              countries={countries}
-              handleCountry={handleCountry}
-              setPopupOpen={setPopupOpen}
-              radius={0}
-            />
-          </div>
-          <div id='total' className={styles.block}>
-            <div style={{ margin: '16px 24px' }}>
-              <AnchoredSubTitle 
-                hrefId='total'
-                title='Total cases'
-                subTitle={country && country.name}
-              />
-            </div>
-            <Cards data={data} />
-          </div>
+          <CountryPicker
+            country={country}
+            setCountry={setCountry}
+            countries={countries}
+            handleCountry={handleCountry}
+            setPopupOpen={setPopupOpen}
+            radius={0}
+          />
 
-          <div id='distribution' className={styles.block}>
-            <div style={{ margin: '16px 24px' }}>
-              <AnchoredSubTitle 
-                hrefId='distribution'
-                title='Cases distribution'
-                subTitle={country && country.name}
-              />
-            </div>
+          <Block 
+            id='total' 
+            title='Total cases' 
+            subtitle={countryName}
+            source={`Updated ${updated}`}
+          >
+            <Cards data={data} />
+          </Block>
+
+          <Block 
+            id='distribution' 
+            title='Cases distribution' 
+            subtitle={countryName}
+            source={`Updated ${updated}`}
+          >
             <div className={styles.box}>
               <div className={styles.chart}>
                 <PieChart data={data} />
@@ -99,8 +93,7 @@ const Total = ({ countries, data, setData }) => {
                 </div>
               </div>
             </div>
-
-          </div>
+          </Block>
         </div>
       ) : (
         <Progress />

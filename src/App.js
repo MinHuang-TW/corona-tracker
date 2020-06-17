@@ -7,7 +7,6 @@ import moment from 'moment';
 const App = () => {
   const [data, setData] = useState([]);
   const [countries, setCountries] = useState([]);
-
   const lastUpdated = moment(data.updated).startOf('hour').fromNow();
   const link = 'https://github.com/NovelCovid/API';
 
@@ -22,14 +21,18 @@ const App = () => {
   return (
     <>
       <div className={styles.container}>
-        <Total countries={countries} data={data} setData={setData} />
-        <History countries={countries} />
+        <Total 
+          countries={countries} 
+          data={data} 
+          setData={setData}
+          updated={lastUpdated}
+        />
+        <History countries={countries} updated={lastUpdated} />
       </div>
 
       <footer>
-        <p>{`Updated ${lastUpdated}, `}</p>
         <p>
-          {`Source: `}
+          {`Data source | `}
           <a href={link} target='_blank' rel='noopener noreferrer'>
             NOVELCovid API
           </a>

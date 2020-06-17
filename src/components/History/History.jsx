@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { fetchHistoryData, fetchHistoryOverall } from '../../api';
 import { color } from '../common/Chart/chartConfig';
-import { AnchoredTitle, AnchoredSubTitle, CountryPicker, Progress, LineChart } from '../common';
+import { AnchoredTitle, Block, CountryPicker, Progress, LineChart } from '../common';
 import styles from './History.module.css';
 
-const History = ({ countries }) => {
+const History = ({ countries, updated }) => {
   const [countriesData, setCountriesData] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [activeType, setActiveType] = useState('cases');
   const types = ['cases', 'recovered', 'deaths'];
+  const selected = selectedCountries && selectedCountries.length > 0;
 
   const capitalize = (str, lower = false) => 
     (lower ? str.toLowerCase() : str)
@@ -66,22 +67,17 @@ const History = ({ countries }) => {
             />
           </div>
 
-          {selectedCountries && selectedCountries.length > 0 && (
-            <div id='overTime' className={styles.block}>
-              <div className={styles.title}>
-                <AnchoredSubTitle 
-                  hrefId='overTime'
-                  title='Cases over time'
-                  subTitle={`${capitalize(getTypeText(activeType))} cases`}
-                />
-              </div>
+          <Block 
+            id='overTime' 
+            title='Cases over time' 
+            subtitle={`${capitalize(getTypeText(activeType))} cases`}
+            source={selected && `Updated ${updated}`}
+          >
+            {selected && (
               <div className={styles.chart}>
-                <LineChart 
-                  selectedCountries={selectedCountries} 
-                  type={activeType} 
-                />
-              </div>
-            </div>)}
+                <LineChart selectedCountries={selectedCountries} type={activeType} />
+              </div>)}
+          </Block>
         </>
       ) : (
         <Progress />

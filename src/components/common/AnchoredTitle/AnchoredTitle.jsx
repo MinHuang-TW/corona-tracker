@@ -9,12 +9,12 @@ export const AnchoredTitle = ({ hrefId, color = 'rgba(255, 255, 255, 0.87)', chi
   </a>
 );
 
-export const AnchoredSubTitle = ({ hrefId, color = 'rgba(255, 255, 255, 0.87)', title, subTitle }) => (
+export const AnchoredSubtitle = ({ hrefId, color = 'rgba(255, 255, 255, 0.87)', title, subtitle }) => (
   <>
     <a href={`#${hrefId}`} className={styles.title} style={{ color }}>
       <Anchor color={color} size={12} />
       <h1 className={styles.sub_title}>{title}</h1>
     </a>
-    <p className={styles.text}>{subTitle}</p>
+    <p className={styles.text}>{subtitle}</p>
   </>
 );

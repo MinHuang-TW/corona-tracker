@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import MapGL, { FlyToInterpolator, Source, Layer } from 'react-map-gl';
 import { color } from '../common/Chart/chartConfig';
 import PopupContent from '../PopupContent/PopupContent';
+import { useWindowWidth } from '../Hook';
 import { clusterRadius, setOpacity } from './clusterStyle';
 
 const Map = ({
@@ -19,10 +20,11 @@ const Map = ({
     strokeOpacity: 0,
   });
   const sourceRef = useRef();
+  const windowWidth = useWindowWidth();
 
   const initial_viewport = {
-    zoom: 1.2,
-    latitude: 20,
+    zoom: windowWidth < 450 ? 0 : 1.2,
+    latitude: windowWidth < 450 ? 0 : 20,
     longitude: 15,
   };
 
