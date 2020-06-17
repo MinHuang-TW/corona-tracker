@@ -45,6 +45,7 @@
 .chart {
   width: 70%;
   margin: auto;
+  margin-top: 24px;
 }
 
 @media (max-width: 960px) {

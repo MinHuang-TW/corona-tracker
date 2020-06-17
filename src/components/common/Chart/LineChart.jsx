@@ -35,7 +35,8 @@ console.log(windowWidth)
   const options = {
     layout: {
       padding: {
-        bottom: windowWidth < 450 ? 48 : 16,
+        bottom: 16,
+        // bottom: windowWidth < 450 ? 48 : 16,
         top: 8,
         right: 8,
       }
@@ -105,7 +106,7 @@ console.log(windowWidth)
     <>
       {hasHistoryData 
         ? (<Line 
-            height={windowWidth < 450 ? 300 : 180} 
+            height={windowWidth < 650 ? 300 : 180} 
             data={data} 
             options={options} 
           />)

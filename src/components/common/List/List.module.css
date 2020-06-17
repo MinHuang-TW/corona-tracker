@@ -11,11 +11,15 @@ li {
 }
 
 li:hover {
-  background: rgba(255, 255, 255, 0.87);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .divider {
   border-bottom: 1px solid #121212;
+}
+
+.divider:last-child {
+  border: none;
 }
 
 .more,
