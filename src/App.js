@@ -21,18 +21,13 @@ const App = () => {
   return (
     <>
       <div className={styles.container}>
-        <Total 
-          countries={countries} 
-          data={data} 
-          setData={setData}
-          updated={lastUpdated}
-        />
+        <Total countries={countries} data={data} setData={setData} updated={lastUpdated} />
         <History countries={countries} updated={lastUpdated} />
       </div>
 
       <footer>
         <p>
-          {`Data source | `}
+          {`Source: `}
           <a href={link} target='_blank' rel='noopener noreferrer'>
             NOVELCovid API
           </a>

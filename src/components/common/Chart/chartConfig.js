@@ -12,13 +12,13 @@ export const background = {
 
 export const gridLines = {
   drawOnChartArea: false,
-  color: 'rgba(255, 255, 255, 0.6)',
+  color: 'rgba(255, 255, 255, 0.38)',
   tickMarkLength: 5,
 };
 
 export const ticks = { 
   padding: 8, 
-  fontColor: 'rgba(255, 255, 255, 0.6)',
+  fontColor: 'rgba(255, 255, 255, 0.38)',
 };
 
 export const ticks_amount = {
@@ -59,7 +59,7 @@ export const drawHoverLine = (chart) => {
     ctx.moveTo(x, topY);
     ctx.lineTo(x, bottomY);
     ctx.lineWidth = 0.1;
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
     ctx.setLineDash([3, 3]);
     ctx.stroke();
     ctx.restore();

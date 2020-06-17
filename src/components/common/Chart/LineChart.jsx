@@ -46,7 +46,7 @@ console.log(windowWidth)
       text: 'Toggle different countries',
       position: 'bottom',
       fontStyle: 'normal',
-      fontColor: 'rgba(255, 255, 255, 0.6)',
+      fontColor: 'rgba(255, 255, 255, 0.38)',
     },
     scales: {
       yAxes: [{

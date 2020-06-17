@@ -10,7 +10,10 @@ const Block = ({ id, title, subtitle, children, source }) => {
 
   return (
     <div id={id} className={styles.block}>
-      <div className={styles.title} style={{ marginBottom: !open && 0 }}>
+      <div
+        className={styles.title}
+        style={{ marginBottom: open && children && 16 }}
+      >
         <div>
           <AnchoredSubtitle hrefId={id} title={title} subtitle={subtitle} />
         </div>
@@ -21,7 +24,7 @@ const Block = ({ id, title, subtitle, children, source }) => {
       {open && (
         <>
           {children}
-          <p className={styles.source}>{source}</p>
+          {source && <p className={styles.source}>{source}</p>}
         </>
       )}
     </div>

@@ -71,12 +71,11 @@ const History = ({ countries, updated }) => {
             id='overTime' 
             title='Cases over time' 
             subtitle={`${capitalize(getTypeText(activeType))} cases`}
-            source={selected && `Updated ${updated}`}
+            source={selected && 'Source: Johns Hopkins University'}
           >
-            {selected && (
-              <div className={styles.chart}>
-                <LineChart selectedCountries={selectedCountries} type={activeType} />
-              </div>)}
+            {selected && (<div className={styles.chart}>
+              <LineChart selectedCountries={selectedCountries} type={activeType} />
+            </div>)}
           </Block>
 
           <Block
