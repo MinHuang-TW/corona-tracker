@@ -40,7 +40,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0px 24px 8px;
+  /* padding: 0px 24px 16px; */
+  width: 80%;
 }
 
 .chart {
@@ -48,19 +49,15 @@
   margin: auto;
 }
 
-.content {
-  width: 30%;
-}
-
 .list {
-  margin: 16px auto;
+  margin-bottom: 24px;
 }
 
 .list:last-child {
   margin-bottom: 0px;
 }
 
-.list span {
+.indicator {
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -74,7 +71,7 @@
   color: rgba(255, 255, 255, 0.6);
 }
 
-.list h2 {
+.ratio {
   margin-top: 4px;
   font-weight: 500;
   font-size: 24px;
@@ -101,17 +98,15 @@
 
   .box {
     flex-direction: column;
-  }
-
-  .content {
-    width: 80%;
-    margin-top: 24px;
+    margin: auto;
   }
 
   .lists {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-top: 24px;
+    width: 90%;
   }
 
   .list {
@@ -121,7 +116,7 @@
 }
 
 @media (max-width: 450px) {
-  .content {
+  .lists {
     width: 100%;
   }
 }

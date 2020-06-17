@@ -3,6 +3,7 @@ import { fetchData } from '../../api';
 import { Map } from '../../components';
 import { color } from '../common/Chart/chartConfig';
 import { AnchoredTitle, Block, CountryPicker, Cards, PieChart, Progress } from '../common';
+import Countup from 'react-countup';
 import styles from './Total.module.css';
 
 const Total = ({ countries, data, setData, updated }) => {
@@ -13,13 +14,13 @@ const Total = ({ countries, data, setData, updated }) => {
   const getRatio = (amount) => {
     if (amount === 0) return '-';
     const total = (data.cases + data.recovered + data.deaths);
-    return parseFloat((amount / total * 100).toFixed(1)) + '%';
+    return (amount / total * 100);
   };
 
   const dataLists = [
-    { text: 'Confirmed', data: data.cases, color: color.confirmed },
-    { text: 'Recovered', data: data.recovered, color: color.recovered },
-    { text: 'Deaths', data: data.deaths, color: color.deaths },
+    { text: 'Confirmed', data: data.cases },
+    { text: 'Recovered', data: data.recovered },
+    { text: 'Deaths', data: data.deaths },
   ];
 
   useEffect(() => {
@@ -81,16 +82,19 @@ const Total = ({ countries, data, setData, updated }) => {
                 <PieChart data={data} />
               </div>
 
-              <div className={styles.content}>
-                <div className={styles.lists}>
-                  {dataLists.map(({ text, data, color }) => (
-                    <div key={text} className={styles.list}>
-                      <span style={{ background: color }} />
-                      <p>{text}</p>
-                      <h2>{getRatio(data)}</h2>
+              <div className={styles.lists}>
+                {dataLists.map(({ text, data }) => (
+                  <div key={text} className={styles.list}>
+                    <span 
+                      className={styles.indicator} 
+                      style={{ background: color[text.toLocaleLowerCase()] }} 
+                    />
+                    <p>{text}</p>
+                    <div className={styles.ratio}>
+                      <Countup start={0} end={getRatio(data)} duration={0.3} decimals={1} suffix='%' />
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
           </Block>
