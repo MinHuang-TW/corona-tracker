@@ -114,7 +114,7 @@ const Map = ({
       // mapStyle='mapbox://styles/min-huang/ckb2wh38l00aw1iph6kncjlx0'
       interactiveLayerIds={[clusterLayer.id]}
       maxZoom={8}
-      minZoom={1}
+      minZoom={windowWidth < 450 ? 0 : 1}
       onClick={handleClick}
       onViewportChange={(newViewport) => setViewport({ 
         ...newViewport, 

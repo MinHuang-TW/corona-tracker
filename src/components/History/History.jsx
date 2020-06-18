@@ -1,24 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { fetchHistoryData, fetchHistoryOverall } from '../../api';
+import { fetchHistoryData } from '../../api';
 import { color } from '../common/Chart/chartConfig';
+import { capitalize } from '../../utils/format';
 import { AnchoredTitle, Block, CountryPicker, Progress, LineChart } from '../common';
 import styles from './History.module.css';
 
-const History = ({ countries, updated }) => {
-  const [countriesData, setCountriesData] = useState([]);
+const History = ({ countriesData, updated }) => {
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [activeType, setActiveType] = useState('cases');
   const types = ['cases', 'recovered', 'deaths'];
   const selected = selectedCountries && selectedCountries.length > 0;
-
-  const capitalize = (str, lower = false) => 
-    (lower ? str.toLowerCase() : str)
-      .replace(/(?:^|\s|["'([{])+\S/g, match => match.toUpperCase());
-
   const getTypeText = (type) => (type === 'cases' ? 'Confirmed' : type);
 
   const TypeButton = ({ type }) => {
-    const color_pallete = color[type === 'cases' ? 'confirmed' : type];
+    const color_pallete = color[getTypeText(type).toLowerCase()];
     const selected = activeType === type;
     const handleSetType = useCallback(() => setActiveType(type), [type]);
     return (
@@ -39,13 +34,12 @@ const History = ({ countries, updated }) => {
 
   useEffect(() => {
     const getData = async () => {
-      const allCountries = await fetchHistoryData(countries);
-      const overall = await fetchHistoryOverall();
-      setSelectedCountries([overall]);
-      setCountriesData([overall, ...allCountries]);
+      const data = JSON.parse(localStorage.getItem('SelectedCountry'));
+      const globalHistory = await fetchHistoryData(data && data.length && data);
+      setSelectedCountries(globalHistory);
     };
     getData();
-  }, [countries]);
+  }, []);
 
   return (
     <section id='history' className={styles.container}>

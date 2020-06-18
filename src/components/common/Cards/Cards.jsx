@@ -4,7 +4,7 @@ import styles from './Cards.module.css';
 import { color } from '../Chart/chartConfig';
 
 const Cards = ({
-  data: { cases, todayCases, recovered, todayRecovered, deaths, todayDeaths },
+  data: { cases, todayCases, active, recovered, todayRecovered, deaths, todayDeaths },
 }) => {
   if (!cases) return null;
   const setBackgroundColor = (title) => { 
@@ -14,6 +14,7 @@ const Cards = ({
 
   const contents = [
     { title: 'Confirmed', value: cases, todayValue: todayCases }, 
+    { title: 'Active', value: active, todayValue: 0 }, 
     { title: 'Recovered', value: recovered, todayValue: todayRecovered }, 
     { title: 'Deaths', value: deaths, todayValue: todayDeaths }
   ];
@@ -26,7 +27,7 @@ const Cards = ({
           <p className={styles.title}>{title}</p>
 
           <div className={styles.value}>
-            <Countup start={0} end={value} duration={1} separator=',' />
+            <Countup start={0} end={value} duration={0.5} separator=',' />
             {todayValue !== 0 && (
               <span className={styles.badge} style={setBackgroundColor(title)}>
                 +{todayValue.toLocaleString()}

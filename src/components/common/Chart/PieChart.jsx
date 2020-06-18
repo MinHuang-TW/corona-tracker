@@ -2,13 +2,13 @@ import React from 'react';
 import { color, tooltips } from './chartConfig';
 import { Doughnut } from 'react-chartjs-2';
 
-const PieChart = ({ data: { cases, recovered, deaths } }) => {
+const PieChart = ({ data: { active, cases, recovered, deaths } }) => {
   const data_source = cases && {
-    labels: [' Confirmed', ' Recovered', ' Deaths'],
+    labels: [' Active', ' Recovered', ' Deaths'],
     datasets: [{
-      borderColor: '#373737',
-      data: [cases, recovered, deaths],
-      backgroundColor: [color.confirmed, color.recovered, color.deaths],
+      borderColor: '#121212',
+      data: [active, recovered, deaths],
+      backgroundColor: [color.active, color.recovered, color.deaths],
     }],
   };
 
@@ -21,7 +21,7 @@ const PieChart = ({ data: { cases, recovered, deaths } }) => {
         label: (tooltipItem, data) => {
           const dataset = data.datasets[tooltipItem.datasetIndex];
           const currentValue = dataset.data[tooltipItem.index];
-          return currentValue.toLocaleString();
+          return (` ${currentValue.toLocaleString()}`);
         },
         title: (tooltipItem, data) => data.labels[tooltipItem[0].index],
       },

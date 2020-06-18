@@ -13,12 +13,11 @@ const Total = ({ countries, data, setData, updated }) => {
 
   const getRatio = (amount) => {
     if (amount === 0) return 0;
-    const total = (data.cases + data.recovered + data.deaths);
-    return parseFloat(amount / total * 100);
+    return parseFloat(amount / data.cases * 100);
   };
-  
+
   const dataLists = [
-    { text: 'Confirmed', data: data.cases },
+    { text: 'Active', data: data.active },
     { text: 'Recovered', data: data.recovered },
     { text: 'Deaths', data: data.deaths },
   ];
@@ -33,13 +32,12 @@ const Total = ({ countries, data, setData, updated }) => {
 
   return (
     <section id='map'>
-      <div style={{
-        position: 'absolute',
-        top: '40vh',
-        width: '100vw', height: '10vh',
-        zIndex: 2,
-        background: 'linear-gradient(to bottom, rgba(18, 18, 18, 0), rgba(18, 18, 18, 1))',
-      }} />
+      <div 
+        className={styles.cover} 
+        style={{ background: `linear-gradient(
+          to bottom, rgba(18, 18, 18, 0), rgba(18, 18, 18, 1))` 
+        }} 
+      />
       <Map
         country={country}
         setCountry={setCountry}
@@ -91,7 +89,7 @@ const Total = ({ countries, data, setData, updated }) => {
                     />
                     <p>{text}</p>
                     <div className={styles.ratio}>
-                      <Countup start={0} end={getRatio(data)} duration={0.3} decimals={1} suffix='%' />
+                      <Countup start={0} end={getRatio(data)} duration={0.5} decimals={1} suffix='%' />
                     </div>
                   </div>
                 ))}

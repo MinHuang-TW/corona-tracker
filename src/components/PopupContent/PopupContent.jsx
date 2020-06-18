@@ -11,8 +11,8 @@ const PopupContent = ({
 }) => {
   const popupLists = [
     { type: 'Confirmed', amount: cases },
-    { type: 'Recovered', amount: recovered },
-    { type: 'Deaths', amount: deaths },
+    // { type: 'Recovered', amount: recovered },
+    // { type: 'Deaths', amount: deaths },
   ];
 
   const handleClosePopup = useCallback(() => {

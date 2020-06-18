@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  color, background as bg,
+  color,
   ticks, ticks_amount,
   tooltips,
   gridLines,
@@ -15,7 +15,7 @@ const BarChart = ({ country, data: { cases, recovered, deaths } }) => {
       borderWidth: 1.5,
       // barThickness: 40,
       borderColor: [color.confirmed, color.recovered, color.deaths],
-      backgroundColor: [bg.confirmed, bg.recovered, bg.deaths],
+      // backgroundColor: [bg.confirmed, bg.recovered, bg.deaths],
       data: [cases, recovered, deaths],
     }],
   };

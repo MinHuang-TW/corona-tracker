@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { List } from '../../common';
 import { useKey } from '../../Hook';
+import { uuid } from 'uuidv4';
 import { Chip, Avatar } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import PublicIcon from '@material-ui/icons/Public';
@@ -13,19 +14,23 @@ const Selector = ({ country, setCountry }) => {
     ? styles.selector_add : styles.selector_remove;
 
   const handleDelete = useCallback((countryName) => (event) => {
-    setCountry(country.filter(({ name }) => name !== countryName));
+    const filteredCountry = country.filter(({ name }) => name !== countryName);
+    setCountry(filteredCountry);
+    localStorage.setItem('SelectedCountry', JSON.stringify(filteredCountry));
   }, [country, setCountry]);
 
   const handleClear = useCallback(() => {
-    if (country.length === MAX_ITEM) setCountry([]);
+    if (country.length === MAX_ITEM) {
+      setCountry([]);
+      localStorage.removeItem('SelectedCountry');
+    }
   }, [country, setCountry]);
-
   return (
     <>
       <div>
         {country.length ? (country.map(({ name, flag }) => (
           <Chip
-            key={name}
+            key={uuid()}
             label={name}
             className={styles.selector_chip}
             onDelete={handleDelete(name)}
@@ -36,7 +41,7 @@ const Selector = ({ country, setCountry }) => {
           />))
         ) : (
           <div className={styles.selector_text}>
-            Select countries to compare
+            {`Select countries to compare (Up to 5)`}
           </div>
         )}
       </div>
@@ -78,7 +83,9 @@ const CountryPicker = ({
 
   const handleSelect = useCallback((countryInfo) => (event) => {
     if (selector) {
-      setCountry([...country, countryInfo]);
+      const newCountry = [...country, countryInfo];
+      setCountry(newCountry);
+      localStorage.setItem('SelectedCountry', JSON.stringify(newCountry));
     } else {
       if (countryInfo.name === 'Worldwide') {
         handleCountry();
@@ -133,7 +140,7 @@ const CountryPicker = ({
             .filter(({ name }) => filterList(name))
             .map((country) => (
               <List
-                key={country.name}
+                key={uuid()}
                 icon={country.flag}
                 text={country.name}
                 onClick={handleSelect(country)}

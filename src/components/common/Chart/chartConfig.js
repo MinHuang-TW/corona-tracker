@@ -1,13 +1,8 @@
 export const color = {
+  active: '#e6b548',
   confirmed: '#CF6679',
-  recovered: '#03DAC5',
-  deaths: '#BB86FC',
-};
-
-export const background = {
-  confirmed: '#CF6679',
-  recovered: '#03DAC5',
-  deaths: '#BB86FC',
+  recovered: '#4fbdb4',
+  deaths: '#8579c1',
 };
 
 export const gridLines = {

@@ -52,6 +52,7 @@ export const fetchData = async (country) => {
         deaths,
         todayDeaths,
         updated,
+        active,
       },
     } = await axios.get(changeableUrl, { cancelToken: source.token });
     return {
@@ -62,21 +63,8 @@ export const fetchData = async (country) => {
       deaths,
       todayDeaths,
       updated,
+      active,
     };
-  } catch (error) {
-    handleError(error);
-  }
-};
-
-export const fetchHistoryOverall = async (days) => {
-  const day = days ? days : 'all';
-  let source = axios.CancelToken.source();
-
-  try {
-    const { data } = await axios.get(`${url_JHU}/all?lastdays=${day}`, {
-      cancelToken: source.token,
-    });
-    return { ...initial, timeline: data };
   } catch (error) {
     handleError(error);
   }
@@ -85,13 +73,22 @@ export const fetchHistoryOverall = async (days) => {
 export const fetchHistoryData = async (countries, days) => {
   const day = days ? days : 'all';
   let source = axios.CancelToken.source();
-
   try {
-    const countriesName = countries.map(({ name }) => name);
-    const query = encodeURIComponent(countriesName);
+    const countriesName = countries && countries.map(({ name }) => name);
+    const query = countries ? encodeURIComponent(countriesName) : 'all';
     const { data } = await axios.get(`${url_JHU}/${query}?lastdays=${day}`, {
       cancelToken: source.token,
     });
+    if (!countries) return [{ ...initial, timeline: data }];
+    if (countriesName.length === 1) return countries
+      .map(({ name, flag, lat, long }) => ({ 
+        name, 
+        flag, 
+        lat, 
+        long, 
+        timeline: data.timeline,
+      }));
+
     const filteredData = data.filter((d) => d.hasOwnProperty('timeline'));
     let mergedData = [];
     for (let i = 0; i < countries.length; i++) {
