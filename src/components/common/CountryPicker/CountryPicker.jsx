@@ -9,22 +9,25 @@ import styles from './CountryPicker.module.css';
 
 const MAX_ITEM = 5;
 
-const Selector = ({ country, setCountry }) => {
+const Selector = ({ country, setCountry, data, setData }) => {
   const setButton = country.length < MAX_ITEM 
     ? styles.selector_add : styles.selector_remove;
 
   const handleDelete = useCallback((countryName) => (event) => {
     const filteredCountry = country.filter(({ name }) => name !== countryName);
+    const filteredData = data.filter(({ name }) => name !== countryName);
     setCountry(filteredCountry);
+    setData(filteredData);
     localStorage.setItem('SelectedCountry', JSON.stringify(filteredCountry));
-  }, [country, setCountry]);
+  }, [country, setCountry, data, setData]);
 
   const handleClear = useCallback(() => {
     if (country.length === MAX_ITEM) {
       setCountry([]);
+      setData([]);
       localStorage.removeItem('SelectedCountry');
     }
-  }, [country, setCountry]);
+  }, [country, setCountry, setData]);
   return (
     <>
       <div>
@@ -65,6 +68,8 @@ const CountryPicker = ({
   handleCountry,
   country,
   setCountry,
+  data,
+  setData,
   setPopupOpen,
   selector,
   radius,
@@ -82,28 +87,25 @@ const CountryPicker = ({
   };
 
   const handleSelect = useCallback((countryInfo) => (event) => {
+    const isGlobal = countryInfo.name === 'Worldwide';
     if (selector) {
       const newCountry = [...country, countryInfo];
       setCountry(newCountry);
+      handleCountry(isGlobal ? '' : countryInfo.name);
       localStorage.setItem('SelectedCountry', JSON.stringify(newCountry));
     } else {
-      if (countryInfo.name === 'Worldwide') {
-        handleCountry();
-        setCountry({
-          name: 'Worldwide',
-          flag: null,
-          lat: 20,
-          long: 15,
-        });
-      } else {
-        handleCountry(countryInfo.name);
-        setCountry(countryInfo);
-      }
+      const globalInfo = {
+        name: 'Worldwide',
+        flag: null,
+        lat: 20,
+        long: 15,
+      };
+      handleCountry(isGlobal ? null : countryInfo.name);
+      setCountry(isGlobal ? globalInfo : countryInfo);
       setPopupOpen(true);
     }
     setPickerOpen(false);
-    // eslint-disable-next-line
-  }, [country]);
+  }, [country]); // eslint-disable-line
 
   const handleClose = useCallback(() => setPickerOpen(false), []);
 
@@ -118,13 +120,13 @@ const CountryPicker = ({
       {pickerOpen &&  (<div className={styles.backdrop} onClick={handleClose} />)}
       <div 
         className={selector ? styles.selector : styles.picker} 
-        style={{ borderRadius: pickerOpen 
-          ? `${radius}px ${radius}px 0 0` : `${radius}px` 
-        }}
+        // style={{ borderRadius: pickerOpen 
+        //   ? `${radius}px ${radius}px 0 0` : `${radius}px` 
+        // }}
         onClick={handleOpen}
       >
         {selector 
-          ? (<Selector country={country} setCountry={setCountry} />) 
+          ? (<Selector country={country} setCountry={setCountry} data={data} setData={setData} />) 
           : (<Picker open={pickerOpen} country={country} />)}
       </div>
 

@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const url = 'https://corona.lmao.ninja/v2';
-const url_JHU = 'https://disease.sh/v2/historical';
+const url = 'https://disease.sh/v2';
 
 const initial = {
   name: 'Worldwide',
@@ -70,13 +69,32 @@ export const fetchData = async (country) => {
   }
 };
 
+export const fetchDataDetails = async (country) => {
+  let source = axios.CancelToken.source();
+  let changeableUrl = `${url}/all`;
+
+  if (country && country.length && country !== 'Worldwide') {
+    const query = country.length > 1 ? encodeURIComponent(country) : country;
+    changeableUrl = `${url}/countries/${query}`;
+  }
+
+  try {
+    const { data } = await axios.get(changeableUrl, { cancelToken: source.token });    
+    if (Array.isArray(data)) return data.map(d => ({ name: d.country, data: d }));
+    return [{ name: data.country ? data.country : 'Worldwide', data }];
+  } catch (error) {
+    handleError(error);
+  }
+};
+
 export const fetchHistoryData = async (countries, days) => {
   const day = days ? days : 'all';
+  const countriesName = countries && countries.map(({ name }) => name);
+  const query = countries ? encodeURIComponent(countriesName) : 'all';
   let source = axios.CancelToken.source();
+
   try {
-    const countriesName = countries && countries.map(({ name }) => name);
-    const query = countries ? encodeURIComponent(countriesName) : 'all';
-    const { data } = await axios.get(`${url_JHU}/${query}?lastdays=${day}`, {
+    const { data } = await axios.get(`${url}/historical/${query}?lastdays=${day}`, {
       cancelToken: source.token,
     });
     if (!countries) return [{ ...initial, timeline: data }];
@@ -88,7 +106,6 @@ export const fetchHistoryData = async (countries, days) => {
         long, 
         timeline: data.timeline,
       }));
-
     const filteredData = data.filter((d) => d.hasOwnProperty('timeline'));
     let mergedData = [];
     for (let i = 0; i < countries.length; i++) {

@@ -35,9 +35,9 @@ console.log(windowWidth)
   const options = {
     layout: {
       padding: {
-        bottom: 16,
-        // bottom: windowWidth < 450 ? 48 : 16,
-        top: 8,
+        bottom: windowWidth < 400 ? 18 : 8,
+        // bottom: 8,
+        top: 16,
         right: 8,
       }
     },
@@ -67,6 +67,7 @@ console.log(windowWidth)
       mode: 'index',
       bodySpacing: 8,
       yAlign: windowWidth < 400 && 'top',
+      // yAlign: windowWidth < 400 && 'top',
       callbacks: {
         label: (tooltipItem, data) => {
           let label = data.datasets[tooltipItem.datasetIndex].label;

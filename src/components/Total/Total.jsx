@@ -2,33 +2,40 @@ import React, { useState, useEffect } from 'react';
 import { fetchData } from '../../api';
 import { Map } from '../../components';
 import { color } from '../common/Chart/chartConfig';
+import { getRatio } from '../../utils/format';
 import { AnchoredTitle, Block, CountryPicker, Cards, PieChart, Progress } from '../common';
 import Countup from 'react-countup';
 import styles from './Total.module.css';
+import moment from 'moment';
 
-const Total = ({ countries, data, setData, updated }) => {
+const Total = ({ countries }) => {
+  const [data, setData] = useState([]);
   const [country, setCountry] = useState(null);
   const [popupOpen, setPopupOpen] = useState(false);
+  const { cases, active, recovered, deaths, updated } = data && data;
+  const lastUpdated = moment(updated).startOf('hour').fromNow();
   const countryName = country && country.name;
 
-  const getRatio = (amount) => {
-    if (amount === 0) return 0;
-    return parseFloat(amount / data.cases * 100);
-  };
-
   const dataLists = [
-    { text: 'Active', data: data.active },
-    { text: 'Recovered', data: data.recovered },
-    { text: 'Deaths', data: data.deaths },
+    { text: 'Active', data: active },
+    { text: 'Recovered', data: recovered },
+    { text: 'Deaths', data: deaths },
   ];
+
+  const handleCountry = async (country) => {
+    setData(await fetchData(country));
+  };
 
   useEffect(() => {
     setCountry(countries[0]);
   }, [countries]);
 
-  const handleCountry = async (country) => {
-    setData(await fetchData(country));
-  };
+  useEffect(() => {
+    const getData = async () => {
+      setData(await fetchData());
+    };
+    getData();
+  }, []);
 
   return (
     <section id='map'>
@@ -64,7 +71,7 @@ const Total = ({ countries, data, setData, updated }) => {
             id='total' 
             title='Total cases' 
             subtitle={countryName}
-            source={`Updated ${updated}`}
+            source={`Updated ${lastUpdated}`}
           >
             <Cards data={data} />
           </Block>
@@ -73,7 +80,7 @@ const Total = ({ countries, data, setData, updated }) => {
             id='distribution' 
             title='Cases distribution' 
             subtitle={countryName}
-            source={`Updated ${updated}`}
+            source={`Updated ${lastUpdated}`}
           >
             <div className={styles.box}>
               <div className={styles.chart}>
@@ -89,7 +96,13 @@ const Total = ({ countries, data, setData, updated }) => {
                     />
                     <p>{text}</p>
                     <div className={styles.ratio}>
-                      <Countup start={0} end={getRatio(data)} duration={0.5} decimals={1} suffix='%' />
+                      <Countup 
+                        start={0} 
+                        end={getRatio(data, cases)} 
+                        duration={0.5} 
+                        decimals={1} 
+                        suffix='%' 
+                      />
                     </div>
                   </div>
                 ))}
