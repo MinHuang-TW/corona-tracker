@@ -78,7 +78,7 @@ const Total = ({ countries }) => {
 
           <Block 
             id='distribution' 
-            title='Cases distribution' 
+            title='Case distribution' 
             subtitle={countryName}
             source={`Updated ${lastUpdated}`}
           >

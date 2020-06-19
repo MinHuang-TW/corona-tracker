@@ -9,11 +9,12 @@ import styles from './History.module.css';
 const History = ({ countriesData }) => {
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [data, setData] = useState([]);
-  const [activeType, setActiveType] = useState('cases');
   const types = ['cases', 'recovered', 'deaths'];
+  const [activeType, setActiveType] = useState(types[0]);
+
   const selected = selectedCountries && selectedCountries.length > 0;
   const getTypeText = (type) => (type === 'cases' ? 'Confirmed' : type);
-  const lastUpdated = moment(data.length && data[0].data.updated).startOf('hour').fromNow();
+  const lastUpdated = moment(data.length && data[0].updated).startOf('hour').fromNow();
   const currentType = capitalize(getTypeText(activeType));
 
   const TypeButton = ({ type }) => {
@@ -69,17 +70,13 @@ const History = ({ countriesData }) => {
     };
     getData();
   }, []);
-  
+
   return (
     <section id='history' className={styles.container}>
       <AnchoredTitle hrefId='history'>Cases comparison</AnchoredTitle>
 
       {countriesData.length ? (
         <>
-          <div className={styles.buttons}>
-            {types.map((type, index) => (<TypeButton key={index} type={type} />))}
-          </div>
-
           <div className={styles.selector}>
             <CountryPicker
               countries={countriesData}
@@ -92,6 +89,14 @@ const History = ({ countriesData }) => {
             />
           </div>
 
+          <Block
+            id='countriesTotal'
+            title='Case details' 
+            source={selected && `Updated ${lastUpdated}`}
+          >
+            {selected && (<Table data={data} />)}
+          </Block>
+
           <Block 
             id='overTime' 
             title='Cases over time' 
@@ -102,15 +107,10 @@ const History = ({ countriesData }) => {
               <LineChart selectedCountries={selectedCountries} type={activeType} />
             </div>)}
           </Block>
-
-          <Block
-            id='countriesTotal'
-            title='Total cases' 
-            subtitle={`${currentType} cases`}
-            source={selected && `Updated ${lastUpdated}`}
-          >
-            {selected && (<Table activeType={activeType} data={data} />)}
-          </Block>
+          <div style={{ height: 16 }} />
+          <div className={styles.buttons}>
+            {types.map((type, index) => (<TypeButton key={index} type={type} />))}
+          </div>
         </>
       ) : (
         <Progress />

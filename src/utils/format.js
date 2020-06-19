@@ -9,8 +9,8 @@ export const getRatio = (amount, total) => {
 };
 
 export const sortLists = (a, b, item, status) => {
-  let A = (item === 'name') ? a.name : a.data[item];
-  let B = (item === 'name') ? b.name : b.data[item];
+  let A = a[item];
+  let B = b[item];
   if (status) return (A < B) ? -1 : (B > A) ? 1 : 0;
   return (A > B) ? -1 : (B < A) ? 1 : 0;
 };

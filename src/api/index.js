@@ -80,8 +80,8 @@ export const fetchDataDetails = async (country) => {
 
   try {
     const { data } = await axios.get(changeableUrl, { cancelToken: source.token });    
-    if (Array.isArray(data)) return data.map(d => ({ name: d.country, data: d }));
-    return [{ name: data.country ? data.country : 'Worldwide', data }];
+    if (Array.isArray(data)) return data.map(d => ({ name: d.country, ...d }));
+    return [{ name: data.country ? data.country : 'Worldwide', ...data }];
   } catch (error) {
     handleError(error);
   }

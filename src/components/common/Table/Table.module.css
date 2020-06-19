@@ -3,18 +3,35 @@
   text-align: right;
   font-size: 14px;
   color: rgba(255, 255, 255, 0.6);
+  border-spacing: 0;
 }
 
-.table tr:nth-child(even) {
-  background: rgba(255, 255, 255, 0.07);
+.table tr:nth-child(odd),
+.table tr:nth-child(odd) .countries {
+  background: #222222;
+}
+
+.table tr:nth-child(even),
+.table tr:nth-child(even) .countries {
+  background: #363636;
+}
+
+tr {
+  height: 48px;
 }
 
 .head {
+  text-align: right;
+  font-size: 12px;
+}
+
+.head th:first-child {
   text-align: center;
 }
 
 .column {
   cursor: pointer;
+  padding-right: 8px;
 }
 
 .column:hover {
@@ -26,24 +43,34 @@
   vertical-align: middle;
 }
 
+.indicator {
+  display: inline-block; 
+  width: 8px; 
+  height: 8px;
+  border-radius: 50%; 
+  margin-right: 8px;
+}
+
 .table th {
-  background: rgba(255, 255, 255, 0.07);
-  width: 30%;
+  background: #363636;
+  min-width: 120px;
+}
+
+.table th:first-child,
+.countries {
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  left: 0;
+  z-index: 5;
 }
 
 .table th:first-child {
   width: 36%;
 }
 
-tr {
-  height: 48px;
-}
-
 .countries {
-  display: flex;
-  align-items: center;
-  height: 48px;
   text-align: left;
+  min-width: 160px;
 }
 
 .countries span:first-child {
@@ -52,8 +79,13 @@ tr {
 
 .value {
   color: rgba(255, 255, 255, 0.87);
-  padding-right: 16px;
-  font-size: 21px;
+  padding-right: 8px;
+  font-size: 16px;
+}
+
+.align {
+  vertical-align: middle;
+  display: inline-block;
 }
 
 .more,
@@ -69,7 +101,6 @@ tr {
   transform: rotate(180deg);
 }
 
-
 @media (max-width: 450px) {
   .table {
     font-size: 12px;
@@ -77,6 +108,10 @@ tr {
 
   .table th:first-child {
     width: 40%;
+  }
+
+  .countries {
+    min-width: auto;
   }
 
   .countries span:first-child {
