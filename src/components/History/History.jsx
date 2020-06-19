@@ -44,29 +44,32 @@ const History = ({ countriesData }) => {
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('SelectedCountry'));
-    const hasStoredData = storedData && storedData.length;
-    const query = hasStoredData && storedData
-      .map(({ name }) => name)
-      .filter(name => name !== 'Worldwide');
+    const query = storedData.map(({ name }) => name).filter(name => name !== 'Worldwide');
     const hasGlobal = query && query.length !== storedData.length;
-    const hasOnlyGlobal = hasGlobal & hasStoredData && storedData.length === 1;
-
+    const hasOnlyGlobal = hasGlobal & storedData.length === 1;
+    
     const getData = async () => {
-      const globalHistory = await fetchHistoryData(hasStoredData && !hasOnlyGlobal && storedData);
+      let queryHistoryData = '';
+      let queryDataDetails = '';
+
+      if (storedData && storedData.length) {
+        if (!hasOnlyGlobal)
+          queryHistoryData = storedData;
+          queryDataDetails = query;
+      }
+      const globalHistory = await fetchHistoryData(queryHistoryData);
       setSelectedCountries(globalHistory);
 
-      const globalData = await fetchDataDetails();
-      const selectedCountriesData = await fetchDataDetails(query);
-
-      if (!hasStoredData || hasOnlyGlobal) return setData(globalData);
-      if (hasGlobal) {
-        const newData = [...globalData, ...selectedCountriesData];
-        return setData(newData);
+      let countriesData = await fetchDataDetails(queryDataDetails);
+      if (hasGlobal && !hasOnlyGlobal) {
+        const globalData = await fetchDataDetails();
+        countriesData = [...globalData, ...countriesData];
       }
-      return setData(selectedCountriesData);
+      return setData(countriesData);
     };
     getData();
   }, []);
+  
   return (
     <section id='history' className={styles.container}>
       <AnchoredTitle hrefId='history'>Cases comparison</AnchoredTitle>
@@ -85,7 +88,6 @@ const History = ({ countriesData }) => {
               handleCountry={handleCountry}
               data={data}
               setData={setData}
-              radius={0}
               selector
             />
           </div>
@@ -107,7 +109,7 @@ const History = ({ countriesData }) => {
             subtitle={`${currentType} cases`}
             source={selected && `Updated ${lastUpdated}`}
           >
-            <Table activeType={activeType} data={data} />
+            {selected && (<Table activeType={activeType} data={data} />)}
           </Block>
         </>
       ) : (

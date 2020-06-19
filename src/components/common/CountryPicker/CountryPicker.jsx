@@ -72,7 +72,7 @@ const CountryPicker = ({
   setData,
   setPopupOpen,
   selector,
-  radius,
+  radius = 0,
 }) => {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [key, setKey] = useKey(setPickerOpen);
@@ -105,7 +105,7 @@ const CountryPicker = ({
       setPopupOpen(true);
     }
     setPickerOpen(false);
-  }, [country]); // eslint-disable-line
+  }, [country, handleCountry]); // eslint-disable-line
 
   const handleClose = useCallback(() => setPickerOpen(false), []);
 
@@ -120,9 +120,6 @@ const CountryPicker = ({
       {pickerOpen &&  (<div className={styles.backdrop} onClick={handleClose} />)}
       <div 
         className={selector ? styles.selector : styles.picker} 
-        // style={{ borderRadius: pickerOpen 
-        //   ? `${radius}px ${radius}px 0 0` : `${radius}px` 
-        // }}
         onClick={handleOpen}
       >
         {selector 

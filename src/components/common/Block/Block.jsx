@@ -17,7 +17,11 @@ const Block = ({ id, title, subtitle, children, source }) => {
         <div>
           <AnchoredSubtitle hrefId={id} title={title} subtitle={subtitle} />
         </div>
-        <span className={setStyle} onClick={handleOpen}>
+        <span 
+          className={setStyle} 
+          onClick={handleOpen} 
+          style={{ display: !children && 'none' }}
+        >
           <ExpandMoreIcon />
         </span>
       </div>
