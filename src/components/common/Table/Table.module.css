@@ -1,3 +1,22 @@
+.container {
+  overflow-x: auto;
+}
+
+.container::-webkit-scrollbar {
+  background: rgb(30, 30, 30);
+  height: 10px;
+}
+
+.container::-webkit-scrollbar-track {
+  background: rgb(30, 30, 30);
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  border: 2px solid rgb(30, 30, 30);
+}
+
 .table {
   width: 100%;
   text-align: right;
@@ -8,21 +27,22 @@
 
 .table tr:nth-child(odd),
 .table tr:nth-child(odd) .countries {
-  background: #222222;
+  background: rgb(30, 30, 30);
 }
 
 .table tr:nth-child(even),
 .table tr:nth-child(even) .countries {
-  background: #363636;
+  background: rgb(47, 47, 47);
 }
 
 tr {
   height: 48px;
 }
 
-.head {
+.head th {
   text-align: right;
   font-size: 12px;
+  font-weight: 400;
 }
 
 .head th:first-child {
@@ -52,7 +72,7 @@ tr {
 }
 
 .table th {
-  background: #363636;
+  background: rgb(47, 47, 47);
   min-width: 120px;
 }
 
@@ -65,7 +85,8 @@ tr {
 }
 
 .table th:first-child {
-  width: 36%;
+  /* width: 36%; */
+  max-width: 200px;
 }
 
 .countries {

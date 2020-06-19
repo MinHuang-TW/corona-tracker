@@ -47,7 +47,7 @@ const Table = ({ data }) => {
     }, [descending]);
 
   return (
-    <div style={{ overflowX: 'scroll' }}>
+    <div className={styles.container}>
       <table className={styles.table}>
         <thead>
           <tr className={styles.head}>

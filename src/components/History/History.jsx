@@ -101,13 +101,13 @@ const History = ({ countriesData }) => {
             id='overTime' 
             title='Cases over time' 
             subtitle={`${currentType} cases`}
-            source={selected && 'Source: Johns Hopkins University'}
+            source={selected && `Source: Johns Hopkins University`}
           >
             {selected && (<div className={styles.chart}>
               <LineChart selectedCountries={selectedCountries} type={activeType} />
             </div>)}
           </Block>
-          <div style={{ height: 16 }} />
+
           <div className={styles.buttons}>
             {types.map((type, index) => (<TypeButton key={index} type={type} />))}
           </div>

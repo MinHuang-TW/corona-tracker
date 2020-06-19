@@ -7,6 +7,7 @@ const Cards = ({
   data: { cases, todayCases, active, recovered, todayRecovered, deaths, todayDeaths },
 }) => {
   if (!cases) return null;
+
   const setBackgroundColor = (title) => { 
     const type = title.toLocaleLowerCase();
     return { background: color[type] };
@@ -29,7 +30,11 @@ const Cards = ({
           <div className={styles.value}>
             <Countup start={0} end={value} duration={0.5} separator=',' />
             {todayValue !== 0 && (
-              <span className={styles.badge} style={setBackgroundColor(title)}>
+              <span 
+                key={`${value}-${todayValue}`} 
+                className={styles.badge} 
+                style={setBackgroundColor(title)}
+              >
                 +{todayValue.toLocaleString()}
               </span>
             )}
