@@ -1,7 +1,7 @@
 .table {
   width: 100%;
   text-align: right;
-  font-size: 12px;
+  font-size: 14px;
   color: rgba(255, 255, 255, 0.6);
 }
 
@@ -13,9 +13,26 @@
   text-align: center;
 }
 
+.column {
+  cursor: pointer;
+}
+
+.column:hover {
+  text-decoration: underline;
+}
+
+.column svg,
+.column span {
+  vertical-align: middle;
+}
+
 .table th {
   background: rgba(255, 255, 255, 0.07);
   width: 30%;
+}
+
+.table th:first-child {
+  width: 36%;
 }
 
 tr {
@@ -30,11 +47,44 @@ tr {
 }
 
 .countries span:first-child {
-  margin: auto 8px;
+  margin: auto 16px;
 }
 
 .value {
   color: rgba(255, 255, 255, 0.87);
-  padding-right: 8px;
-  font-size: 14px;
+  padding-right: 16px;
+  font-size: 21px;
+}
+
+.more,
+.less {
+  display: inline-block;
+}
+
+.more {
+  transform: rotate(0deg);
+}
+
+.less {
+  transform: rotate(180deg);
+}
+
+
+@media (max-width: 450px) {
+  .table {
+    font-size: 12px;
+  }
+
+  .table th:first-child {
+    width: 40%;
+  }
+
+  .countries span:first-child {
+    margin: auto 8px;
+  }
+  
+  .value {
+    padding-right: 8px;
+    font-size: 14px;
+  }
 }
