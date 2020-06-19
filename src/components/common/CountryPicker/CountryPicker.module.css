@@ -51,7 +51,7 @@
   overflow: scroll;
   position: absolute;
   transform: translateY(-1px);
-  transition: max-height 0.15s ease-out;
+  /* transition: max-height 0.15s ease-out; */
 }
 
 .menu_active::-webkit-scrollbar,
@@ -123,9 +123,15 @@
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: 2;
+  z-index: 10;
   backdrop-filter: blur(4px) saturate(20%);
   /* transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s; */
+}
+
+@media (max-width: 600px) {
+  .selector {
+    padding: 4px;
+  }
 }
 
 @media (max-width: 600px) {

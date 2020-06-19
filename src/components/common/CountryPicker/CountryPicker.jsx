@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { List } from '../../common';
-import { useKey } from '../../Hook';
+import { useKey, useWindowWidth } from '../../Hook';
 import { uuid } from 'uuidv4';
 import { Chip, Avatar } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
@@ -10,6 +10,7 @@ import styles from './CountryPicker.module.css';
 const MAX_ITEM = 5;
 
 const Selector = ({ country, setCountry, data, setData }) => {
+  const windowWidth = useWindowWidth();
   const setButton = country.length < MAX_ITEM 
     ? styles.selector_add : styles.selector_remove;
 
@@ -36,6 +37,7 @@ const Selector = ({ country, setCountry, data, setData }) => {
             key={uuid()}
             label={name}
             className={styles.selector_chip}
+            size={windowWidth < 960 ? 'small' : null}
             onDelete={handleDelete(name)}
             avatar={name === 'Worldwide' 
               ? <PublicIcon /> 

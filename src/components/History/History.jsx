@@ -100,7 +100,7 @@ const History = ({ countriesData }) => {
           <Block 
             id='overTime' 
             title='Cases over time' 
-            subtitle={`${currentType} cases`}
+            subtitle={selected && `${currentType} cases`}
             source={selected && `Source: Johns Hopkins University`}
           >
             {selected && (<div className={styles.chart}>
@@ -108,9 +108,9 @@ const History = ({ countriesData }) => {
             </div>)}
           </Block>
 
-          <div className={styles.buttons}>
+          {selected && (<div className={styles.buttons}>
             {types.map((type, index) => (<TypeButton key={index} type={type} />))}
-          </div>
+          </div>)}
         </>
       ) : (
         <Progress />

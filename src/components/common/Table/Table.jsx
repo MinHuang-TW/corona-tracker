@@ -59,7 +59,7 @@ const Table = ({ data }) => {
                     style={{ background: list.includes('cases') ? color.confirmed : color[list] }} 
                   />
                 ) : null}
-                <span style={{ maxWidth: 70, display: 'inline-block' }}>{setHeadText(list)}</span>
+                <span>{setHeadText(list)}</span>
                 <span
                   className={descending ? styles.less : styles.more}
                   style={{ display: list !== sortColumn && 'none' }}

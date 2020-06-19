@@ -49,15 +49,15 @@ footer a {
 
 @media (max-width: 960px) {
   .container {
-    width: 90%;
-  }
-}
-
-@media (max-width: 600px) {
-  .container {
     width: 95%;
   }
 }
+
+/* @media (max-width: 600px) {
+  .container {
+    width: 95%;
+  }
+} */
 
 @media (max-width: 320px) {
   footer {

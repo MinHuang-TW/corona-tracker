@@ -66,7 +66,6 @@ console.log(windowWidth)
     tooltips: {
       mode: 'index',
       bodySpacing: 8,
-      yAlign: windowWidth < 400 && 'top',
       // yAlign: windowWidth < 400 && 'top',
       callbacks: {
         label: (tooltipItem, data) => {

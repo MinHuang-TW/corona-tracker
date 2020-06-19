@@ -74,9 +74,15 @@
   font-size: 24px;
 }
 
+@media (max-width: 1280px) {
+  .ratio {
+    font-size: 21px;
+  }
+}
+
 @media (max-width: 960px) {
   .body {
-    width: 90%;
+    width: 95%;
   }
 
   .chart {
@@ -85,9 +91,9 @@
 }
 
 @media (max-width: 600px) {
-  .body {
+  /* .body {
     width: 95%;
-  }
+  } */
 
   .chart {
     width: 70%;
