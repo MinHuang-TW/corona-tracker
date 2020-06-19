@@ -47,19 +47,6 @@
   margin: auto;
 }
 
-th {
-  height: 32px;
-  width: 30%;
-}
-
-tr {
-  height: 48px;
-}
-
-td {
-  padding-right: 8px;
-}
-
 @media (max-width: 960px) {
   .chart {
     width: 85%;

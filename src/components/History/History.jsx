@@ -2,10 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { fetchHistoryData, fetchDataDetails } from '../../api';
 import { color } from '../common/Chart/chartConfig';
 import { capitalize } from '../../utils/format';
-import { AnchoredTitle, Block, CountryPicker, Progress, LineChart } from '../common';
-import { uuid } from 'uuidv4';
+import { AnchoredTitle, Block, CountryPicker, Progress, LineChart, Table } from '../common';
 import moment from 'moment';
-import PublicIcon from '@material-ui/icons/Public';
 import styles from './History.module.css';
 
 const History = ({ countriesData }) => {
@@ -16,6 +14,7 @@ const History = ({ countriesData }) => {
   const selected = selectedCountries && selectedCountries.length > 0;
   const getTypeText = (type) => (type === 'cases' ? 'Confirmed' : type);
   const lastUpdated = moment(data.length && data[0].data.updated).startOf('hour').fromNow();
+  const currentType = capitalize(getTypeText(activeType));
 
   const TypeButton = ({ type }) => {
     const color_pallete = color[getTypeText(type).toLowerCase()];
@@ -49,8 +48,8 @@ const History = ({ countriesData }) => {
     const query = hasStoredData && storedData
       .map(({ name }) => name)
       .filter(name => name !== 'Worldwide');
-    const hasGlobal = query.length !== storedData.length;
-    const hasOnlyGlobal = hasGlobal & storedData.length === 1;
+    const hasGlobal = query && query.length !== storedData.length;
+    const hasOnlyGlobal = hasGlobal & hasStoredData && storedData.length === 1;
 
     const getData = async () => {
       const globalHistory = await fetchHistoryData(hasStoredData && !hasOnlyGlobal && storedData);
@@ -94,7 +93,7 @@ const History = ({ countriesData }) => {
           <Block 
             id='overTime' 
             title='Cases over time' 
-            subtitle={`${capitalize(getTypeText(activeType))} cases`}
+            subtitle={`${currentType} cases`}
             source={selected && 'Source: Johns Hopkins University'}
           >
             {selected && (<div className={styles.chart}>
@@ -105,36 +104,10 @@ const History = ({ countriesData }) => {
           <Block
             id='countriesTotal'
             title='Total cases' 
-            subtitle={`${capitalize(getTypeText(activeType))} cases`}
+            subtitle={`${currentType} cases`}
             source={selected && `Updated ${lastUpdated}`}
           >
-            <table style={{ width: '100%', textAlign: 'right', fontSize: 14, margin: 'auto' }}>
-              <thead>
-                <tr style={{ textAlign: 'center', fontSize: 12 }}>
-                  <th>Country</th>
-                  <th>{capitalize(getTypeText(activeType))}</th>
-                  <th>{capitalize(getTypeText(activeType))} / 1M</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map(({ name, data: { cases, casesPerOneMillion, countryInfo }}, index) => (
-                  <tr 
-                    key={uuid()} 
-                    style={{ 
-                      background: index % 2 ? null : 'rgba(255, 255, 255, 0.07)',
-                    }}
-                  >
-                    <td style={{ textAlign: 'left', fontSize: 12, paddingLeft: 8 }}>
-                      {name === 'Worldwide' ? (<span style={{ height: 48 }}><PublicIcon /></span>) : (
-                        <img src={countryInfo.flag} alt={name} style={{ marginRight: 8 }} />
-                      )}
-                      <span>{name}</span>
-                    </td>
-                    <td>{cases.toLocaleString()}</td>
-                    <td>{casesPerOneMillion.toLocaleString()}</td>
-                  </tr>))}
-              </tbody>
-            </table>
+            <Table activeType={activeType} data={data} />
           </Block>
         </>
       ) : (
