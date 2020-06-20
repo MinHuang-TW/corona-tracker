@@ -6,7 +6,7 @@ const PieChart = ({ data: { active, cases, recovered, deaths } }) => {
   const data_source = cases && {
     labels: [' Active', ' Recovered', ' Deaths'],
     datasets: [{
-      borderColor: '#121212',
+      borderColor: 'rgb(34, 34, 34)',
       data: [active, recovered, deaths],
       backgroundColor: [color.active, color.recovered, color.deaths],
     }],

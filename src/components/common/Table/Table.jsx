@@ -10,8 +10,8 @@ import styles from './Table.module.css';
 const Table = ({ data }) => {
   const [descending, setDescending] = useState(true);
   const columnLists = [
-    'name', 'tests', 'cases', 'casesPerOneMillion', 
-    'critical', 'active', 'recovered', 'deaths',
+    'name', 'cases', 'casesPerOneMillion', 
+    'critical', 'active', 'recovered', 'deaths', 'tests',
   ];
   const [sortColumn, setSortColum] = useState(columnLists[0].sortIndx);
 
@@ -22,7 +22,7 @@ const Table = ({ data }) => {
           ? (<PublicIcon />) 
           : (<Avatar
               src={data.countryInfo && data.countryInfo.flag}
-              style={{ width: '20px', height: '20px', margin: 2 }}
+              style={{ width: '20px', height: '20px', margin: 2, filter: 'saturate(70%)' }}
               alt={data[list]}
             />)}
       </span>)}

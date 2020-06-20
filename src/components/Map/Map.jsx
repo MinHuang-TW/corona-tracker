@@ -26,6 +26,8 @@ const Map = ({
     zoom: windowWidth < 450 ? 0 : 1.2,
     latitude: windowWidth < 450 ? 0 : 20,
     longitude: 15,
+    bearing: 0,
+    pitch: 0,
   };
 
   const animation = {
@@ -75,6 +77,7 @@ const Map = ({
       setViewport({ ...viewport, ...initial_viewport });
     else setViewport({
       ...viewport,
+      ...animation,
       zoom: 5,
       latitude: country.lat,
       longitude: country.long,
@@ -116,10 +119,7 @@ const Map = ({
       maxZoom={8}
       minZoom={windowWidth < 450 ? 0 : 1}
       onClick={handleClick}
-      onViewportChange={(newViewport) => setViewport({ 
-        ...newViewport, 
-        ...animation, 
-      })}
+      onViewportChange={(newViewport) => setViewport(newViewport)}
     >
       <Source ref={sourceRef} data={clusterData} type='geojson'>
         <Layer {...clusterLayer} />
