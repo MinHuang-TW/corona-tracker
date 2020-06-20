@@ -91,8 +91,8 @@ const History = ({ countriesData }) => {
 
           <Block
             id='countriesTotal'
-            title='Case details' 
-            source={selected && `Updated ${lastUpdated}`}
+            title='Cases details' 
+            source={selected && `Updated ${lastUpdated} from Worldometers`}
           >
             {selected && (<Table data={data} />)}
           </Block>
@@ -101,7 +101,7 @@ const History = ({ countriesData }) => {
             id='overTime' 
             title='Cases over time' 
             subtitle={selected && `${currentType} cases`}
-            source={selected && `Source: Johns Hopkins University`}
+            source={selected && `Updated ${lastUpdated} from Johns Hopkins University`}
           >
             {selected && (<div className={styles.chart}>
               <LineChart selectedCountries={selectedCountries} type={activeType} />

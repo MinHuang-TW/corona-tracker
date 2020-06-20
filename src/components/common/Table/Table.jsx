@@ -38,6 +38,7 @@ const Table = ({ data }) => {
     if (text === 'name') return 'Country';
     if (text === 'cases') return 'Confirmed';
     if (text.includes('PerOneMillion')) return 'Confirmed per 1M';
+    if (text === 'tests') return `${capitalize(text)} conducted`;
     return capitalize(text);
   }
 

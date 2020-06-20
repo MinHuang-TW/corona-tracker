@@ -68,19 +68,19 @@ const Total = ({ countries }) => {
           />
 
           <Block 
-            id='total' 
-            title='Total cases' 
+            id='overview' 
+            title='Cases overview' 
             subtitle={countryName}
-            source={`Updated ${lastUpdated}`}
+            source={`Updated ${lastUpdated} from Worldometers`}
           >
             <Cards data={data} />
           </Block>
 
           <Block 
             id='distribution' 
-            title='Case distribution' 
+            title='Cases distribution' 
             subtitle={countryName}
-            source={`Updated ${lastUpdated}`}
+            source={`Updated ${lastUpdated} from Worldometers`}
           >
             <div className={styles.box}>
               <div className={styles.chart}>
