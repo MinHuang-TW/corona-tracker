@@ -14,7 +14,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80%;
+  width: 85%;
   margin: auto;
   top: -80px;
   position: relative;
@@ -39,6 +39,7 @@
   align-items: center;
   /* padding: 0px 24px 16px; */
   width: 80%;
+  margin-bottom: 16px;
 }
 
 .chart {
@@ -79,16 +80,16 @@
 }
 
 @media (max-width: 1280px) {
+  .body {
+    width: 95%;
+  }
+
   .ratio {
     font-size: 21px;
   }
 }
 
 @media (max-width: 960px) {
-  .body {
-    width: 95%;
-  }
-
   .chart {
     width: 40%;
   }
@@ -106,6 +107,7 @@
   .box {
     flex-direction: column;
     margin: auto;
+    margin-bottom: 16px;
   }
 
   .lists {

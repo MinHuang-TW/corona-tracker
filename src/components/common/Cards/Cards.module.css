@@ -84,7 +84,7 @@
   }
 }
 
-@media (max-width: 750px) {
+@media (max-width: 960px) {
   .container {
     width: 100%;
     flex-direction: column;

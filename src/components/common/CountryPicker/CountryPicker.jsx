@@ -32,7 +32,8 @@ const Selector = ({ country, setCountry, data, setData }) => {
   return (
     <>
       <div>
-        {country.length ? (country.map(({ name, flag }) => (
+        {/* {country.length ? ( */}
+          {country.map(({ name, flag }) => (
           <Chip
             key={uuid()}
             label={name}
@@ -43,12 +44,7 @@ const Selector = ({ country, setCountry, data, setData }) => {
               ? <PublicIcon /> 
               : <Avatar src={flag} alt={name} />
             }
-          />))
-        ) : (
-          <div className={styles.selector_text}>
-            {`Select countries to compare (Up to 5)`}
-          </div>
-        )}
+          />))}
       </div>
       <span className={setButton} onClick={handleClear}>
         <AddIcon />
@@ -58,11 +54,13 @@ const Selector = ({ country, setCountry, data, setData }) => {
 };
 
 const Picker = ({ open, country }) => (
-  <List main 
-    icon={country && country.flag} 
-    text={country ? country.name : 'Loading...'} 
-    open={open}
-  />
+  <ol>
+    <List main 
+      icon={country && country.flag} 
+      text={country ? country.name : 'Loading...'} 
+      open={open}
+    />
+  </ol>
 );
 
 const CountryPicker = ({
@@ -130,7 +128,7 @@ const CountryPicker = ({
       </div>
 
       {pickerOpen ? (
-        <div   
+        <ul   
           className={styles.menu_active}
           style={{ 
             borderRadius: `0 0 ${radius}px ${radius}px`,
@@ -147,7 +145,7 @@ const CountryPicker = ({
                 onClick={handleSelect(country)}
               />
             ))}
-        </div>
+        </ul>
       ) : (
         <div className={styles.menu} />
       )}

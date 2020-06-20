@@ -11,3 +11,38 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.mapboxgl-popup-content {
+  border-radius: 6px !important;
+  padding: 0 !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+  border-bottom-color: rgba(0, 0, 0, 0.8) !important;
+}
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
+  border-top-color: rgba(0, 0, 0, 0.8) !important;
+}
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  border-right-color: rgba(0, 0, 0, 0.8) !important;
+}
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+  border-left-color: rgba(0, 0, 0, 0.8) !important;
+}
+.mapboxgl-ctrl-bottom-right {
+  display: none;
+}
+.mapboxgl-ctrl-bottom-left {
+  display: none;
+}
+.MuiPaper-rounded {
+  border-radius: 6px !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+.MuiChip-root {
+  background: rgba(255, 255, 255, 0.6) !important;
+}

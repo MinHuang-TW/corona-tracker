@@ -45,19 +45,25 @@ const History = ({ countriesData }) => {
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('SelectedCountry'));
-    const query = storedData.map(({ name }) => name).filter(name => name !== 'Worldwide');
-    const hasGlobal = query && query.length !== storedData.length;
-    const hasOnlyGlobal = hasGlobal & storedData.length === 1;
+    let queryHistoryData = '',
+        queryDataDetails = '';
+    let hasGlobal = false,
+        hasOnlyGlobal = false;
+
+    if (storedData && storedData.length) {
+      const query = storedData
+        .map(({ name }) => name)
+        .filter(name => name !== 'Worldwide');
+
+      hasGlobal = query && query.length !== storedData.length;
+      hasOnlyGlobal = hasGlobal & storedData.length === 1;
+
+      if (!hasOnlyGlobal)
+        queryHistoryData = storedData;
+        queryDataDetails = query;
+    }
     
     const getData = async () => {
-      let queryHistoryData = '';
-      let queryDataDetails = '';
-
-      if (storedData && storedData.length) {
-        if (!hasOnlyGlobal)
-          queryHistoryData = storedData;
-          queryDataDetails = query;
-      }
       const globalHistory = await fetchHistoryData(queryHistoryData);
       setSelectedCountries(globalHistory);
 

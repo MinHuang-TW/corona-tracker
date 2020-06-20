@@ -2,53 +2,26 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" type="image/png" href="./images/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Web site created using create-react-app" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css' rel='stylesheet' />
+    <meta name="description" content="Web site tracking daily Coronavirus status" />
+    <link rel="apple-touch-icon" href="./images/icon512.png" />
+    <link rel="manifest" href="./manifest.json" />
     <title>Coronavirus Tracker</title>
-    <style>
-      .mapboxgl-popup-content {
-        border-radius: 6px !important;
-        padding: 0 !important;
-        background: rgba(0, 0, 0, 0.8);
-      }
-      .mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
-      .mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
-      .mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
-        border-bottom-color: rgba(0, 0, 0, 0.8) !important;
-      }
-      .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
-      .mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
-      .mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
-        border-top-color: rgba(0, 0, 0, 0.8) !important;
-      }
-      .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
-        border-right-color: rgba(0, 0, 0, 0.8) !important;
-      }
-      .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
-        border-left-color: rgba(0, 0, 0, 0.8) !important;
-      }
-      .mapboxgl-ctrl-bottom-right {
-        display: none;
-      }
-      .mapboxgl-ctrl-bottom-left {
-        display: none;
-      }
-      .MuiPaper-rounded {
-        border-radius: 6px !important;
-        background: rgba(255, 255, 255, 0.12) !important;
-      }
-      .MuiChip-root {
-        background: rgba(255, 255, 255, 0.6) !important;
-      }
-    </style>
   </head>
   <body>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js'></script>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('./serviceWorker.js')
+            .then(reg => console.log('Success: ', reg.scope))
+            .catch(err => console.log('Failure: ', err));
+        })
+      }
+    </script>
   </body>
 </html>
