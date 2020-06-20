@@ -114,12 +114,12 @@ const Map = ({
       {...viewport}
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       mapStyle='mapbox://styles/mapbox/dark-v10?optimize=true'
-      // mapStyle='mapbox://styles/min-huang/ckb2wh38l00aw1iph6kncjlx0'
       interactiveLayerIds={[clusterLayer.id]}
       maxZoom={8}
       minZoom={windowWidth < 450 ? 0 : 1}
       onClick={handleClick}
       onViewportChange={(newViewport) => setViewport(newViewport)}
+      style={{ zIndex: 3 }}
     >
       <Source ref={sourceRef} data={clusterData} type='geojson'>
         <Layer {...clusterLayer} />

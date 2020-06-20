@@ -6,33 +6,29 @@
   position: relative;
   width: 100%;
   margin-top: 8px;
-  /* padding: 32px 0px; */
 }
 
 .selector {
   width: 100%;
-  /* margin-bottom: 16px; */
 }
 
 .buttons {
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  margin-top: 8px;
+  width: 95%;
+  margin: 16px auto;
 }
 
 .button {
   width: 100%;
   margin: auto;
-  margin-right: 8px;
-  padding: 16px;
   text-align: center;
+  padding: 12px 0px;
   font-size: 14px;
   letter-spacing: 1px;
   font-weight: 500;
   cursor: pointer;
   color: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .button:last-child {
@@ -65,18 +61,8 @@
   }
 }
 
-@media (max-width: 355px) {
-  .buttons {
-    flex-direction: column;
-  }
-
+@media (max-width: 350px) {
   .button {
-    margin: 0px auto 8px;
-    padding: 12px;
     font-size: 12px;
-  }
-
-  .button:last-child {
-    margin-bottom: 0px;
   }
 }

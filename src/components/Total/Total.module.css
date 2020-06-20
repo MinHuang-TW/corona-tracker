@@ -1,13 +1,9 @@
-/* .container {
-  min-height: 100vh;
-} */
-
 .cover {
   position: absolute;
   top: 40vh;
   width: 100vw; 
   height: 10vh;
-  z-index: 2;
+  z-index: 4;
 }
 
 .body {
@@ -18,9 +14,8 @@
   margin: auto;
   top: -80px;
   position: relative;
-  z-index: 10;
+  /* z-index: 10; */
   margin-bottom: -80px;
-  /* margin-top: 24px; */
 }
 
 .block,
@@ -96,10 +91,6 @@
 }
 
 @media (max-width: 600px) {
-  /* .body {
-    width: 95%;
-  } */
-
   .chart {
     width: 70%;
   }
