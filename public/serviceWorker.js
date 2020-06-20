@@ -2,8 +2,7 @@ const cacheName = 'version_1';
 const cacheAssets = ['index.html', 'offline.html'];
 
 self.addEventListener('install', (event) => {
-  console.log('Service Worker: Installed!')
-
+  // console.log('Service Worker: Installed!')
   event.waitUntil(
     caches
       .open(cacheName)
@@ -16,8 +15,7 @@ self.addEventListener('install', (event) => {
 })
 
 self.addEventListener('fetch', (event) => {
-  console.log('Service Worker: Fetching...');
-
+  // console.log('Service Worker: Fetching...');
   event.respondWith(
     caches
       .match(event.request)
@@ -26,15 +24,10 @@ self.addEventListener('fetch', (event) => {
           .catch(() => caches.match('offline.html'));
       })
   )
-  // event.respondWith(
-  //   fetch(event.request)
-  //     .catch(() => caches.match(event.request))
-  // );
 })
 
 self.addEventListener('activate', (event) => {
-  console.log('Service Worker: Activated!');
-
+  // console.log('Service Worker: Activated!');
   const cacheWhitelist = [];
   cacheWhitelist.push(cacheName);
 
@@ -43,7 +36,6 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (!cacheWhitelist.includes(cacheName)) {
-            // console.log('Service Worker: Clearing old cache.');
             return caches.delete(cacheName);
           }
         })

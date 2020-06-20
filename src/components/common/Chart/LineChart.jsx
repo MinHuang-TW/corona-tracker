@@ -18,7 +18,7 @@ const LineChart = ({ selectedCountries, type }) => {
       color: colorPalette[index],
     })
   ) : [];
-console.log(windowWidth)
+
   const data = {
     labels: Object.keys(timeline).map((date) =>
       moment(new Date(date)).format('MMMM D, YYYY')
