@@ -37,7 +37,7 @@ const Map = ({
 
   const [viewport, setViewport] = useState({
     width: '100vw',
-    height: '50vh',
+    height: windowWidth < 600 ? '50vh' : '60vh',
     ...initial_viewport,
     ...animation,
   });

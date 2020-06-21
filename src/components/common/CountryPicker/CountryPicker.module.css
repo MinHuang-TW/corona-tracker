@@ -4,7 +4,6 @@
 
 .container {
   width: 100%;
-  /* max-width: 600px; */
   position: relative;
   margin: auto;
 }
@@ -48,7 +47,7 @@
 }
 
 .menu_active {
-  max-height: calc(48px * 10 - 10px);
+  max-height: calc(48px * 6 - 14px);
   z-index: 7;
 }
 
@@ -133,11 +132,5 @@
 @media (max-width: 600px) {
   .selector {
     padding: 4px;
-  }
-}
-
-@media (max-width: 600px) {
-  .menu_active {
-    max-height: calc(48px * 8 - 14px);
   }
 }

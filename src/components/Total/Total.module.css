@@ -1,6 +1,6 @@
 .cover {
   position: absolute;
-  top: 40vh;
+  top: 50vh;
   width: 100vw; 
   height: 10vh;
   z-index: 4;
@@ -74,7 +74,7 @@
   font-size: 24px;
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1250px) {
   .body {
     width: 95%;
   }
@@ -91,6 +91,10 @@
 }
 
 @media (max-width: 600px) {
+  .cover {
+    top: 40vh;
+  }
+
   .chart {
     width: 70%;
   }

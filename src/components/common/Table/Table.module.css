@@ -60,6 +60,10 @@ tr {
   padding-right: 8px;
 }
 
+.column:last-of-type {
+  padding-right: 16px;
+}
+
 .column:hover {
   text-decoration: underline;
 }
@@ -108,6 +112,10 @@ tr {
   color: rgba(255, 255, 255, 0.87);
   padding-right: 8px;
   font-size: 16px;
+}
+
+.value:last-of-type {
+  padding-right: 16px;
 }
 
 .align {
@@ -162,7 +170,12 @@ tr {
   }
   
   .value {
-    padding-right: 8px;
     font-size: 14px;
+  }
+
+  .value,
+  .column:last-of-type,
+  .value:last-of-type {
+    padding-right: 8px;
   }
 }

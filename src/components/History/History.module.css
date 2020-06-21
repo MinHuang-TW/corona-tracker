@@ -24,7 +24,7 @@
   width: 100%;
   margin: auto;
   text-align: center;
-  padding: 12px 0px;
+  padding: 10px 0px;
   font-size: 14px;
   letter-spacing: 1px;
   font-weight: 500;
@@ -50,7 +50,7 @@
 }
 
 .chart {
-  width: 70%;
+  width: 56%;
   margin: auto;
 }
 
