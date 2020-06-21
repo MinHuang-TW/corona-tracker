@@ -22,13 +22,8 @@ const History = ({ countriesData }) => {
     return (
       <div 
         onClick={handleSetType}
-        className={styles.button}
-        style={{
-          background: selected && color_pallete,
-          color: selected && '#000000',
-          borderColor: selected && color_pallete,
-          fontWeight: selected && 600,
-        }}
+        className={selected ? styles.button_active : styles.button}
+        style={{ background: selected && color_pallete }}
       >
         {getTypeText(type).toUpperCase()}
       </div>
@@ -92,7 +87,6 @@ const History = ({ countriesData }) => {
               selector
             />
           </div>
-
 
           <Block 
             id='overTime' 

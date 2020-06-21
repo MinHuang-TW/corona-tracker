@@ -72,7 +72,6 @@ const CountryPicker = ({
   setData,
   setPopupOpen,
   selector,
-  radius = 0,
 }) => {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [key, setKey] = useKey(setPickerOpen);
@@ -130,10 +129,7 @@ const CountryPicker = ({
       {pickerOpen ? (
         <ul   
           className={styles.menu_active}
-          style={{ 
-            borderRadius: `0 0 ${radius}px ${radius}px`,
-            borderColor: selector && 'rgba(255, 255, 255, 0.6)',
-          }}
+          style={{ borderColor: selector && 'rgba(255, 255, 255, 0.6)' }}
         >
           {countries
             .filter(({ name }) => filterList(name))

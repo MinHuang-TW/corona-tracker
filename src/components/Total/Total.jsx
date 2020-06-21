@@ -58,14 +58,15 @@ const Total = ({ countries }) => {
         <div className={styles.body}>
           <AnchoredTitle hrefId='map'>Coronavirus Cases</AnchoredTitle>
           
-          <CountryPicker
-            country={country}
-            setCountry={setCountry}
-            countries={countries}
-            handleCountry={handleCountry}
-            setPopupOpen={setPopupOpen}
-            radius={0}
-          />
+          <div style={{ width: '100%', maxWidth: 1024 }}>
+            <CountryPicker
+              country={country}
+              setCountry={setCountry}
+              countries={countries}
+              handleCountry={handleCountry}
+              setPopupOpen={setPopupOpen}
+            />
+          </div>
 
           <Block 
             id='overview' 

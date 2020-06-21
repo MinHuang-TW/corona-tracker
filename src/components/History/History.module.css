@@ -19,7 +19,8 @@
   margin: 16px auto;
 }
 
-.button {
+.button,
+.button_active {
   width: 100%;
   margin: auto;
   text-align: center;
@@ -29,6 +30,15 @@
   font-weight: 500;
   cursor: pointer;
   color: rgba(255, 255, 255, 0.6);
+}
+
+.button_active {
+  color: #000000;
+  font-weight: 500;
+  box-shadow: 
+    rgba(0, 0, 0, 0.2) 0px 3px 3px -2px, 
+    rgba(0, 0, 0, 0.14) 0px 3px 4px 0px,
+    rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
 }
 
 .button:last-child {
@@ -54,15 +64,11 @@
   .chart {
     width: 95%;
   }
-
-  .button {
-    font-size: 12px;
-    padding: 10px;
-  }
 }
 
-@media (max-width: 350px) {
-  .button {
+@media (max-width: 400px) {
+  .button,
+  .button_active {
     font-size: 12px;
   }
 }

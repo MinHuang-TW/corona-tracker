@@ -9,6 +9,15 @@
     background: transparent;
 }
 
+::selection {
+  color: none;
+  background: none;
+}
+::-moz-selection {
+  color: none;
+  background: none;
+}
+
 html {
   scroll-behavior: smooth;
 }
