@@ -78,10 +78,6 @@
   .body {
     width: 95%;
   }
-
-  .ratio {
-    font-size: 21px;
-  }
 }
 
 @media (max-width: 960px) {
