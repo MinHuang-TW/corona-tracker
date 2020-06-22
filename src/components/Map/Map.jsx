@@ -4,6 +4,7 @@ import { color } from '../common/Chart/chartConfig';
 import PopupContent from '../PopupContent/PopupContent';
 import { useWindowWidth } from '../Hook';
 import { clusterRadius, setOpacity } from './clusterStyle';
+import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 
 const Map = ({
   country,
@@ -68,6 +69,10 @@ const Map = ({
     setPopupOpen(true);
   }, []); // eslint-disable-line
 
+  const handleZoomOut = useCallback(() => {
+    setViewport({ ...viewport, ...initial_viewport })
+  }, []); // eslint-disable-line
+
   useEffect(() => {
     setCluster(setOpacity(viewport.zoom));
   }, [viewport.zoom]);
@@ -124,7 +129,18 @@ const Map = ({
       <Source ref={sourceRef} data={clusterData} type='geojson'>
         <Layer {...clusterLayer} />
       </Source>
-
+      <span 
+        onClick={handleZoomOut} 
+        style={{ 
+          cursor: 'pointer', 
+          float: 'right',
+          marginTop: windowWidth < 450 ? 16 : 24, 
+          marginRight: windowWidth < 450 ? 16 : 24, 
+          color: 'rgba(255, 255, 255, 0.6)',
+        }}
+      >
+        <ZoomOutMapIcon />
+      </span>
       {popupOpen && country.name !== 'Worldwide' && (
         <PopupContent 
           country={country} 
