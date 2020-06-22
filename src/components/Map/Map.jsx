@@ -136,7 +136,7 @@ const Map = ({
           float: 'right',
           marginTop: windowWidth < 450 ? 16 : 24, 
           marginRight: windowWidth < 450 ? 16 : 24, 
-          color: 'rgba(255, 255, 255, 0.6)',
+          color: 'rgba(255, 255, 255, 0.87)',
         }}
       >
         <ZoomOutMapIcon />

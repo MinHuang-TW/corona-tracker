@@ -41,13 +41,13 @@ const LineChart = ({ selectedCountries, type }) => {
         right: 8,
       }
     },
-    title: {
-      display: true,
-      text: 'Toggle different countries',
-      position: 'bottom',
-      fontStyle: 'normal',
-      fontColor: 'rgba(255, 255, 255, 0.38)',
-    },
+    // title: {
+    //   display: true,
+    //   text: 'Toggle different countries',
+    //   position: 'bottom',
+    //   fontStyle: 'normal',
+    //   fontColor: 'rgba(255, 255, 255, 0.38)',
+    // },
     scales: {
       yAxes: [{
         gridLines,
