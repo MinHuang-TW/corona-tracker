@@ -29,7 +29,7 @@ const App = () => {
 
       <footer>
         <p>
-          {`Source: `}
+          {`Source `}
           <a href={link} target='_blank' rel='noopener noreferrer'>
             NOVELCovid API
           </a>
