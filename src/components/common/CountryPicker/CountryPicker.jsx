@@ -32,19 +32,20 @@ const Selector = ({ country, setCountry, data, setData }) => {
   return (
     <>
       <div>
-        {/* {country.length ? ( */}
-          {country.map(({ name, flag }) => (
+        {country.length ? (country.map(({ name, flag }) => (
           <Chip
             key={uuid()}
             label={name}
             className={styles.selector_chip}
             size={windowWidth < 960 ? 'small' : null}
             onDelete={handleDelete(name)}
-            avatar={name === 'Worldwide' 
-              ? <PublicIcon /> 
-              : <Avatar src={flag} alt={name} />
-            }
-          />))}
+            avatar={name === 'Worldwide' ? <PublicIcon /> : <Avatar src={flag} alt={name} />}
+          />))
+        ) : (
+          <div className={styles.selector_text}>
+            {`Select countries to compare (Up to 5)`}
+          </div>
+        )}
       </div>
       <span className={setButton} onClick={handleClear}>
         <AddIcon />
