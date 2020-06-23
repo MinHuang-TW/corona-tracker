@@ -101,12 +101,12 @@ const LineChart = ({ selectedCountries, type }) => {
       },
     });
   }, []);
-
+console.log(windowWidth)
   return (
     <>
       {hasHistoryData 
         ? (<Line 
-            height={windowWidth < 650 ? 300 : 180} 
+            height={windowWidth < 650 ? 300 : 150} 
             data={data} 
             options={options} 
           />)

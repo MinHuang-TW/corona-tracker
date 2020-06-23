@@ -49,11 +49,11 @@
 }
 
 .chart {
-  width: 56%;
+  width: 90%;
   margin: auto;
 }
 
-@media (max-width: 960px) {
+/* @media (max-width: 960px) {
   .chart {
     width: 85%;
   }
@@ -63,7 +63,7 @@
   .chart {
     width: 95%;
   }
-}
+} */
 
 @media (max-width: 400px) {
   .button,

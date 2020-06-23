@@ -90,14 +90,6 @@ const History = ({ countriesData }) => {
             />
           </div>
 
-          <Block
-            id='countriesTotal'
-            title='Cases details' 
-            source={selected && `Updated ${lastUpdated} from Worldometers`}
-          >
-            {selected && (<Table data={data} />)}
-          </Block>
-
           <Block 
             id='overTime' 
             title='Cases over time' 
@@ -110,6 +102,14 @@ const History = ({ countriesData }) => {
                 {types.map((type, index) => (<TypeButton key={index} type={type} />))}
               </div>
             </div>)}
+          </Block>
+
+          <Block
+            id='countriesTotal'
+            title='Cases details' 
+            source={selected && `Updated ${lastUpdated} from Worldometers`}
+          >
+            {selected && (<Table data={data} />)}
           </Block>
         </>
       ) : (

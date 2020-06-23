@@ -17,9 +17,6 @@
 
 .title {
   margin-left: 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .source {
@@ -28,24 +25,6 @@
   float: right;
   margin-right: 16px;
   margin-top: 16px;
-}
-
-.more,
-.less {
-  height: 48px;
-  display: flex;
-  align-items: center;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
-  margin-right: 16px;
-  cursor: pointer;
-}
-
-.more {
-  transform: rotate(0deg);
-}
-
-.less {
-  transform: rotate(180deg);
 }
 
 @media (max-width: 600px) {
