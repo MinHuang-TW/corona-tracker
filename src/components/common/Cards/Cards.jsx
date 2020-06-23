@@ -15,7 +15,7 @@ const Cards = ({
 
   const contents = [
     { title: 'Confirmed', value: cases, todayValue: todayCases }, 
-    { title: 'Active', value: active, todayValue: 0 }, 
+    // { title: 'Active', value: active, todayValue: 0 }, 
     { title: 'Recovered', value: recovered, todayValue: todayRecovered }, 
     { title: 'Deaths', value: deaths, todayValue: todayDeaths }
   ];

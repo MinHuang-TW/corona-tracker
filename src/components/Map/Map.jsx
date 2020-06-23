@@ -5,6 +5,7 @@ import PopupContent from '../PopupContent/PopupContent';
 import { useWindowWidth } from '../Hook';
 import { clusterRadius, setOpacity } from './clusterStyle';
 import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
+import styles from './Map.module.css';
 
 const Map = ({
   country,
@@ -129,16 +130,7 @@ const Map = ({
       <Source ref={sourceRef} data={clusterData} type='geojson'>
         <Layer {...clusterLayer} />
       </Source>
-      <span 
-        onClick={handleZoomOut} 
-        style={{ 
-          cursor: 'pointer', 
-          position: 'absolute',
-          right: '5%',
-          bottom: '15%',
-          color: 'rgba(255, 255, 255, 0.87)',
-        }}
-      >
+      <span onClick={handleZoomOut} className={styles.zoomOut}>
         <ZoomOutMapIcon />
       </span>
       {popupOpen && country.name !== 'Worldwide' && (

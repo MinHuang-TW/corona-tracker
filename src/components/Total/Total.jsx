@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchData } from '../../api';
+import { useWindowWidth } from '../Hook';
 import { Map } from '../../components';
 import { AnchoredTitle, Block, CountryPicker, Chart, Cards, Progress } from '../common';
 import styles from './Total.module.css';
@@ -9,16 +10,9 @@ const Total = ({ countries }) => {
   const [data, setData] = useState([]);
   const [country, setCountry] = useState(null);
   const [popupOpen, setPopupOpen] = useState(false);
-  const { cases, active, recovered, deaths, updated } = data && data;
-  const lastUpdated = moment(updated).startOf('hour').fromNow();
+  const windowWidth = useWindowWidth();
+  const lastUpdated = moment(data && data.updated).startOf('hour').fromNow();
   const countryName = country && country.name;
-
-  const dataLists = [
-    { text: 'Confirmed', data: cases },
-    { text: 'Active', data: active },
-    { text: 'Recovered', data: recovered },
-    { text: 'Deaths', data: deaths },
-  ];
 
   const handleCountry = async (country) => {
     setData(await fetchData(country));
@@ -56,7 +50,7 @@ const Total = ({ countries }) => {
       {countries.length ? (
         <div className={styles.body}>
           <AnchoredTitle hrefId='map'>
-            Coronavirus Cases
+            {`Coronavirus ${windowWidth > 600 ? '(COVID-19) ' : ''}Cases`}
           </AnchoredTitle>
 
           <CountryPicker
@@ -69,7 +63,7 @@ const Total = ({ countries }) => {
 
           <Block
             id='overview'
-            title='Cases overview'
+            title='Overview'
             subtitle={countryName}
             source={`Updated ${lastUpdated}`}
           >
@@ -78,22 +72,22 @@ const Total = ({ countries }) => {
 
           <Block
             id='breakdown'
-            title='Breakdown'
+            title='Breakdown of Confirmed cases'
             subtitle={countryName}
             classes={styles.breakdown}
             source={`Updated ${lastUpdated}`}
           >
-            <Chart data={data} dataLists={dataLists} bar />
+            <Chart data={data} bar />
           </Block>
 
           <Block
             id='distribution'
-            title='Distribution'
+            title='Distribution of Confirmed cases'
             subtitle={countryName}
             classes={styles.distribution}
             source={`Updated ${lastUpdated}`}
           >
-            <Chart data={data} dataLists={dataLists.slice(1)} total={cases} />
+            <Chart data={data} />
           </Block>
         </div>
       ) : (

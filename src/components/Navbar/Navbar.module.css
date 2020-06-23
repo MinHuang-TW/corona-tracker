@@ -1,10 +1,11 @@
 nav {
   background: rgba(0, 0, 0, 0.87);
+  color: rgba(255, 255, 255, 0.87);
   position: fixed;
   top: 0;
   height: 56px;
   width: 100%;
-  padding: 0px 2.5%;
+  padding: 0px 7.5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,8 +23,14 @@ nav {
   align-items: center;
 }
 
-nav,
 nav a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  margin-left: 32px;
+}
+
+
+nav a:hover {
   color: rgba(255, 255, 255, 0.87);
 }
 
@@ -42,11 +49,6 @@ nav h3 {
   font-weight: 500;
 }
 
-nav a {
-  text-decoration: none;
-  margin-left: 32px;
-}
-
 .active {
   visibility: visible;
   transition: all 0.5s;
@@ -57,11 +59,13 @@ nav a {
   transform: translateY(-100%);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1250px) {
   nav {
-    padding: 0px 16px;
+    padding: 0px 2.5%;
   }
+}
 
+@media (max-width: 600px) {
   nav div {
     height: 50%;
   }

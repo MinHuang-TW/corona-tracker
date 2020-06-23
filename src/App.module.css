@@ -36,15 +36,17 @@ body {
 
 footer {
   width: 100%;
-  padding: 24px 0px;
+  padding: 24px 7.5%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   position: relative;
+  background: #000000;
 }
 
 footer p {
   font-size: 12px;
-  margin: 4px 2px;
+  margin: 8px 2px;
   color: rgba(255, 255, 255, 0.6);
 }
 
@@ -56,11 +58,19 @@ footer a {
   .container {
     width: 95%;
   }
+
+  footer {
+    padding: 24px 2.5%;
+  }
 }
 
-@media (max-width: 320px) {
-  footer {
-    flex-direction: column;
-    align-items: center;
+@media (max-width: 450px) {
+  footer div {
+    width: 160px;
+  }
+
+  .text {
+    width: 96px;
+    text-align: right;
   }
 }

@@ -30,12 +30,15 @@ const App = () => {
       </main>
 
       <footer>
-        <p>
-          {`Source `}
-          <a href={link} target='_blank' rel='noopener noreferrer'>
-            NOVELCovid API
-          </a>
-        </p>
+        <div>
+          <p>{`[ API ] `}
+            <a href={link} target='_blank' rel='noopener noreferrer'>
+              NOVELCovid
+            </a>
+          </p>
+          <p>[ DATA ] Worldometers, Johns Hopkins University</p>
+        </div>
+        <p className={styles.text}>Copyright © 2020 Min Huang</p>
       </footer>
     </>
   );
