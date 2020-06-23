@@ -25,7 +25,7 @@ const Map = ({
 
   const initial_viewport = {
     zoom: windowWidth < 450 ? 0 : 1.2,
-    latitude: windowWidth < 450 ? 0 : 20,
+    latitude: 15,
     longitude: 15,
     bearing: 0,
     pitch: 0,
@@ -38,7 +38,7 @@ const Map = ({
 
   const [viewport, setViewport] = useState({
     width: '100vw',
-    height: windowWidth < 600 ? '50vh' : '60vh',
+    height: '60vh',
     ...initial_viewport,
     ...animation,
   });
@@ -133,9 +133,9 @@ const Map = ({
         onClick={handleZoomOut} 
         style={{ 
           cursor: 'pointer', 
-          float: 'right',
-          marginTop: windowWidth < 450 ? 16 : 24, 
-          marginRight: windowWidth < 450 ? 16 : 24, 
+          position: 'absolute',
+          right: '5%',
+          bottom: '15%',
           color: 'rgba(255, 255, 255, 0.87)',
         }}
       >

@@ -106,7 +106,7 @@ console.log(windowWidth)
     <>
       {hasHistoryData 
         ? (<Line 
-            height={windowWidth < 650 ? 300 : 150} 
+            height={windowWidth < 700 ? 300 : 145} 
             data={data} 
             options={options} 
           />)

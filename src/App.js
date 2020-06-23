@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchCountries, fetchHistoryData } from './api';
-import { Total, History } from './components';
+import { Navbar, Total, History } from './components';
 import styles from './App.module.css';
 
 const App = () => {
@@ -22,10 +22,12 @@ const App = () => {
 
   return (
     <>
-      <div className={styles.container}>
+      <Navbar />
+
+      <main className={styles.container}>
         <Total countries={countries} />
         <History countriesData={countriesData} />
-      </div>
+      </main>
 
       <footer>
         <p>

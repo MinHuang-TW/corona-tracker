@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchData } from '../../api';
 import { Map } from '../../components';
-import { color } from '../common/Chart/chartConfig';
-import { getRatio } from '../../utils/format';
-import { AnchoredTitle, Block, CountryPicker, Cards, PieChart, Progress } from '../common';
-import Countup from 'react-countup';
+import { AnchoredTitle, Block, CountryPicker, Chart, Cards, Progress } from '../common';
 import styles from './Total.module.css';
 import moment from 'moment';
 
@@ -17,6 +14,7 @@ const Total = ({ countries }) => {
   const countryName = country && country.name;
 
   const dataLists = [
+    { text: 'Confirmed', data: cases },
     { text: 'Active', data: active },
     { text: 'Recovered', data: recovered },
     { text: 'Deaths', data: deaths },
@@ -39,11 +37,12 @@ const Total = ({ countries }) => {
 
   return (
     <section id='map'>
-      <div 
-        className={styles.cover} 
-        style={{ background: `linear-gradient(
-          to bottom, rgba(18, 18, 18, 0), rgba(18, 18, 18, 1))` 
-        }} 
+      <div
+        className={styles.cover}
+        style={{
+          background: `linear-gradient(
+          to bottom, rgba(18, 18, 18, 0), rgba(18, 18, 18, 1))`,
+        }}
       />
       <Map
         country={country}
@@ -56,8 +55,10 @@ const Total = ({ countries }) => {
       />
       {countries.length ? (
         <div className={styles.body}>
-          <AnchoredTitle hrefId='map'>Coronavirus Cases</AnchoredTitle>
-          
+          <AnchoredTitle hrefId='map'>
+            Coronavirus Cases
+          </AnchoredTitle>
+
           <CountryPicker
             country={country}
             setCountry={setCountry}
@@ -66,54 +67,40 @@ const Total = ({ countries }) => {
             setPopupOpen={setPopupOpen}
           />
 
-          <Block 
-            id='overview' 
-            title='Cases overview' 
+          <Block
+            id='overview'
+            title='Cases overview'
             subtitle={countryName}
-            source={`Updated ${lastUpdated} from Worldometers`}
+            source={`Updated ${lastUpdated}`}
           >
             <Cards data={data} />
           </Block>
 
-          <Block 
-            id='distribution' 
-            title='Cases distribution' 
+          <Block
+            id='breakdown'
+            title='Breakdown'
             subtitle={countryName}
-            source={`Updated ${lastUpdated} from Worldometers`}
+            classes={styles.breakdown}
+            source={`Updated ${lastUpdated}`}
           >
-            <div className={styles.box}>
-              <div className={styles.chart}>
-                <PieChart data={data} />
-              </div>
+            <Chart data={data} dataLists={dataLists} bar />
+          </Block>
 
-              <div className={styles.lists}>
-                {dataLists.map(({ text, data }) => (
-                  <div key={text} className={styles.list}>
-                    <span 
-                      className={styles.indicator} 
-                      style={{ background: color[text.toLocaleLowerCase()] }} 
-                    />
-                    <p>{text}</p>
-                    <div className={styles.ratio}>
-                      <Countup 
-                        start={0} 
-                        end={getRatio(data, cases)} 
-                        duration={0.5} 
-                        decimals={1} 
-                        suffix='%' 
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <Block
+            id='distribution'
+            title='Distribution'
+            subtitle={countryName}
+            classes={styles.distribution}
+            source={`Updated ${lastUpdated}`}
+          >
+            <Chart data={data} dataLists={dataLists.slice(1)} total={cases} />
           </Block>
         </div>
       ) : (
         <Progress />
       )}
     </section>
-  )
-}
+  );
+};
 
 export default Total;

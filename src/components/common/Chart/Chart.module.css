@@ -1,12 +1,125 @@
-.container {
-  margin: 32px auto;
-  display: flex;
-  justify-content: center;
+
+.barChart {
+  width: 90%; 
+  margin: auto; 
+  margin-top: 24px;
+}
+
+.chart {
   width: 70%;
+  margin: auto;
+  align-self: center;
+  margin-top: 16px;
+}
+
+.list {
+  margin-bottom: 24px;
+}
+
+.list:last-child {
+  margin-bottom: 0px;
+}
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+  box-shadow: 
+    rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, 
+    rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, 
+    rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+}
+
+.breakdown_lists,
+.lists {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 8px auto 24px;
+  align-self: flex-end;
+}
+
+.breakdown_lists {
+  width: 75%;
+}
+
+.lists {
+  width: 70%;
+}
+  
+.list {
+  margin: 0px;
+  text-align: center;
+}
+
+.list p {
+  font-size: 12px;
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.ratio {
+  margin-top: 4px;
+  font-weight: 500;
+  font-size: 21px;
+}
+
+@media (max-width: 1250px) {
+  .breakdown_lists {
+    width: 80%;
+    margin: 16px auto 8px;
+  }
+
+  .lists {
+    width: 80%;
+    margin: 8px auto;
+  }
 }
 
 @media (max-width: 960px) {
-  .container {
-    width: 100%;
+  .breakdown_lists {
+    width: 95%;
+  }
+
+  .lists {
+    width: 90%;
+  }
+}
+
+@media (max-width: 760px) {
+  .breakdown_lists {
+    width: 85%;
+    margin: 8px auto 16px;
+  }
+  
+  .lists {
+    width: 50%;
+    margin: 16px auto;
+  }
+
+  .list {
+    margin-top: 16px;
+  }
+
+  .chart {
+    width: 50%;
+  }
+}
+
+@media (max-width: 550px) {
+  .breakdown_lists {
+    flex-wrap: wrap;
+    width: 80%;
+  }
+
+  .breakdown_lists .list {
+    flex: 1 40%;
+    margin-top: 16px;
+  }
+
+  .lists {
+    width: 70%;
   }
 }

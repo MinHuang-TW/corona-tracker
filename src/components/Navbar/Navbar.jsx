@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useWindowWidth } from '../../Hook';
+import { useWindowWidth } from '../Hook';
 import MenuIcon from '@material-ui/icons/Menu';
 import ClearIcon from '@material-ui/icons/Clear';
 import styles from './Navbar.module.css';

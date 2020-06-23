@@ -25,6 +25,7 @@
   float: right;
   margin-right: 16px;
   margin-top: 16px;
+  text-align: right;
 }
 
 @media (max-width: 600px) {

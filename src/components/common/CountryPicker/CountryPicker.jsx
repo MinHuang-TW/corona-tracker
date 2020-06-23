@@ -6,6 +6,7 @@ import { Chip, Avatar } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import PublicIcon from '@material-ui/icons/Public';
 import styles from './CountryPicker.module.css';
+import cx from 'classnames';
 
 const MAX_ITEM = 5;
 
@@ -73,6 +74,7 @@ const CountryPicker = ({
   setData,
   setPopupOpen,
   selector,
+  classes,
 }) => {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [key, setKey] = useKey(setPickerOpen);
@@ -116,7 +118,7 @@ const CountryPicker = ({
   }, [pickerOpen, country]); // eslint-disable-line
 
   return (
-    <div className={styles.container} onBlur={handleClose} tabIndex={0}>
+    <div className={cx(classes, styles.container)} onBlur={handleClose} tabIndex={0}>
       {pickerOpen &&  (<div className={styles.backdrop} onClick={handleClose} />)}
       <div 
         className={selector ? styles.selector : styles.picker} 

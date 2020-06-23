@@ -21,7 +21,7 @@ const PieChart = ({ data: { active, cases, recovered, deaths } }) => {
         label: (tooltipItem, data) => {
           const dataset = data.datasets[tooltipItem.datasetIndex];
           const currentValue = dataset.data[tooltipItem.index];
-          return (` ${currentValue.toLocaleString()}`);
+          return (` Amount ${currentValue.toLocaleString()}`);
         },
         title: (tooltipItem, data) => data.labels[tooltipItem[0].index],
       },
