@@ -12,7 +12,20 @@ const Total = ({ countries }) => {
   const [popupOpen, setPopupOpen] = useState(false);
   const windowWidth = useWindowWidth();
   const lastUpdated = moment(data && data.updated).startOf('hour').fromNow();
-  const countryName = country && country.name;
+
+  const blockLists = [{ 
+    id: 'overview', 
+    title: 'Cases overview', 
+    children: <Cards data={data} /> 
+  }, { 
+    id: 'breakdown', 
+    title: 'Breakdown of Confirmed cases', 
+    children: <Chart data={data} bar /> 
+  }, { 
+    id: 'distribution', 
+    title: 'Distribution of Confirmed cases', 
+    children: <Chart data={data} /> 
+  }];
 
   const handleCountry = async (country) => {
     setData(await fetchData(country));
@@ -31,13 +44,7 @@ const Total = ({ countries }) => {
 
   return (
     <section id='map'>
-      <div
-        className={styles.cover}
-        style={{
-          background: `linear-gradient(
-          to bottom, rgba(18, 18, 18, 0), rgba(18, 18, 18, 1))`,
-        }}
-      />
+      <div className={styles.cover} />
       <Map
         country={country}
         setCountry={setCountry}
@@ -61,34 +68,17 @@ const Total = ({ countries }) => {
             setPopupOpen={setPopupOpen}
           />
 
-          <Block
-            id='overview'
-            title='Overview'
-            subtitle={countryName}
-            source={`Updated ${lastUpdated}`}
-          >
-            <Cards data={data} />
-          </Block>
-
-          <Block
-            id='breakdown'
-            title='Breakdown of Confirmed cases'
-            subtitle={countryName}
-            classes={styles.breakdown}
-            source={`Updated ${lastUpdated}`}
-          >
-            <Chart data={data} bar />
-          </Block>
-
-          <Block
-            id='distribution'
-            title='Distribution of Confirmed cases'
-            subtitle={countryName}
-            classes={styles.distribution}
-            source={`Updated ${lastUpdated}`}
-          >
-            <Chart data={data} />
-          </Block>
+          {blockLists.map(({ id, title, children }) =>(
+            <Block
+              key={id}
+              id={id}
+              title={title}
+              classes={styles[`${id}`]}
+              subtitle={country && country.name}
+              source={`Updated ${lastUpdated}`}
+            >
+              {children}
+            </Block>))}
         </div>
       ) : (
         <Progress />

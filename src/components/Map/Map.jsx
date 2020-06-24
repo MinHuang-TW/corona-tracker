@@ -17,6 +17,7 @@ const Map = ({
   data,
 }) => {
   const [clusterData, setClusterData] = useState(null);
+  const [scroll, setScroll] = useState(0);
   const [cluster, setCluster] = useState({
     opacity: 0,
     strokeOpacity: 0,
@@ -91,6 +92,17 @@ const Map = ({
   }, [country]); // eslint-disable-line
 
   useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = document.body.getBoundingClientRect().top;
+      setScroll(scrollTop);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [scroll]);
+
+  useEffect(() => {
     const features = countries && countries
       .filter(({ name }) => name !== 'Worldwide')
       .map((country) => ({
@@ -130,9 +142,10 @@ const Map = ({
       <Source ref={sourceRef} data={clusterData} type='geojson'>
         <Layer {...clusterLayer} />
       </Source>
-      <span onClick={handleZoomOut} className={styles.zoomOut}>
-        <ZoomOutMapIcon />
-      </span>
+      {scroll === 0 && (
+        <span onClick={handleZoomOut} className={styles.zoomOut}>
+          <ZoomOutMapIcon />
+        </span>)}
       {popupOpen && country.name !== 'Worldwide' && (
         <PopupContent 
           country={country} 

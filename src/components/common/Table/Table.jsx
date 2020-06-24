@@ -8,12 +8,12 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import styles from './Table.module.css';
 
 const Table = ({ data }) => {
-  const [descending, setDescending] = useState(true);
+  const [descending, setDescending] = useState(false);
   const columnLists = [
     'name', 'cases', 'casesPerOneMillion', 
     'critical', 'active', 'recovered', 'deaths', 'tests',
   ];
-  const [sortColumn, setSortColum] = useState(columnLists[0].sortIndx);
+  const [sortColumn, setSortColum] = useState('cases');
 
   const Cell = ({ data }) => columnLists.map((list, index) => (
     <td key={uuid()} className={!index ? styles.countries : styles.value}>
@@ -27,9 +27,7 @@ const Table = ({ data }) => {
             />)}
       </span>)}
       <span className={styles.align}>
-        {!index ? data[list] 
-          : data[list] === 0 ? '-' 
-          : data[list].toLocaleString()}
+        {!index ? data[list] : data[list] === 0 ? '-' : data[list].toLocaleString()}
       </span>
     </td>
   ));

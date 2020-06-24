@@ -6,12 +6,16 @@ import styles from './Navbar.module.css';
 
 const Menu = ({ setOpen, mobile = null }) => {
   const handleClick = useCallback(() => {
-    setOpen(false)
-  }, []); // eslint-disable-line 
+    setOpen(false);
+  }, []); // eslint-disable-line
   return (
     <div>
-      <a href='#map' onClick={mobile && handleClick}>Cases</a>
-      <a href='#history' onClick={mobile && handleClick}>Cases comparison</a>
+      <a href='#map' onClick={mobile && handleClick}>
+        Cases
+      </a>
+      <a href='#history' onClick={mobile && handleClick}>
+        Cases comparison
+      </a>
     </div>
   );
 };
@@ -28,10 +32,10 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = document.body.getBoundingClientRect().top
+      const scrollTop = document.body.getBoundingClientRect().top;
       setNav({
         scroll: scrollTop,
-        show: scrollTop > nav.scroll,
+        show: scrollTop === 0 || scrollTop > nav.scroll,
       });
       setOpen(false);
     };
@@ -54,13 +58,15 @@ const Navbar = () => {
           <img src={process.env.PUBLIC_URL + '/images/icon.png'} alt='logo' />
           <h3>Coronavirus Tracker</h3>
         </div>
-        {windowWidth < 600 
-          ? (<span onClick={handleOpen}>
-              {open ? <ClearIcon /> : <MenuIcon />}
-            </span>) 
-          : (<Menu setOpen={setOpen} />)}
+        {windowWidth < 600 ? (
+          <span onClick={handleOpen}>
+            {open ? <ClearIcon /> : <MenuIcon />}
+          </span>
+        ) : (
+          <Menu setOpen={setOpen} />
+        )}
       </div>
-      {open && (<Menu setOpen={setOpen} mobile />)}
+      {open && <Menu setOpen={setOpen} mobile />}
     </nav>
   );
 };

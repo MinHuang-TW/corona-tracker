@@ -92,7 +92,7 @@ tr {
 
 .table th:first-child,
 .countries {
-  position: -webkit-sticky; /* for Safari */
+  position: -webkit-sticky;
   position: sticky;
   left: 0;
   z-index: 1;
