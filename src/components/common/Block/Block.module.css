@@ -28,12 +28,8 @@
   text-align: right;
 }
 
-@media (max-width: 600px) {
-  .block {
-    padding: 16px 0px;
-  }
-  
+@media (max-width: 960px) {  
   .title {
-    margin-left: 24px;
+    margin: 0px 24px;
   }
 }
