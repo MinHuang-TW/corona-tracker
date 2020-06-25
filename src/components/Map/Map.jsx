@@ -39,8 +39,8 @@ const Map = ({
   };
 
   const [viewport, setViewport] = useState({
-    width: '100vw',
-    height: '60vh',
+    width: '100%',
+    height: '100%',
     ...initial_viewport,
     ...animation,
   });
@@ -128,33 +128,38 @@ const Map = ({
   }, []); // eslint-disable-line
 
   return (
-    <MapGL
-      {...viewport}
-      mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-      mapStyle='mapbox://styles/mapbox/dark-v10?optimize=true'
-      interactiveLayerIds={[clusterLayer.id]}
-      maxZoom={8}
-      minZoom={windowWidth < 450 ? 0 : 1}
-      onClick={handleClick}
-      onViewportChange={(newViewport) => setViewport(newViewport)}
-      style={{ zIndex: 3 }}
-    >
-      <Source ref={sourceRef} data={clusterData} type='geojson'>
-        <Layer {...clusterLayer} />
-      </Source>
+    <div className={styles.container}>
       {scroll === 0 && (
         <span onClick={handleZoomOut} className={styles.zoomOut}>
-          <ZoomOutMapIcon />
+          <ZoomOutMapIcon fontSize='small' />
         </span>)}
-      {popupOpen && country.name !== 'Worldwide' && (
-        <PopupContent 
-          country={country} 
-          data={data} 
-          onClick={handleClick}
-          setPopupOpen={setPopupOpen} 
-        />
-      )}
-    </MapGL>
+      <div className={styles.cover} />
+      <MapGL
+        {...viewport}
+        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+        mapStyle='mapbox://styles/mapbox/dark-v10?optimize=true'
+        interactiveLayerIds={[clusterLayer.id]}
+        maxZoom={8}
+        minZoom={windowWidth < 450 ? 0 : 1}
+        attributionControl={false}
+        onClick={handleClick}
+        onViewportChange={(newViewport) => setViewport(newViewport)}
+        style={{ zIndex: 3 }}
+      >
+        <Source ref={sourceRef} data={clusterData} type='geojson'>
+          <Layer {...clusterLayer} />
+        </Source>
+
+        {popupOpen && country.name !== 'Worldwide' && (
+          <PopupContent 
+            country={country} 
+            data={data} 
+            onClick={handleClick}
+            setPopupOpen={setPopupOpen} 
+          />
+        )}
+      </MapGL>
+    </div>
   );
 };
 

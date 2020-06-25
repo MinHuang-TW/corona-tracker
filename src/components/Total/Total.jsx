@@ -44,7 +44,6 @@ const Total = ({ countries }) => {
 
   return (
     <section id='map'>
-      <div className={styles.cover} />
       <Map
         country={country}
         setCountry={setCountry}

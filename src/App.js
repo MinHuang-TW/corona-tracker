@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { fetchCountries, fetchHistoryData } from './api';
 import { Navbar, Total, History } from './components';
 import styles from './App.module.css';
-import IconButton from '@material-ui/core/IconButton';
 import MailOutlineSharpIcon from '@material-ui/icons/MailOutlineSharp';
 
 const App = () => {
@@ -37,10 +36,10 @@ const App = () => {
           <a href={link} target='_blank' rel='noopener noreferrer'>NOVELCovid</a>
         </p>
         <p className={styles.text}>Copyright © 2020 Min Huang</p>
-        <a href='mailto:h.min719@gmail.com' className={styles.mail}>
-          <IconButton className={styles.icon}>
-            <MailOutlineSharpIcon />
-          </IconButton>
+        <a href='mailto:h.min719@gmail.com' className={styles.mail} aria-label='mail me'>
+          <span className={styles.icon}>
+            <MailOutlineSharpIcon fontSize='small' />
+          </span>
         </a>
       </footer>
     </>

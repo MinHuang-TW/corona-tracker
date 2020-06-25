@@ -61,7 +61,13 @@ footer a {
 }
 
 .icon {
-  background: rgba(255, 255, 255, 0.34) !important;
+  background: rgba(255, 255, 255, 0.34);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .icon svg {
@@ -79,21 +85,7 @@ footer a {
 }
 
 @media (max-width: 600px) {
-  footer {
-    grid-template-columns: 1fr 1fr auto;
-    grid-template-rows: 1fr 1fr;
-  }
   .api {
-    grid-column: 1/3;
-    grid-row: 1/2;
-  }
-  .text {
-    grid-column: 1/3;
-    grid-row: 2/3;
-    justify-self: start;
-  }
-  .mail {
-    grid-column: 3/4;
-    grid-row: 1/3;
+    width: 96px;
   }
 }

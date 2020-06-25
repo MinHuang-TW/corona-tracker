@@ -33,9 +33,6 @@ code {
 .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
   border-left-color: rgba(0, 0, 0, 0.8) !important;
 }
-.mapboxgl-ctrl-bottom-right {
-  display: none;
-}
 .mapboxgl-ctrl-bottom-left {
   display: none;
 }

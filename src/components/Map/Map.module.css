@@ -1,13 +1,30 @@
+.container {
+  width: 100vw;
+  height: 60vh;
+  position: relative;
+}
+
+.cover {
+  position: absolute;
+  bottom: 0%;
+  width: 100%; 
+  height: 96px;
+  z-index: 4;
+  background: -webkit-linear-gradient(to bottom, rgba(18, 18, 18, 0), rgba(18, 18, 18, 1));
+  background: linear-gradient(to bottom, rgba(18, 18, 18, 0), rgba(18, 18, 18, 1));
+}
+
 .zoomOut {
   cursor: pointer; 
   position: absolute;
-  right: 7.5%;
-  bottom: 15%;
+  right: 8%;
+  bottom: 56px;
   color: rgba(255, 255, 255, 0.87);
   background: rgba(0, 0, 0, 0.87);
-  width: 48px; 
-  height: 48px; 
+  width: 40px; 
+  height: 40px; 
   border-radius: 50%;
+  z-index: 10;
   display: flex; 
   justify-content: center; 
   align-items: center;
@@ -15,12 +32,8 @@
     rgba(0, 0, 0, 0.2) 0px 3px 3px -2px, 
     rgba(0, 0, 0, 0.14) 0px 3px 4px 0px,
     rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
-  -webkit-animation: popup;
-  -webkit-animation-duration: 0.2s;
-  -webkit-animation-timing-function: ease-in;
-  animation: popup;
-  animation-duration: 0.2s;
-  animation-timing-function: ease-in;
+  -webkit-animation: popup 0.2s ease-in;
+  animation: popup 0.2s ease-in;
 }
 
 @-webkit-keyframes popup {
@@ -37,6 +50,6 @@
 
 @media (max-width: 1250px) {
   .zoomOut {
-    right: 2.5%;
+    right: 5%;
   }
 }
