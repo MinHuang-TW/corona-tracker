@@ -35,7 +35,7 @@ const Navbar = () => {
       const scrollTop = document.body.getBoundingClientRect().top;
       setNav({
         scroll: scrollTop,
-        show: scrollTop === 0 || scrollTop > nav.scroll,
+        show: scrollTop > nav.scroll,
       });
       setOpen(false);
     };

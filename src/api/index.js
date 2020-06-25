@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+const cors = 'https://cors-anywhere.herokuapp.com/';
 const url = 'https://disease.sh/v2';
 
 const initial = {
@@ -17,7 +17,7 @@ const handleError = (error) => {
 export const fetchCountries = async () => {
   let source = axios.CancelToken.source();
   try {
-    const { data } = await axios.get(`${url}/countries`, {
+    const { data } = await axios.get(`${cors}${url}/countries`, {
       cancelToken: source.token,
     });
     const countries = data.map(
@@ -37,9 +37,9 @@ export const fetchCountries = async () => {
 
 export const fetchData = async (country) => {
   let source = axios.CancelToken.source();
-  let changeableUrl = `${url}/all`;
+  let changeableUrl = `${cors}${url}/all`;
   if (country && country !== 'Worldwide') 
-    changeableUrl = `${url}/countries/${country}`;
+    changeableUrl = `${cors}${url}/countries/${country}`;
 
   try {
     const {
@@ -71,11 +71,11 @@ export const fetchData = async (country) => {
 
 export const fetchDataDetails = async (country) => {
   let source = axios.CancelToken.source();
-  let changeableUrl = `${url}/all`;
+  let changeableUrl = `${cors}${url}/all`;
 
   if (country && country.length && country !== 'Worldwide') {
     const query = country.length > 1 ? encodeURIComponent(country) : country;
-    changeableUrl = `${url}/countries/${query}`;
+    changeableUrl = `${cors}${url}/countries/${query}`;
   }
 
   try {
@@ -94,7 +94,7 @@ export const fetchHistoryData = async (countries, days) => {
   let source = axios.CancelToken.source();
 
   try {
-    const { data } = await axios.get(`${url}/historical/${query}?lastdays=${day}`, {
+    const { data } = await axios.get(`${cors}${url}/historical/${query}?lastdays=${day}`, {
       cancelToken: source.token,
     });
     if (!countries) return [{ ...initial, timeline: data }];
