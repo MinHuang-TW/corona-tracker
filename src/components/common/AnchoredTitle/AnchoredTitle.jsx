@@ -15,7 +15,7 @@ export const AnchoredTitle = ({
     style={{ color, marginBottom: 24 }}
   >
     <Anchor color={color} />
-    <h1>{children}</h1>
+    <h1 className={styles.main_title}>{children}</h1>
   </a>
 );
 

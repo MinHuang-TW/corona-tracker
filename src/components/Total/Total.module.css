@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   justify-content: center;
   position: relative;
+  max-width: 960px;
   width: 85%;
   top: -80px;
   margin: auto;

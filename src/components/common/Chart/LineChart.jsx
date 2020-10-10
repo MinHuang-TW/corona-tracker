@@ -101,7 +101,7 @@ const LineChart = ({ selectedCountries, type }) => {
       },
     });
   }, []);
-console.log(windowWidth)
+// console.log(windowWidth)
   return (
     <>
       {hasHistoryData 

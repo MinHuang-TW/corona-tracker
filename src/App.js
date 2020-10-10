@@ -31,16 +31,18 @@ const App = () => {
       </main>
 
       <footer>
-        <p className={styles.api}>
-          {`[ Data API ] `}
-          <a href={link} target='_blank' rel='noopener noreferrer'>NOVELCovid</a>
-        </p>
-        <p className={styles.text}>Copyright © 2020 Min Huang</p>
-        <a href='mailto:h.min719@gmail.com' className={styles.mail} aria-label='mail me'>
-          <span className={styles.icon}>
-            <MailOutlineSharpIcon fontSize='small' />
-          </span>
-        </a>
+        <div className={styles.footerContainer}>
+          <p className={styles.api}>
+            {`[ Data API ] `}
+            <a href={link} target='_blank' rel='noopener noreferrer'>NOVELCovid</a>
+          </p>
+          <p className={styles.text}>Copyright © 2020 Min Huang</p>
+          <a href='mailto:h.min719@gmail.com' className={styles.mail} aria-label='mail me'>
+            <span className={styles.icon}>
+              <MailOutlineSharpIcon fontSize='small' />
+            </span>
+          </a>
+        </div>
       </footer>
     </>
   );

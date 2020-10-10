@@ -59,7 +59,7 @@ const Picker = ({ open, country }) => (
   <ol>
     <List main 
       icon={country && country.flag} 
-      text={country ? country.name : 'Loading...'} 
+      text={country ? country.name: 'Loading...'} 
       open={open}
     />
   </ol>
@@ -121,7 +121,9 @@ const CountryPicker = ({
     <div className={cx(classes, styles.container)} onBlur={handleClose} tabIndex={0}>
       {pickerOpen &&  (<div className={styles.backdrop} onClick={handleClose} />)}
       <div 
-        className={selector ? styles.selector : styles.picker} 
+        className={selector 
+          ? styles.selector : pickerOpen 
+          ? cx(styles.picker, styles.remark) : styles.picker} 
         onClick={handleOpen}
       >
         {selector 

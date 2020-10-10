@@ -129,6 +129,18 @@
   /* transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s; */
 }
 
+@media (min-width: 1400px) {
+  .remark::before {
+    content: 'Search for the First Letter using Keyboard';
+    color: #121212;
+    position: absolute;
+    right: 3.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+}
+
 @media (max-width: 600px) {
   .selector {
     padding: 4px;

@@ -92,7 +92,7 @@ const History = ({ countriesData }) => {
 
           <Block 
             id='overTime' 
-            title='Cases over time' 
+            title='Total cases over time' 
             subtitle={selected && `${currentType} cases`}
             source={selected && `Updated ${lastUpdated}`}
           >

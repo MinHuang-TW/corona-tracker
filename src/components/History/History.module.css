@@ -5,7 +5,8 @@
   align-items: center;
   position: relative;
   width: 100%;
-  padding-top: 24px;
+  max-width: 960px;
+  padding-top: 5rem;
 }
 
 .selector {
@@ -66,6 +67,10 @@
 } */
 
 @media (max-width: 400px) {
+  .container {
+    padding-top: 24px;
+  }
+
   .button,
   .button_active {
     font-size: 12px;

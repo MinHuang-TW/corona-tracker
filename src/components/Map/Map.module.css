@@ -17,7 +17,7 @@
 .zoomOut {
   cursor: pointer; 
   position: absolute;
-  right: 8%;
+  right: 5%;
   bottom: 56px;
   color: rgba(255, 255, 255, 0.87);
   background: rgba(0, 0, 0, 0.87);
@@ -48,8 +48,14 @@
   100% { transform: scale(1);}
 }
 
-@media (max-width: 1250px) {
+@media (min-width: 1000px) {
   .zoomOut {
-    right: 5%;
+    right: calc((100vw - 960px) / 2);
+  }
+}
+
+@media (max-height: 500px) {
+  .container {
+    height: 100vh;
   }
 }
