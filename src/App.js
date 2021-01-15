@@ -36,7 +36,9 @@ const App = () => {
             {`[ Data API ] `}
             <a href={link} target='_blank' rel='noopener noreferrer'>NOVELCovid</a>
           </p>
-          <p className={styles.text}>Copyright © 2020 Min Huang</p>
+          <p className={styles.text}>
+            {`Copyright © ${new Date().getFullYear()} Min Huang`}
+          </p>
           <a href='mailto:h.min719@gmail.com' className={styles.mail} aria-label='mail me'>
             <span className={styles.icon}>
               <MailOutlineSharpIcon fontSize='small' />

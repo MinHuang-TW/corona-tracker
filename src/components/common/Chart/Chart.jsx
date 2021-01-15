@@ -7,12 +7,12 @@ import { getRatio } from '../../../utils/format';
 import styles from './Chart.module.css';
 
 const Chart = ({ data, bar }) => {
-  const total = data && data.cases;
+  const total = data?.cases;
   const dataLists = [
     { text: 'Confirmed', data: total },
-    { text: 'Active', data: data && data.active },
-    { text: 'Recovered', data: data && data.recovered },
-    { text: 'Deaths', data: data && data.deaths },
+    { text: 'Active', data: data?.active },
+    { text: 'Recovered', data: data?.recovered },
+    { text: 'Deaths', data: data?.deaths },
   ];
   return (
     <>

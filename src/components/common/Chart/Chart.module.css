@@ -63,7 +63,7 @@
 .ratio {
   margin-top: 4px;
   font-weight: 500;
-  font-size: 21px;
+  font-size: 1rem;
 }
 
 @media (max-width: 1250px) {

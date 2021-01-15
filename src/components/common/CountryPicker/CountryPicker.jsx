@@ -58,7 +58,7 @@ const Selector = ({ country, setCountry, data, setData }) => {
 const Picker = ({ open, country }) => (
   <ol>
     <List main 
-      icon={country && country.flag} 
+      icon={country?.flag} 
       text={country ? country.name: 'Loading...'} 
       open={open}
     />

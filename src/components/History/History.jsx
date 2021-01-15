@@ -12,7 +12,7 @@ const History = ({ countriesData }) => {
   const types = ['cases', 'recovered', 'deaths'];
   const [activeType, setActiveType] = useState(types[0]);
 
-  const selected = selectedCountries && selectedCountries.length > 0;
+  const selected = selectedCountries?.length > 0;
   const getTypeText = (type) => (type === 'cases' ? 'Confirmed' : type);
   const lastUpdated = moment(data.length && data[0].updated).startOf('hour').fromNow();
   const currentType = capitalize(getTypeText(activeType));
@@ -45,12 +45,12 @@ const History = ({ countriesData }) => {
     let hasGlobal = false,
         hasOnlyGlobal = false;
 
-    if (storedData && storedData.length) {
+    if (storedData?.length) {
       const query = storedData
         .map(({ name }) => name)
         .filter(name => name !== 'Worldwide');
 
-      hasGlobal = query && query.length !== storedData.length;
+      hasGlobal = query?.length !== storedData.length;
       hasOnlyGlobal = hasGlobal & storedData.length === 1;
 
       if (!hasOnlyGlobal)
@@ -96,12 +96,14 @@ const History = ({ countriesData }) => {
             subtitle={selected && `${currentType} cases`}
             source={selected && `Updated ${lastUpdated}`}
           >
-            {selected && (<div className={styles.chart}>
-              <LineChart selectedCountries={selectedCountries} type={activeType} />
-              <div className={styles.buttons}>
-                {types.map((type, index) => (<TypeButton key={index} type={type} />))}
+            {selected && (
+              <div className={styles.chart}>
+                <LineChart selectedCountries={selectedCountries} type={activeType} />
+                <div className={styles.buttons}>
+                  {types.map((type, index) => (<TypeButton key={index} type={type} />))}
+                </div>
               </div>
-            </div>)}
+            )}
           </Block>
 
           <Block

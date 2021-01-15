@@ -1,12 +1,13 @@
 import React from 'react';
 import Countup from 'react-countup';
+import Progress from '../Progress/Progress';
 import styles from './Cards.module.css';
 import { color } from '../Chart/chartConfig';
 
 const Cards = ({
   data: { cases, todayCases, active, recovered, todayRecovered, deaths, todayDeaths },
 }) => {
-  if (!cases) return null;
+  if (!cases) return <Progress />;
 
   const setBackgroundColor = (title) => { 
     const type = title.toLocaleLowerCase();
